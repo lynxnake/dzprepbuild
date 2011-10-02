@@ -36,7 +36,7 @@ dcc32 [... options ...] <projectname>.dpr
 
 dcc32, in contrast to the IDE, does not use the .dof file and does not
 automatically increment the build number. Instead it reads a .cfg file,
-if one exists. The Delphi IDE creates this .cfg file every time it saves,
+if one exists. The Delphi IDE creates this .cfg file every time it saves
 the project, so it always contains the settings of the IDE, which is
 usually not what you want, hence the delete in the example above.
 
