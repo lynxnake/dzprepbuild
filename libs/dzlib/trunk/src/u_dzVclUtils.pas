@@ -16,9 +16,9 @@ uses
   Messages,
   Controls,
   ComCtrls,
-  ExtCtrls,
   CheckLst,
   StdCtrls,
+  ExtCtrls,
   Grids,
   DbGrids,
   Buttons,
@@ -60,7 +60,7 @@ function GetFileFormats: TFileFormatsList;
 ///<summary> Assigns the TBitBtn's glyph from the hex string (e.g. copied from .dfm)
 ///          if ContainsLength is true, the first 4 bytes (8 characters) contain the length of the
 ///          data (as is the case with the strings stored in the .dfm file) </summary>
-procedure TBitBtn_GlyphFromString(_btn: TBitBtn; const _GlyphStr: AnsiString; _ContainsLength: boolean = true);
+procedure TBitBtn_GlyphFromString(_btn: TBitBtn; const _GlyphStr: AnsiString; _ContainsLength: Boolean = True);
 
 ///<summary> This is meant as a replacement to the LockWindowUpate function which shouldn't really be used
 ///          any more.
@@ -72,7 +72,7 @@ function TWinControl_Lock(_Ctrl: TWinControl): IInterface;
 ///          @param Element is the integer to check for
 ///          @param Arr is the array to check
 ///          @returns true, if Arr contains Element </summary>
-function ArrayContains(_Element: integer; const _Arr: array of integer): boolean;
+function ArrayContains(_Element: Integer; const _Arr: array of Integer): Boolean;
 
 type
   ///<summary> used in ResizeStringGrid and ResizeDbGrid to specify additional options
@@ -92,9 +92,9 @@ type
 ///                         defaults to an empty set. </summary>
 procedure TGrid_Resize(_Grid: TCustomGrid); overload;
 procedure TGrid_Resize(_Grid: TCustomGrid; _Options: TResizeOptionSet); overload;
-procedure TGrid_Resize(_Grid: TCustomGrid; _Options: TResizeOptionSet; _RowOffset: integer); overload;
-procedure TGrid_Resize(_Grid: TCustomGrid; _Options: TResizeOptionSet; const _ConstantCols: array of integer); overload;
-procedure TGrid_Resize(_Grid: TCustomGrid; _Options: TResizeOptionSet; const _ConstantCols: array of integer; _RowOffset: integer); overload;
+procedure TGrid_Resize(_Grid: TCustomGrid; _Options: TResizeOptionSet; _RowOffset: Integer); overload;
+procedure TGrid_Resize(_Grid: TCustomGrid; _Options: TResizeOptionSet; const _ConstantCols: array of Integer); overload;
+procedure TGrid_Resize(_Grid: TCustomGrid; _Options: TResizeOptionSet; const _ConstantCols: array of Integer; _RowOffset: Integer); overload;
 
 ///<summary> Resizes the columns of a TDbGrid to fit their contents
 ///          @param Grid is the TCustomDbGrid to work on
@@ -107,7 +107,7 @@ procedure TDbGrid_Resize(_Grid: TCustomDbGrid; _Options: TResizeOptionSet = []);
 ///          @param IncludeFixed determines whether the fixed rows/columns are also included
 ///          @returns a string containing the contents of the grid columns separated by TAB
 ///                   rows sepearated by CRLF. </summary>
-function TGrid_GetText(_Grid: TCustomGrid; _IncludeFixed: boolean = false): string; overload;
+function TGrid_GetText(_Grid: TCustomGrid; _IncludeFixed: Boolean = False): string; overload;
 
 ///<summary> Returns the content of a StringGrid as a string
 ///          @param Grid is the TCustomGrid to read from.
@@ -120,32 +120,32 @@ function TGrid_GetText(_Grid: TCustomGrid; _Selection: TGridRect): string; overl
 ///          @param Grid is the string grid to export
 ///          @param Filename is the name of the text file to create
 ///          @param IncludeFixed determines whether the fixed rows/columns are also exported </summary>
-procedure TGrid_ExportToFile(_Grid: TCustomGrid; const _Filename: string; _IncludeFixed: boolean = false);
+procedure TGrid_ExportToFile(_Grid: TCustomGrid; const _Filename: string; _IncludeFixed: Boolean = False);
 
 ///<summary> exports the contents of the string grid as tab separated strings to a stream
 ///          @param Grid is the string grid to export
 ///          @param Stream is the stream to write to
 ///          @param IncludeFixed determines whether the fixed rows/columns are also exported </summary>
-procedure TGrid_ExportToStream(_Grid: TCustomGrid; _Stream: TStream; _IncludeFixed: boolean = false);
+procedure TGrid_ExportToStream(_Grid: TCustomGrid; _Stream: TStream; _IncludeFixed: Boolean = False);
 
 ///<summary> sets the row count, taking the fixed rows into account
 ///          @returns the new RowCount </summary>
-function TGrid_SetRowCount(_Grid: TCustomGrid; _RowCount: integer): integer;
+function TGrid_SetRowCount(_Grid: TCustomGrid; _RowCount: Integer): Integer;
 
 ///<summary> sets the nonfixd row count
 ///          @returns the new RowCount </summary>
-function TGrid_SetNonfixedRowCount(_Grid: TCustomGrid; _RowCount: integer): integer;
+function TGrid_SetNonfixedRowCount(_Grid: TCustomGrid; _RowCount: Integer): Integer;
 
 ///<summary> sets the column count, taking the fixed columns into account
 ///          @returns the new ColCount </summary>
-function TGrid_SetColCount(_Grid: TCustomGrid; _ColCount: integer): integer;
+function TGrid_SetColCount(_Grid: TCustomGrid; _ColCount: Integer): Integer;
 
 ///<summary> sets the nonfixd column count
 ///          @returns the new ColCount </summary>
-function TGrid_SetNonfixedColCount(_Grid: TCustomGrid; _ColCount: integer): integer;
+function TGrid_SetNonfixedColCount(_Grid: TCustomGrid; _ColCount: Integer): Integer;
 
 ///<summary> sets the grid's current row without triggering an OnClick event
-procedure TGrid_SetRowNoClick(_Grid: TDrawGrid; _Row: integer);
+procedure TGrid_SetRowNoClick(_Grid: TCustomGrid; _Row: Integer);
 
 ///<summary> sets the row count to FixedRows + 1 and clears all non-fixed cells </summary>
 procedure TStringGrid_Clear(_Grid: TStringGrid);
@@ -156,7 +156,10 @@ procedure TStringGrid_Clear(_Grid: TStringGrid);
 ///          @param Grid is the grid to expand
 ///          @param Caption is the caption of the new column
 ///          @returns the index of the new column </summary>
-function TStringGrid_AddColumn(_Grid: TStringGrid; const _Caption: string): integer;
+function TStringGrid_AddColumn(_Grid: TStringGrid; const _Caption: string): Integer;
+
+procedure TStringGrid_SetNonfixedCell(_Grid: TStringGrid; _col, _row: Integer; const _Text: string);
+function TStringGrid_GetNonfixedCell(_Grid: TStringGrid; _col, _row: Integer): string;
 
 ///<summary> exports the contents of the string grid to a tab separated text file (deprecated, use TGrid_ExportTofile instead)
 ///          @param Grid is the string grid to export
@@ -167,26 +170,29 @@ procedure TStringGrid_ExportToFile(_Grid: TCustomGrid; const _Filename: string);
 ///          @param Grid is the TStringGrid to scroll
 ///          @param Top is the topmost row to scroll, if passed as -1 defaults to the first non-fixed row
 ///          @param Bottom is the bottommost row to scroll, if passed as -1 defaults to RowCount-1 </summary>
-procedure TStringGrid_ScrollUp(_Grid: TStringGrid; _Top: integer = -1; _Bottom: integer = -1);
+procedure TStringGrid_ScrollUp(_Grid: TStringGrid; _Top: Integer = -1; _Bottom: Integer = -1);
 
 ///<summary> sets the row count, taking the fixed rows into account  (deprecated, use TGrid_SetRowCount instead) </summary>
-procedure TStringGrid_SetRowCount(_Grid: TCustomGrid; _RowCount: integer); deprecated; inline; // use TGrid_SetRowCount instead
+procedure TStringGrid_SetRowCount(_Grid: TCustomGrid; _RowCount: Integer); deprecated; inline; // use TGrid_SetRowCount instead
 
 ///<summary> sets the column count, taking the fixed columns into account </summary>
-procedure TStringGrid_SetColCount(_Grid: TCustomGrid; _ColCount: integer); deprecated; inline; // use TGrid_SetColCount instead
+procedure TStringGrid_SetColCount(_Grid: TCustomGrid; _ColCount: Integer); deprecated; inline; // use TGrid_SetColCount instead
 
 ///<summary> deletes the given row from the string grid and moves all rows below it up by one,
 ///   if there is only one non-fixed row left, this row is cleared but not deleted.
 ///   @param Grid is the StringGrid to change
 ///   @param Row is the index of the row to delete, or -1 to delete the current row
 ///   @returns true, if the row was deleted </summary>
-function TStringGrid_DeleteRow(_Grid: TStringGrid; _Row: integer = -1): boolean;
+function TStringGrid_DeleteRow(_Grid: TStringGrid; _Row: Integer = -1): Boolean;
 
 ///<summary> inserts a row at the given index into the string grid and moves all rows below it down by one.
 ///          @param Grid is the StringGrid to change
 ///          @param Row is the index of the row to insert, or -1 to insert at the current row
 ///          @returns the inserted row index or -1 if the row cannot be inserted </summary>
-function TStringGrid_InsertRow(_Grid: TStringGrid; _Row: integer = -1): integer;
+function TStringGrid_InsertRow(_Grid: TStringGrid; _Row: Integer = -1): Integer;
+
+///<summary> Appends a row to the string grid and returns the index of the new row </summary>
+function TStringGrid_AppendRow(_Grid: TStringGrid): Integer;
 
 ///<summary> Tries to convert the grid cell to a double, if an error occurs, it raises
 ///          an exception and optionally focuses the cell.
@@ -197,7 +203,7 @@ function TStringGrid_InsertRow(_Grid: TStringGrid; _Row: integer = -1): integer;
 ///                           if it does not contain a valid value
 ///          @returns the cell's content as a double
 ///          @raises EConvertError if the cell's content could not be converted </summary>
-function TStringGrid_CellToDouble(_grid: TStringGrid; _Col, _Row: integer; _FocusCell: boolean = true): double;
+function TStringGrid_CellToDouble(_grid: TStringGrid; _Col, _Row: Integer; _FocusCell: Boolean = True): Double;
 
 ///<summary> Tries to convert the grid cell to an integer, if an error occurs, it raises
 ///          an exception and optionally focuses the cell.
@@ -208,16 +214,16 @@ function TStringGrid_CellToDouble(_grid: TStringGrid; _Col, _Row: integer; _Focu
 ///                           if it does not contain a valid value
 ///          @returns the cell's content as an integer
 ///          @raises EConvertError if the cell's content could not be converted </summary>
-function TStringGrid_CellToInt(_grid: TStringGrid; _Col, _Row: integer; _FocusCell: boolean = true): integer;
+function TStringGrid_CellToInt(_grid: TStringGrid; _Col, _Row: Integer; _FocusCell: Boolean = True): Integer;
 
 ///<summary> Deletes the top lines of the memo so it only contains Retain lines
 ///          @param Memo is the memo to work on
 ///          @param Retain is the number of lines to retain </summary>
-procedure TMemo_DeleteTopLines(_Memo: TMemo; _Retain: integer);
+procedure TMemo_DeleteTopLines(_Memo: TMemo; _Retain: Integer);
 
 ///<summary> Gets the cursor position (actually the start of the selection) of the memo </summary>
-function TMemo_GetCursorPos(_Memo: TMemo): integer;
-procedure TMemo_SetCursorPos(_Memo: TMemo; _CharIdx: integer);
+function TMemo_GetCursorPos(_Memo: TMemo): Integer;
+procedure TMemo_SetCursorPos(_Memo: TMemo; _CharIdx: Integer);
 procedure TMemo_ScrollToCursorPos(_Memo: TMemo);
 
 ///<summary> Scrolls the memo to the end </summary>
@@ -233,13 +239,32 @@ procedure TEdit_SetTextNoChange(_ed: TCustomEdit; const _Text: string);
 ///                              if it does not contain a valid value or not
 ///          @returns the controls content as a double
 ///          @raises EConvertError if the controls content could not be converted </summary>
-function TEdit_TextToDouble(_ed: TEdit; _FocusControl: boolean = true): double;
+function TEdit_TextToDouble(_ed: TCustomEdit; _FocusControl: Boolean = True): Double;
 
 ///<summary> Tries to convert the edit control text to a double, if an error occurs, it changes it's
 ///          color to ErrColor and returns false, otherwise it changes the color to OkColor and
 ///          returns true. </summary>
-function TEdit_TryTextToDouble(_ed: TEdit; _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): boolean; overload;
-function TEdit_TryTextToDouble(_ed: TEdit; out _Value: double; _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): boolean; overload;
+function TEdit_TryTextToDouble(_ed: TEdit; _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean; overload;
+function TEdit_TryTextToDouble(_ed: TEdit; out _Value: Double; _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean; overload;
+
+function TEdit_TryTextToFloat(_ed: TCustomEdit; out _Value: Extended;
+  _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean; overload;
+function TEdit_TryTextToFloat(_ed: TCustomEdit; out _Value: Double;
+  _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean; overload;
+function TEdit_TryTextToFloat(_ed: TCustomEdit; out _Value: single;
+  _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean; overload;
+
+function TEdit_IsTextFloat(_ed: TCustomEdit; _MinValue, _MaxValue: Extended;
+  _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean; overload;
+function TEdit_IsTextFloat(_ed: TCustomEdit; _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean; overload;
+
+function TEdit_TryTextToInt(_ed: TEdit; _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean; overload;
+function TEdit_TryTextToInt(_ed: TCustomEdit; out _Value: Integer;
+  _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean; overload;
+
+function TEdit_IsTextInt(_ed: TCustomEdit; _MinValue, _MaxValue: Integer;
+  _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean; overload;
+function TEdit_IsTextInt(_ed: TCustomEdit; _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean; overload;
 
 ///<summary> Tries to convert the edit control text to an integer, if an error occurs, it raises
 ///          an exception and optionally focuses the control.
@@ -248,14 +273,14 @@ function TEdit_TryTextToDouble(_ed: TEdit; out _Value: double; _OkColor: TColor 
 ///                              if it does not contain a valid value
 ///          @returns the controls content as an integer
 ///          @raises EConvertError if the controls content could not be converted </summary>
-function TEdit_TextToInt(_ed: TEdit; _FocusControl: boolean = true): integer; overload;
-function TEdit_TextToInt(_ed: TLabeledEdit; _FocusControl: boolean = true): integer; overload;
+function TEdit_TextToInt(_ed: TCustomEdit; _FocusControl: Boolean = True): Integer; overload;
+function TEdit_TextToInt(_ed: TLabeledEdit; _FocusControl: Boolean = True): Integer; overload;
 
 ///<summary> returns the contents of the tree view as a string with indentations
 ///          @param Tree is the TTreeView to process
 ///          @param Indentation is the number of spaces for indentation
 ///          @param Marker is a marker character to use for each item, #0 for no marker </summary>
-function TTreeView_GetAsText(_Tree: TTreeView; _Indentation: integer = 2; _Marker: char = #0): string;
+function TTreeView_GetAsText(_Tree: TTreeView; _Indentation: Integer = 2; _Marker: char = #0): string;
 
 ///<summary> adds a new TTabSheet with the given Caption to the PageControl and returns it </summary>
 function TPageControl_AddTabSheet(_PageControl: TPageControl; const _Caption: string): TTabSheet;
@@ -270,8 +295,8 @@ function TPageControl_AddTabSheet(_PageControl: TPageControl; const _Caption: st
 ///         @param TabIndex is the index of the tab to draw
 ///         @param Rect is a TRect giving the drawing area
 ///         @param Active is a boolean that is true if the Tab is currently active </summary>
-procedure TPageControl_DrawTab(_PageControl: TPageControl; _TabIndex: integer;
-  const _Rect: TRect; _Active: boolean);
+procedure TPageControl_DrawTab(_PageControl: TPageControl; _TabIndex: Integer;
+  const _Rect: TRect; _Active: Boolean);
 
 ///<summary> Draws the tab text for a TTabControl as horizontal text, useful, if you
 ///          want to have the tabs on the left or right but don't want vertical text.
@@ -283,12 +308,19 @@ procedure TPageControl_DrawTab(_PageControl: TPageControl; _TabIndex: integer;
 ///         @param TabIndex is the index of the tab to draw
 ///         @param Rect is a TRect giving the drawing area
 ///         @param Active is a boolean that is true if the Tab is currently active </summary>
-procedure TTabControl_DrawTab(_TabControl: TTabControl; _TabIndex: integer;
-  const _Rect: TRect; _Active: boolean);
+procedure TTabControl_DrawTab(_TabControl: TTabControl; _TabIndex: Integer;
+  const _Rect: TRect; _Active: Boolean);
 
 ///<summary> Sets a TTabControl's tab width based on the text it displays, usefull
 ///          to display horizontal text in tabs on the left or right hand side </summary>
-procedure TTabControl_AdjustTabWidth(_TabControl: TTabControl; _Form: TForm; _MinWidth: integer = 80);
+procedure TTabControl_AdjustTabWidth(_TabControl: TTabControl; _Form: TForm; _MinWidth: Integer = 80);
+
+///<summary> Gets the object associated with the currently selected tab
+///          @param TabControl is the TTabControl to work on
+///          @param Obj is the object of the selected tab, only valid if Result=true
+///          @returns true, if TabIndex <> -1 </summary>
+function TTabControl_GetSelectedObject(_TabControl: TTabControl; out _Obj: pointer): Boolean; overload;
+function TTabControl_GetSelectedObject(_TabControl: TTabControl; out _Idx: Integer; out _Obj: pointer): Boolean; overload;
 
 ///<summary> Enables longer SimpleText (longer than 127 characters)
 ///          Call once to enable. Works, by adding a single panel with owner drawing and
@@ -305,7 +337,7 @@ procedure TStatusBar_SetLongSimpleText(_StatusBar: TStatusBar; const _Text: stri
 //           from the status bar's OnClick, OnMouseDown or OnMouseUp event handlers
 //           If the status bar does not have any panels (e.g. SimplePanel=true), this function
 //           will return 0.
-function TStatusBar_GetClickedPanel(_sb: TStatusBar): integer;
+function TStatusBar_GetClickedPanel(_sb: TStatusBar): Integer;
 
 type
   ///<summary> Interposer class for TStatusBar to allow longer than 127 characters in SimpleText </summary>
@@ -332,24 +364,24 @@ type
 ///          caption to reflect this
 ///          @param Control is the TControl to change
 ///          @param Enabled is a boolean with the new value for the Enabled property. </summary>
-procedure TControl_SetEnabled(_Control: TControl; _Enabled: boolean);
-procedure SetControlEnabled(_Control: TControl; _Enabled: boolean); deprecated; // use TControl_SetEnabled instead
+procedure TControl_SetEnabled(_Control: TControl; _Enabled: Boolean);
+procedure SetControlEnabled(_Control: TControl; _Enabled: Boolean); deprecated; // use TControl_SetEnabled instead
 
 ///<summary> sets the with of a ComboBox's dropdown  in pixels </summary>
-procedure TComboBox_SetDropdownWidth(_cmb: TCustomCombobox; _Pixels: integer);
+procedure TComboBox_SetDropdownWidth(_cmb: TCustomCombobox; _Pixels: Integer);
 
 ///<summary> Selects the entry in a combobox that has an object pointer matching Value
 ///          @param cmb is the TCustomCombobox (descendant) to select
 ///          @param Value is the desired object value
 ///          @returns true, if the value could be found, false otherwise </summary>
-function TComboBox_SelectByObject(_cmb: TCustomCombobox; _Value: pointer): boolean;
+function TComboBox_SelectByObject(_cmb: TCustomCombobox; _Value: pointer): Boolean;
 
 ///<summary> Gets the string of a combobox entry that has an object pointer matching Obj
 ///          @param cmb is the TCustomCombobox (descendant) to select
 ///          @param Obj is the desired object value
 ///          @param s is the string of the combobox entry, only valid if the function returns true
 ///          @returns true, if the object could be found, false otherwise </summary>
-function TComboBox_GetObjectCaption(_cmb: TCustomCombobox; _Obj: pointer; out _s: string): boolean;
+function TComboBox_GetObjectCaption(_cmb: TCustomCombobox; _Obj: pointer; out _s: string): Boolean;
 
 ///<summary> Gets the object pointer of the selected combobox item
 ///          @param cmb is the TCustomCombobox (descendant) to read from
@@ -359,9 +391,9 @@ function TComboBox_GetObjectCaption(_cmb: TCustomCombobox; _Obj: pointer; out _s
 ///          @param FocusControl is a boolean which determines whether to focus the control
 ///                              if it does not contain a valid value, default = false
 ///          @returns true, if these out parameters are valid </summary>
-function TComboBox_GetSelectedObject(_cmb: TCustomCombobox; out _Obj: pointer; _FocusControl: boolean = false): boolean; overload; inline;
-function TComboBox_GetSelectedObject(_cmb: TCustomCombobox; out _Idx: integer;
-  out _Obj: pointer; _FocusControl: boolean = false): boolean; overload;
+function TComboBox_GetSelectedObject(_cmb: TCustomCombobox; out _Obj: pointer; _FocusControl: Boolean = False): Boolean; overload; inline;
+function TComboBox_GetSelectedObject(_cmb: TCustomCombobox; out _Idx: Integer;
+  out _Obj: pointer; _FocusControl: Boolean = False): Boolean; overload;
 
 ///<summary> Gets the caption of the selected combobox item
 ///          @param cmb is the TCustomCombobox (descendant) to read from
@@ -370,23 +402,29 @@ function TComboBox_GetSelectedObject(_cmb: TCustomCombobox; out _Idx: integer;
 ///                              if it does not contain a valid value, default = false
 ///          @returns true, if an item was selected </summary>
 function TComboBox_GetSelected(_cmb: TCustomComboBox; out _Item: string;
-  _FocusControl: boolean = false): boolean; overload;
+  _FocusControl: Boolean = False): Boolean; overload;
 function TComboBox_GetSelected(_cmb: TCustomComboBox): string; overload;
+
+function TComboBox_IsSelected(_cmb: TCustomComboBox; _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean;
 
 ///<summary> Selects the item if it is in the list and returns the new ItemIndex
 ///          @param cmb is the TCustomCombobox (descendant) to use
 ///          @param Item is the item to select
 ///          @param DefaultIdx is the ItemIndex to use if no item matches.
 ///          @returns the index of the newly selected item or -1 if it doesn't exist </summary>
-function TComboBox_Select(_cmb: TCustomComboBox; const _Item: string; _DefaultIdx: integer = -1): integer;
+function TComboBox_Select(_cmb: TCustomComboBox; const _Item: string; _DefaultIdx: Integer = -1): Integer;
 
-///<summary> Selects an item (or no Item, if Idx = -1) without triggering an OnChange event </summary>
-procedure TComboBox_SelectWithoutChangeEvent(_cmb: TComboBox; _Idx: integer);
+///<summary> Calls the protected Change method of the combobox </summary>
+procedure TComboBox_Change(_cmb: TCustomCombo);
+
+///<summary> Selects an item (or no Item, if Idx = -1) without triggering an OnChange event
+///          (I am not even sure whether setting the item index always triggers an OnChange event.) </summary>
+procedure TComboBox_SelectWithoutChangeEvent(_cmb: TComboBox; _Idx: Integer);
 
 ///<summary> Sets the control to readonly by adding a TPanel as parent and disable it. Note that this does
 ///          not grey out the control as the Enabled property would.
 ///          This is meant for controls that do not have a readonly property like TComboBox or TCheckBox. </summary>
-procedure TControl_SetReadonly(_ctrl: TControl; _ReadOnly: boolean);
+procedure TControl_SetReadonly(_ctrl: TControl; _ReadOnly: Boolean);
 
 ///<summary> Gets the object pointer of the selected listbox item
 ///          @param lst is the TCustomListbox (descendant) to read from
@@ -394,7 +432,7 @@ procedure TControl_SetReadonly(_ctrl: TControl; _ReadOnly: boolean);
 ///          @param Obj is the value of the object pointer of the selected item, only valid
 ///                     if the function returns true
 ///          @returns true, if out parameters are valid </summary>
-function TListBox_GetSelectedObject(_lst: TCustomListbox; out _Idx: integer; out _Obj: pointer): boolean;
+function TListBox_GetSelectedObject(_lst: TCustomListbox; out _Idx: Integer; out _Obj: pointer): Boolean;
 
 ///<summary> Gets the caption of the selected listbox item
 ///          @param cmb is the TCustomListbox (descendant) to read from
@@ -403,29 +441,30 @@ function TListBox_GetSelectedObject(_lst: TCustomListbox; out _Idx: integer; out
 ///                              if it does not contain a valid value, default = false
 ///          @returns true, if an item was selected </summary>
 function TListBox_GetSelected(_lb: TCustomListBox; out _Item: string;
-  _FocusControl: boolean = false): boolean; overload;
+  _FocusControl: Boolean = False): Boolean; overload;
 function TListBox_GetSelected(_lb: TCustomListBox): string; overload;
+function TListBox_GetSelected(_lb: TCustomListBox; out _Idx: Integer; out _Item: string): Boolean; overload;
 
 ///<summary> @Returns the number of selected items in the ListBox
 ///          @param Selected will contain the selected items as well as the
 ///                          associated objects. May be passed as NIL if only the count
 ///                          is required. </summary>
-function TListBox_GetSelected(_lb: TCustomListBox; _Selected: TStrings): integer; overload;
+function TListBox_GetSelected(_lb: TCustomListBox; _Selected: TStrings): Integer; overload;
 
 ///<summary> Selects the item if it is in the list and returns the new ItemIndex
 ///          @param lb is the TCustomListbox (descendant) to use
 ///          @param Item is the item to select
 ///          @param DefaultIdx is the ItemIndex to use if no item matches.
 ///          @returns the index of the newly selected item or -1 if it doesn't exist </summary>
-function TListBox_Select(_lb: TCustomListBox; const _Item: string; _DefaultIdx: integer = -1): integer;
+function TListBox_Select(_lb: TCustomListBox; const _Item: string; _DefaultIdx: Integer = -1): Integer;
 
 ///<summary> Deletes the selected listbox item
 ///          @param lst is the TCustomListbox (descendant) to read from
 ///          @param Idx is the listbox's ItemIndex, only valid if the function returns true
 ///   @returns true, if these values are valid </summary>
-function TListBox_DeleteSelected(_lst: TCustomListbox; out _Idx: integer): boolean; overload;
-function TListBox_DeleteSelected(_lst: TCustomListbox): boolean; overload;
-function TListBox_DeleteSelected(_lst: TCustomListBox; out _s: string): boolean; overload;
+function TListBox_DeleteSelected(_lst: TCustomListbox; out _Idx: Integer): Boolean; overload;
+function TListBox_DeleteSelected(_lst: TCustomListbox): Boolean; overload;
+function TListBox_DeleteSelected(_lst: TCustomListBox; out _s: string): Boolean; overload;
 
 procedure TListBox_UnselectAll(_lb: TCustomListbox);
 
@@ -433,24 +472,24 @@ procedure TListBox_UnselectAll(_lb: TCustomListbox);
 procedure TListbox_ClearWithObjects(_lst: TCustomListBox);
 
 ///<summary> Returns the nunber of items that are checked </summary>
-function TCheckListBox_GetCheckedCount(_clb: TCheckListBox): integer;
+function TCheckListBox_GetCheckedCount(_clb: TCheckListBox): Integer;
 procedure TCheckListBox_DeleteDisabled(_clb: TCheckListBox);
-procedure TCheckListBox_InvertCheckmarks(_clb: TCheckListBox; _IncludeDisabled: boolean = false);
+procedure TCheckListBox_InvertCheckmarks(_clb: TCheckListBox; _IncludeDisabled: Boolean = False);
 procedure TCheckListBox_UncheckAll(_clb: TCheckListBox);
-procedure TCheckListBox_CheckAll(_clb: TCheckListBox; _IncludeDisabled: boolean = false);
+procedure TCheckListBox_CheckAll(_clb: TCheckListBox; _IncludeDisabled: Boolean = False);
 ///<summary> Returns the checked items and the objects associated in them
 ///          @param clb is the TCheckListBox
 ///          @param Checked is a TStrings to which the selected items and objects are to be added
 ///          @param IncludeDisabled determines whether the disabled items should also be returned if they are checked
 ///          @returns the number of Items in Checked </summary>
-function TCheckListBox_GetChecked(_clb: TCheckListBox; _Checked: TStrings; _IncludeDisabled: boolean = false): integer; overload;
-function TCheckListBox_GetChecked(_clb: TCheckListbox; _IncludeDisabled: boolean = false): string; overload;
+function TCheckListBox_GetChecked(_clb: TCheckListBox; _Checked: TStrings; _IncludeDisabled: Boolean = False): Integer; overload;
+function TCheckListBox_GetChecked(_clb: TCheckListbox; _IncludeDisabled: Boolean = False): string; overload;
 ///<summary> Returns the objects associated with the checked items
 ///          @param clb is the TCheckListBox
 ///          @param Objects is a TList to which the selected objects are to be added
 ///          @param IncludeDisabled determines whether the disabled items should also be returned if they are checked
 ///          @returns the number of Items in Objects </summary>
-function TCheckListBox_GetCheckedObjects(_clb: TCheckListBox; _Objects: TList; _IncludeDisabled: boolean = false): integer;
+function TCheckListBox_GetCheckedObjects(_clb: TCheckListBox; _Objects: TList; _IncludeDisabled: Boolean = False): Integer;
 ///<summary> Checks all items contained in the Checked string list
 ///          @param clb is the TCheckListBox to modify
 ///          @param Checked is a string list containing the items to be checked
@@ -460,13 +499,13 @@ function TCheckListBox_GetCheckedObjects(_clb: TCheckListBox; _Objects: TList; _
 ///                               event should be suppressed.
 ///          @returns the number of items that have been checked. </summary>
 function TCheckListBox_SetChecked(_clb: TCheckListBox; _Checked: TStrings;
-  _UncheckOthers: boolean = true; _SuppressClick: boolean = false): integer;
+  _UncheckOthers: Boolean = True; _SuppressClick: Boolean = False): Integer;
 
 ///<summary> sets the checked property without triggering an OnClickCheck event </summary>
-procedure TCheckListBox_SetCheckedNoClick(_clb: TCheckListBox; _Idx: integer; _Checked: boolean);
+procedure TCheckListBox_SetCheckedNoClick(_clb: TCheckListBox; _Idx: Integer; _Checked: Boolean);
 
-procedure TCheckListBox_CheckSelected(_clb: TCheckListBox; _IncludeDisabled: boolean = false);
-procedure TCheckListBox_UncheckSelected(_clb: TCheckListBox; _IncludeDisabled: boolean = false);
+procedure TCheckListBox_CheckSelected(_clb: TCheckListBox; _IncludeDisabled: Boolean = False);
+procedure TCheckListBox_UncheckSelected(_clb: TCheckListBox; _IncludeDisabled: Boolean = False);
 
 ///<summary> Makes the given TCheckListBox readonly by assigning a special
 ///          method to its OnClickCheck event or makes it ReadWrite again
@@ -475,7 +514,7 @@ procedure TCheckListBox_UncheckSelected(_clb: TCheckListBox; _IncludeDisabled: b
 ///          @param ChangeColor determines whether to change the background color
 ///                             to clWindow (ReadWrite) and clBtnFace (ReadOnly)
 ///                             respectively. Defaults to true </summary>
-procedure TCheckListBox_Readonly(_clb: TCheckListBox; _ReadOnly: boolean; _ChangeColor: boolean = true);
+procedure TCheckListBox_Readonly(_clb: TCheckListBox; _ReadOnly: Boolean; _ChangeColor: Boolean = True);
 
 ///<summary> Gets the caption of the given or selected item in the RadioGroup
 ///          @param rg is the TCustomRadioGroup descendant to read
@@ -485,12 +524,12 @@ procedure TCheckListBox_Readonly(_clb: TCheckListBox; _ReadOnly: boolean; _Chang
 ///          @param Idx is the item index to read, defaults to -1 meaning 'selected item'
 ///          @returns true, if the caption could be read </summary>
 function TRadioGroup_GetItemCaption(_rg: TCustomRadioGroup;
-  out _Caption: string; _Idx: integer = -1): boolean;
+  out _Caption: string; _Idx: Integer = -1): Boolean;
 
 ///<summary> Selects the item in the radio group with the given caption,
 ///          returns the item's index or -1 if no item matched.
 ///          Comparison is case insensitive </summary>
-function TRadioGroup_Select(_rg: TCustomRadioGroup; const _Item: string; _DefaultIdx: integer = -1): integer;
+function TRadioGroup_Select(_rg: TCustomRadioGroup; const _Item: string; _DefaultIdx: Integer = -1): Integer;
 
 ///<summary> Gets the object pointer of the selected RadioGroup item
 ///          @param cmb is the TCustomListbox (descendant) to read from
@@ -498,7 +537,7 @@ function TRadioGroup_Select(_rg: TCustomRadioGroup; const _Item: string; _Defaul
 ///          @param Obj is the value of the object pointer of the selected item, only valid
 ///                     if the function returns true
 ///          @returns true, if the out parameters are valid </summary>
-function TRadioGroup_GetSelectedObject(_rg: TCustomRadioGroup; out _Idx: integer; out _Obj: pointer): boolean;
+function TRadioGroup_GetSelectedObject(_rg: TCustomRadioGroup; out _Idx: Integer; out _Obj: pointer): Boolean;
 
 ///<summary> Writes a TPicture object to a String. The Format is
 ///          <pictureformat>#26<picturedata> </summary>
@@ -519,13 +558,13 @@ procedure TRichEdit_ReadFromString(_Re: TRichEdit; const _S: string);
 ///          @param Re is a TRichEdit
 ///          @param Row is the row number (0 based)
 ///          @returns the character offset (0 based) of the first character of the row </summary>
-function TRichEdit_RowToCharIndex(_Re: TRichEdit; _Row: integer): integer;
+function TRichEdit_RowToCharIndex(_Re: TRichEdit; _Row: Integer): Integer;
 
 ///<summary> Returns the row which contains the given character index </summary>
-function TRichEdit_CharIndexToRow(_Re: TRichEdit; _Idx: integer): integer;
+function TRichEdit_CharIndexToRow(_Re: TRichEdit; _Idx: Integer): Integer;
 
 ///<summary> Returns the current row number (0 based) of the RichEdit </summary>
-function TRichEdit_GetCurrentRow(_Re: TRichEdit): integer;
+function TRichEdit_GetCurrentRow(_Re: TRichEdit): Integer;
 
 ///<summary> Scrolls the rich edit to the current caret position </summary>
 procedure TRichEdit_ScrollToCaret(_Re: TRichEdit);
@@ -537,15 +576,15 @@ procedure TRichEdit_WriteLn(_Re: TRichEdit; const _s: string; _Color: TColor = c
 ///          with 16 pixels distance from the upper and 8 pixels from the left border.
 ///          It is assumed that the control already has the correct x position, only
 ///          Top will be adjusted. </summary>
-function AddLabeledControl(_Idx: integer; const _Caption: string; _ctrl: TControl): TLabel;
+function AddLabeledControl(_Idx: Integer; const _Caption: string; _ctrl: TControl): TLabel;
 
 ///<summary> Calculates the height for writing a Text on a control </summary>
-function CalcTextHeight(_Ctrl: TWinControl; const _Text: string; _Width: integer = -1): integer; overload;
-function CalcTextHeight(_Ctrl: TGraphicControl; const _Text: string; _Width: integer = -1): integer; overload;
+function CalcTextHeight(_Ctrl: TWinControl; const _Text: string; _Width: Integer = -1): Integer; overload;
+function CalcTextHeight(_Ctrl: TGraphicControl; const _Text: string; _Width: Integer = -1): Integer; overload;
 
 ///<summary> I don't quite remember what this is supposed to do and where it is used,
 ///          Please, if you find a call to this function somewhere, tell me. -- twm </summary>
-function TStringGrid_IsScrollBarVisible(_Grid: TCustomGrid; _Code: integer): boolean;
+function TStringGrid_IsScrollBarVisible(_Grid: TCustomGrid; _Code: Integer): Boolean;
 
 ///<summary> Returns the path to the application's executable including the trailing backslash </summary>
 function GetApplicationPath: string; deprecated; // use TApplication_GetExePath instead
@@ -554,7 +593,7 @@ function GetApplicationPath: string; deprecated; // use TApplication_GetExePath 
 procedure TControl_Center(_Child: TControl; _Parent: TControl);
 
 ///<summary> sets the Checked property without firing an OnClick event </summary>
-procedure TCheckBox_SetCheckedNoOnClick(_Chk: TCustomCheckBox; _Checked: boolean);
+procedure TCheckBox_SetCheckedNoOnClick(_Chk: TCustomCheckBox; _Checked: Boolean);
 
 ///<summary> centers a form on the given point, but makes sure the form is fully visible </summary>
 procedure TForm_CenterOn(_frm: TForm; _Center: TPoint); overload;
@@ -562,14 +601,14 @@ procedure TForm_CenterOn(_frm: TForm; _Center: TPoint); overload;
 procedure TForm_CenterOn(_frm: TForm; _Center: TWinControl); overload;
 
 ///<summary> tries to focus the given control, returns false if that's not possible </summary>
-function TWinControl_SetFocus(_Ctrl: TWinControl): boolean;
+function TWinControl_SetFocus(_Ctrl: TWinControl): Boolean;
 
 ///<summary> returns the full path of the executable (without the filename but including
 ///          a backslash) </summary>
 function TApplication_GetExePath: string;
 
 ///<summary> returns true, if the application's executable contains version information </summary>
-function TApplication_HasVersionInfo: boolean;
+function TApplication_HasVersionInfo: Boolean;
 
 ///<summary> switches off "Windows Ghosting" in Win 2000 and XP
 ///          This is a workaround for the bug that modal forms sometimes aren't modal in W2K and XP.
@@ -581,26 +620,33 @@ procedure MergeForm(AControl: TWinControl; AForm: TForm; Align: TAlign; Show: Bo
 ///          @param Form is the TForm to unmerge </summary>
 procedure UnMergeForm(_Form: TCustomForm); deprecated; // use a frame instead
 
+///<summary> Calls lv.Items.BeginUpdate and returns an interface which, when released calls
+///          lv.Items.EndUpdate. </summary>
+function TListView_BeginUpdate(_lv: TListView): IInterface;
+
 ///<summary> free all lv.Items[n].Data objects and then clear the items </summary>
 procedure TListView_ClearWithObjects(_lv: TListView);
 
 ///<summary> Unselect all items, if WithSelectEvents is false, OnSelectItem events will be temporarily
 ///          disabled. </summary>
-procedure TListView_UnselectAll(_lv: TListView; _WithSelectEvents: boolean = true);
+procedure TListView_UnselectAll(_lv: TListView; _WithSelectEvents: Boolean = True);
 
 ///<summary> Returns the number of selected items in the ListView </summary>
-function TListView_GetSelectedCount(_lv: TListView): integer;
+function TListView_GetSelectedCount(_lv: TListView): Integer;
+
+function TListView_GetSelected(_Lv: TListView; out _Idx: Integer): Boolean; overload;
+function TListView_GetSelected(_lv: TListView; out _Item: TListItem): Boolean; overload;
 
 ///<summary> Returns the first item in the radio group with the caption ItemText </summary>
 function TRadioGroup_GetButton(_rg: TRadioGroup; _ItemText: string): TRadioButton; overload;
 ///<summary> Returns the ItemIdx'th item in the radio group </summary>
-function TRadioGroup_GetButton(_rg: TRadioGroup; _ItemIdx: integer): TRadioButton; overload;
+function TRadioGroup_GetButton(_rg: TRadioGroup; _ItemIdx: Integer): TRadioButton; overload;
 
 ///<summary> Returns the Checked value of a TCheckbox or TRadioButton (which both descend from TButtonControl) </summary>
-function TButtonControl_GetChecked(_bctrl: TButtonControl): boolean;
+function TButtonControl_GetChecked(_bctrl: TButtonControl): Boolean;
 
 ///<summary> Sets the Checked value of a TCheckbox or TRadioButton (which both descend from TButtonControl) </summary>
-procedure TButtonControl_SetChecked(_bctrl: TButtonControl; _Value: boolean);
+procedure TButtonControl_SetChecked(_bctrl: TButtonControl; _Value: Boolean);
 
 ///<summary> Sets the Caption value of a TCheckbox or TRadioButton (which both descend from TButtonControl) </summary>
 procedure TButtonControl_SetCaption(_bctrl: TButtonControl; _Value: string);
@@ -613,7 +659,13 @@ function TCursor_TemporaryChange(_NewCursor: TCursor = crHourGlass): IInterface;
 //          the function returns true. If they are different, it calls the action's Execute
 //          method and returns its result.
 //          @returns true, if Execute was called and returned true, false otherwise </summary>
-function TAction_SetCheckedExecute(_act: TCustomAction; _Checked: boolean): boolean;
+function TAction_SetCheckedExecute(_act: TCustomAction; _Checked: Boolean): Boolean;
+
+///<summary> Sets the caption of a groupbox in the form '<prefix:><filename>' shortening the
+///          filename in the path part using '..' so the file name itself should be visible.
+///          Note that the Prefix is used as is, so include any whitespace and punctuation you
+///          might want to see. </summary>
+function TGroupBox_SetFileCaption(_grp: TCustomGroupBox; const _Prefix: string; const _Filename: string): string;
 
 implementation
 
@@ -622,6 +674,8 @@ uses
   Consts,
   JPEG,
   StrUtils,
+  Types,
+  Math,
 {$IFDEF SUPPORTS_UNICODE_STRING}
   AnsiStrings,
 {$ENDIF SUPPORTS_UNICODE_STRING}
@@ -631,20 +685,21 @@ uses
 {$ENDIF GIFByRx}
   u_dzConvertUtils,
   u_dzStringUtils,
-  u_dzClassUtils;
+  u_dzClassUtils,
+  FileCtrl;
 
 function _(const _s: string): string; inline;
 begin
   Result := dzDGetText(_s, 'dzlib');
 end;
 
-procedure TBitBtn_GlyphFromString(_btn: TBitBtn; const _GlyphStr: AnsiString; _ContainsLength: boolean = true);
+procedure TBitBtn_GlyphFromString(_btn: TBitBtn; const _GlyphStr: AnsiString; _ContainsLength: Boolean = True);
 var
   st: TMemoryStream;
   s: AnsiString;
   Buf: array of byte;
   res: Integer;
-  Size: integer;
+  Size: Integer;
 begin
   if _ContainsLength then
     s := LowerCase(Copy(_GlyphStr, 9))
@@ -670,7 +725,7 @@ type
   TGridHack = class(TCustomGrid);
   TDbGridHack = class(TCustomDbGrid);
 
-function TGrid_GetText(_Grid: TCustomGrid; _IncludeFixed: boolean = false): string;
+function TGrid_GetText(_Grid: TCustomGrid; _IncludeFixed: Boolean = False): string;
 var
   Selection: TGridRect;
   Grid: TGridHack;
@@ -718,7 +773,7 @@ begin
   end;
 end;
 
-procedure TGrid_ExportToStream(_Grid: TCustomGrid; _Stream: TStream; _IncludeFixed: boolean = false);
+procedure TGrid_ExportToStream(_Grid: TCustomGrid; _Stream: TStream; _IncludeFixed: Boolean = False);
 var
   s: string;
 begin
@@ -726,7 +781,7 @@ begin
   TStream_WriteStringLn(_Stream, s);
 end;
 
-procedure TGrid_ExportToFile(_Grid: TCustomGrid; const _Filename: string; _IncludeFixed: boolean = false);
+procedure TGrid_ExportToFile(_Grid: TCustomGrid; const _Filename: string; _IncludeFixed: Boolean = False);
 var
   t: Text;
   s: string;
@@ -741,7 +796,7 @@ begin
   end;
 end;
 
-function TGrid_SetRowCount(_Grid: TCustomGrid; _RowCount: integer): integer;
+function TGrid_SetRowCount(_Grid: TCustomGrid; _RowCount: Integer): Integer;
 var
   Grid: TGridHack;
 begin
@@ -753,7 +808,7 @@ begin
   Grid.RowCount := Result;
 end;
 
-function TGrid_SetColCount(_Grid: TCustomGrid; _ColCount: integer): integer;
+function TGrid_SetColCount(_Grid: TCustomGrid; _ColCount: Integer): Integer;
 var
   Grid: TGridHack;
 begin
@@ -765,7 +820,7 @@ begin
   Grid.ColCount := Result;
 end;
 
-function TGrid_SetNonfixedColCount(_Grid: TCustomGrid; _ColCount: integer): integer;
+function TGrid_SetNonfixedColCount(_Grid: TCustomGrid; _ColCount: Integer): Integer;
 var
   Grid: TGridHack;
 begin
@@ -774,7 +829,7 @@ begin
   Grid.ColCount := Result;
 end;
 
-function TGrid_SetNonfixedRowCount(_Grid: TCustomGrid; _RowCount: integer): integer;
+function TGrid_SetNonfixedRowCount(_Grid: TCustomGrid; _RowCount: Integer): Integer;
 var
   Grid: TGridHack;
 begin
@@ -783,44 +838,57 @@ begin
   Grid.RowCount := Result;
 end;
 
-procedure TStringGrid_SetRowCount(_Grid: TCustomGrid; _RowCount: integer);
+procedure TStringGrid_SetRowCount(_Grid: TCustomGrid; _RowCount: Integer);
 begin
   TGrid_SetRowCount(_Grid, _RowCount);
 end;
 
-procedure TStringGrid_SetColCount(_Grid: TCustomGrid; _ColCount: integer);
+procedure TStringGrid_SetColCount(_Grid: TCustomGrid; _ColCount: Integer);
 begin
   TGrid_SetColCount(_Grid, _ColCount);
 end;
 
-procedure TGrid_SetRowNoClick(_Grid: TDrawGrid; _Row: integer);
+procedure TGrid_SetRowNoClick(_Grid: TCustomGrid; _Row: Integer);
 var
   Event: TNotifyEvent;
+var
+  Grid: TGridHack;
 begin
-  Event := _Grid.OnClick;
+  Grid := TGridHack(_Grid);
+  Event := Grid.OnClick;
   try
-    _Grid.OnClick := nil;
-    _Grid.Row := _Row;
+    Grid.OnClick := nil;
+    Grid.Row := _Row;
   finally
-    _Grid.OnClick := Event;
+    Grid.OnClick := Event;
   end;
 end;
 
 procedure TStringGrid_ExportToFile(_Grid: TCustomGrid; const _Filename: string);
 begin
-  TGrid_ExportToFile(_Grid, _Filename, true);
+  TGrid_ExportToFile(_Grid, _Filename, True);
 end;
 
 procedure TStringGrid_Clear(_Grid: TStringGrid);
 var
-  c: integer;
+  c: Integer;
 begin
   _Grid.RowCount := _Grid.FixedRows + 1;
   for c := _Grid.FixedCols to _Grid.ColCount - 1 do
     _Grid.Cells[c, _Grid.FixedRows] := '';
 end;
 
-function TStringGrid_AddColumn(_Grid: TStringGrid; const _Caption: string): integer;
+procedure TStringGrid_SetNonfixedCell(_Grid: TStringGrid; _col, _row: Integer; const _Text: string);
+begin
+  _Grid.Cells[_col + _Grid.FixedCols, _row + _Grid.FixedRows] := _Text;
+end;
+
+function TStringGrid_GetNonfixedCell(_Grid: TStringGrid; _col, _row: Integer): string;
+begin
+  Result := _Grid.Cells[_col + _Grid.FixedCols, _row + _Grid.FixedRows];
+end;
+
+function TStringGrid_AddColumn(_Grid: TStringGrid; const _Caption: string): Integer;
 var
   i: Integer;
 begin
@@ -836,7 +904,7 @@ begin
   _Grid.Cells[Result, 0] := _Caption;
 end;
 
-procedure TStringGrid_ScrollUp(_Grid: TStringGrid; _Top: integer = -1; _Bottom: integer = -1);
+procedure TStringGrid_ScrollUp(_Grid: TStringGrid; _Top: Integer = -1; _Bottom: Integer = -1);
 var
   r: Integer;
   c: Integer;
@@ -854,10 +922,10 @@ begin
       _Grid.Cells[c, _Bottom] := '';
 end;
 
-function TStringGrid_DeleteRow(_Grid: TStringGrid; _Row: integer): boolean;
+function TStringGrid_DeleteRow(_Grid: TStringGrid; _Row: Integer): Boolean;
 var
-  r: integer;
-  c: integer;
+  r: Integer;
+  c: Integer;
 begin
   Assert(Assigned(_Grid));
   Assert(_Grid.FixedRows < _Grid.RowCount);
@@ -865,13 +933,13 @@ begin
   if _Row = -1 then
     _Row := _Grid.Row;
   if (_Row < _Grid.FixedRows) or (_Row >= _Grid.RowCount) then begin
-    Result := false;
+    Result := False;
     exit;
   end;
   if _Grid.RowCount <= _Grid.FixedRows + 1 then begin
     for c := 0 to _Grid.ColCount - 1 do
       _Grid.Cells[c, _Grid.FixedRows] := '';
-    Result := true;
+    Result := True;
     exit;
   end;
 
@@ -883,10 +951,10 @@ begin
       _Grid.Cells[c, r - 1] := _Grid.Cells[c, r];
   end;
   _Grid.RowCount := _Grid.RowCount - 1;
-  Result := true;
+  Result := True;
 end;
 
-function TStringGrid_InsertRow(_Grid: TStringGrid; _Row: integer = -1): integer;
+function TStringGrid_InsertRow(_Grid: TStringGrid; _Row: Integer = -1): Integer;
 var
   r: Integer;
   c: Integer;
@@ -910,7 +978,13 @@ begin
   Result := _Row;
 end;
 
-function TStringGrid_CellToDouble(_grid: TStringGrid; _Col, _Row: integer; _FocusCell: boolean = true): double;
+function TStringGrid_AppendRow(_Grid: TStringGrid): Integer;
+begin
+  Result := _Grid.RowCount;
+  _Grid.RowCount := Result + 1;
+end;
+
+function TStringGrid_CellToDouble(_grid: TStringGrid; _Col, _Row: Integer; _FocusCell: Boolean = True): Double;
 var
   s: string;
 begin
@@ -925,7 +999,7 @@ begin
   end;
 end;
 
-function TStringGrid_CellToInt(_grid: TStringGrid; _Col, _Row: integer; _FocusCell: boolean = true): integer;
+function TStringGrid_CellToInt(_grid: TStringGrid; _Col, _Row: Integer; _FocusCell: Boolean = True): Integer;
 var
   s: string;
 begin
@@ -959,7 +1033,7 @@ begin
   end;
 end;
 
-function TEdit_TextToDouble(_ed: TEdit; _FocusControl: boolean = true): double;
+function TEdit_TextToDouble(_ed: TCustomEdit; _FocusControl: Boolean = True): Double;
 var
   s: string;
 begin
@@ -972,7 +1046,7 @@ begin
   end;
 end;
 
-function TEdit_TryTextToDouble(_ed: TEdit; out _Value: double; _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): boolean;
+function TEdit_TryTextToDouble(_ed: TEdit; out _Value: Double; _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean;
 var
   s: string;
 begin
@@ -984,14 +1058,122 @@ begin
     _ed.Color := _ErrColor;
 end;
 
-function TEdit_TryTextToDouble(_ed: TEdit; _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): boolean;
+function TEdit_TryTextToDouble(_ed: TEdit; _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean;
 var
-  Value: double;
+  Value: Double;
 begin
   Result := TEdit_TryTextToDouble(_ed, Value, _OkColor, _ErrColor);
 end;
 
-function TEdit_TextToInt(_ed: TEdit; _FocusControl: boolean = true): integer;
+type
+  TEditHack = class(TCustomEdit)
+  end;
+
+function TEdit_TryTextToFloat(_ed: TCustomEdit; out _Value: Extended;
+  _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean;
+var
+  s: string;
+begin
+  s := _ed.Text;
+  Result := TryStr2Float(s, _Value, #0);
+  if Result then
+    TEditHack(_ed).Color := _OkColor
+  else
+    TEditHack(_ed).Color := _ErrColor;
+end;
+
+function TEdit_TryTextToFloat(_ed: TCustomEdit; out _Value: Double;
+  _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean;
+var
+  s: string;
+begin
+  s := _ed.Text;
+  Result := TryStr2Float(s, _Value, #0);
+  if Result then
+    TEditHack(_ed).Color := _OkColor
+  else
+    TEditHack(_ed).Color := _ErrColor;
+end;
+
+function TEdit_TryTextToFloat(_ed: TCustomEdit; out _Value: single;
+  _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean;
+var
+  s: string;
+begin
+  s := _ed.Text;
+  Result := TryStr2Float(s, _Value, #0);
+  if Result then
+    TEditHack(_ed).Color := _OkColor
+  else
+    TEditHack(_ed).Color := _ErrColor;
+end;
+
+function TEdit_IsTextFloat(_ed: TCustomEdit; _MinValue, _MaxValue: Extended;
+  _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean;
+var
+  Value: Extended;
+begin
+  Result := TEdit_TryTextToFloat(_ed, Value, _OkColor, _ErrColor);
+  if not Result then
+    exit;
+  Result := (CompareValue(_MinValue, Value) <> GreaterThanValue)
+    and (CompareValue(_MaxValue, Value) <> LessThanValue);
+  if Result then
+    TEditHack(_ed).Color := _OkColor
+  else
+    TEditHack(_ed).Color := _ErrColor;
+end;
+
+function TEdit_IsTextFloat(_ed: TCustomEdit; _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean;
+var
+  Value: Extended;
+begin
+  Result := TEdit_TryTextToFloat(_ed, Value, _OkColor, _ErrColor);
+end;
+
+function TEdit_IsTextInt(_ed: TCustomEdit; _MinValue, _MaxValue: Integer;
+  _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean;
+var
+  Value: Integer;
+begin
+  Result := TEdit_TryTextToInt(_ed, Value, _OkColor, _ErrColor);
+  if not Result then
+    exit;
+  Result := (_MinValue < Value) and (Value < _MaxValue);
+  if Result then
+    TEditHack(_ed).Color := _OkColor
+  else
+    TEditHack(_ed).Color := _ErrColor;
+end;
+
+function TEdit_IsTextInt(_ed: TCustomEdit; _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean;
+var
+  Value: Integer;
+begin
+  Result := TEdit_TryTextToInt(_ed, Value, _OkColor, _ErrColor);
+end;
+
+function TEdit_TryTextToInt(_ed: TCustomEdit; out _Value: Integer;
+  _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean;
+var
+  s: string;
+begin
+  s := _ed.Text;
+  Result := TryStrToInt(s, _Value);
+  if Result then
+    TEditHack(_ed).Color := _OkColor
+  else
+    TEditHack(_ed).Color := _ErrColor;
+end;
+
+function TEdit_TryTextToInt(_ed: TEdit; _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean;
+var
+  Value: Integer;
+begin
+  Result := TEdit_TryTextToInt(_ed, Value, _OkColor, _ErrColor);
+end;
+
+function TEdit_TextToInt(_ed: TCustomEdit; _FocusControl: Boolean = True): Integer;
 var
   s: string;
 begin
@@ -1004,7 +1186,7 @@ begin
   end;
 end;
 
-function TEdit_TextToInt(_ed: TLabeledEdit; _FocusControl: boolean = true): integer;
+function TEdit_TextToInt(_ed: TLabeledEdit; _FocusControl: Boolean = True): Integer;
 var
   s: string;
 begin
@@ -1017,9 +1199,9 @@ begin
   end;
 end;
 
-function TTreeView_GetAsText(_Tree: TTreeView; _Indentation: integer = 2; _Marker: char = #0): string;
+function TTreeView_GetAsText(_Tree: TTreeView; _Indentation: Integer = 2; _Marker: char = #0): string;
 var
-  Level: integer;
+  Level: Integer;
   Marker: string;
 
   function GetSubnodes(_tn: TTreeNode): string;
@@ -1050,11 +1232,11 @@ begin
   Result := GetSubnodes(_Tree.Items.GetFirstNode);
 end;
 
-function ArrayContains(_Element: integer; const _Arr: array of integer): boolean;
+function ArrayContains(_Element: Integer; const _Arr: array of Integer): Boolean;
 var
-  i: integer;
+  i: Integer;
 begin
-  Result := false;
+  Result := False;
   for i := low(_Arr) to High(_Arr) do begin
     Result := _Arr[i] = _Element;
     if Result then
@@ -1062,9 +1244,9 @@ begin
   end;
 end;
 
-procedure HandleRow(_Grid: TGridHack; _Col, _Row: integer; var _MinWidth: integer);
+procedure HandleRow(_Grid: TGridHack; _Col, _Row: Integer; var _MinWidth: Integer);
 var
-  ColWidth: integer;
+  ColWidth: Integer;
   ColText: string;
 begin
   ColText := _Grid.GetEditText(_Col, _Row);
@@ -1083,28 +1265,28 @@ begin
   TGrid_Resize(_Grid, _Options, [], -1);
 end;
 
-procedure TGrid_Resize(_Grid: TCustomGrid; _Options: TResizeOptionSet; _RowOffset: integer);
+procedure TGrid_Resize(_Grid: TCustomGrid; _Options: TResizeOptionSet; _RowOffset: Integer);
 begin
   TGrid_Resize(_Grid, _Options, [], _RowOffset);
 end;
 
-procedure TGrid_Resize(_Grid: TCustomGrid; _Options: TResizeOptionSet; const _ConstantCols: array of integer);
+procedure TGrid_Resize(_Grid: TCustomGrid; _Options: TResizeOptionSet; const _ConstantCols: array of Integer);
 begin
   TGrid_Resize(_Grid, _Options, _ConstantCols, -1);
 end;
 
-procedure TGrid_Resize(_Grid: TCustomGrid; _Options: TResizeOptionSet; const _ConstantCols: array of integer; _RowOffset: integer);
+procedure TGrid_Resize(_Grid: TCustomGrid; _Options: TResizeOptionSet; const _ConstantCols: array of Integer; _RowOffset: Integer);
 var
-  Col, Row: integer;
+  Col, Row: Integer;
   Grid: TGridHack;
-  MinWidth: integer;
-  MinCol: integer;
-  MaxCol: integer;
-  MaxRow: integer;
-  ColWidths: array of integer;
-  FirstRow: integer;
-  SumWidths: integer;
-  Additional: integer;
+  MinWidth: Integer;
+  MinCol: Integer;
+  MaxCol: Integer;
+  MaxRow: Integer;
+  ColWidths: array of Integer;
+  FirstRow: Integer;
+  SumWidths: Integer;
+  Additional: Integer;
 begin
   Grid := TGridHack(_Grid);
   MaxCol := Grid.ColCount - 1;
@@ -1166,18 +1348,18 @@ end;
 
 procedure TDbGrid_Resize(_Grid: TCustomDbGrid; _Options: TResizeOptionSet = []);
 var
-  Col, Row: integer;
+  Col, Row: Integer;
   Grid: TDbGridHack;
-  MinWidth: integer;
-  ColWidth: integer;
+  MinWidth: Integer;
+  ColWidth: Integer;
   ColText: string;
-  MinCol: integer;
-  MaxCol: integer;
-  MaxRow: integer;
-  ColWidths: array of integer;
-  FirstRow: integer;
-  SumWidths: integer;
-  Additional: integer;
+  MinCol: Integer;
+  MaxCol: Integer;
+  MaxRow: Integer;
+  ColWidths: array of Integer;
+  FirstRow: Integer;
+  SumWidths: Integer;
+  Additional: Integer;
   DBColumn: TColumn;
 begin
   Grid := TDbGridHack(_Grid);
@@ -1237,9 +1419,9 @@ begin
 end;
 
 procedure DrawTab(_TabControl: TCustomTabControl; const _Caption: string;
-  const _Rect: TRect; _Active: boolean);
+  const _Rect: TRect; _Active: Boolean);
 var
-  TopOffs: integer;
+  TopOffs: Integer;
 begin
   if _Active then
     TopOffs := 4
@@ -1248,23 +1430,23 @@ begin
   _TabControl.Canvas.TextRect(_Rect, _Rect.Left + 4, _Rect.Top + TopOffs, _Caption);
 end;
 
-procedure TPageControl_DrawTab(_PageControl: TPageControl; _TabIndex: integer;
-  const _Rect: TRect; _Active: boolean);
+procedure TPageControl_DrawTab(_PageControl: TPageControl; _TabIndex: Integer;
+  const _Rect: TRect; _Active: Boolean);
 begin
   DrawTab(_PageControl, _PageControl.Pages[_TabIndex].Caption, _Rect, _Active);
 end;
 
-procedure TTabControl_DrawTab(_TabControl: TTabControl; _TabIndex: integer;
-  const _Rect: TRect; _Active: boolean);
+procedure TTabControl_DrawTab(_TabControl: TTabControl; _TabIndex: Integer;
+  const _Rect: TRect; _Active: Boolean);
 begin
   DrawTab(_TabControl, _TabControl.Tabs[_TabIndex], _Rect, _Active);
 end;
 
-procedure TTabControl_AdjustTabWidth(_TabControl: TTabControl; _Form: TForm; _MinWidth: integer = 80);
+procedure TTabControl_AdjustTabWidth(_TabControl: TTabControl; _Form: TForm; _MinWidth: Integer = 80);
 var
-  i: integer;
-  MinWidth: integer;
-  w: integer;
+  i: Integer;
+  MinWidth: Integer;
+  w: Integer;
 begin
   MinWidth := _MinWidth;
   for i := 0 to _TabControl.Tabs.Count - 1 do begin
@@ -1281,6 +1463,24 @@ begin
       _TabControl.Width := _TabControl.Width + w;
     _TabControl.TabHeight := MinWidth;
   end;
+end;
+
+function TTabControl_GetSelectedObject(_TabControl: TTabControl; out _Obj: pointer): Boolean;
+var
+  Idx: Integer;
+begin
+  Idx := _TabControl.TabIndex;
+  Result := (Idx <> -1);
+  if Result then
+    _Obj := _TabControl.Tabs.Objects[Idx];
+end;
+
+function TTabControl_GetSelectedObject(_TabControl: TTabControl; out _Idx: Integer; out _Obj: pointer): Boolean;
+begin
+  _Idx := _TabControl.TabIndex;
+  Result := (_Idx <> -1);
+  if Result then
+    _Obj := _TabControl.Tabs.Objects[_Idx];
 end;
 
 type
@@ -1308,7 +1508,7 @@ var
   Painter: TStatusBarPainter;
   pnl: TStatusPanel;
 begin
-  _StatusBar.SimplePanel := false;
+  _StatusBar.SimplePanel := False;
   _StatusBar.Panels.Clear;
   pnl := _StatusBar.Panels.Add;
   pnl.Style := psOwnerDraw;
@@ -1322,14 +1522,14 @@ begin
   _StatusBar.Invalidate;
 end;
 
-procedure SetControlEnabled(_Control: TControl; _Enabled: boolean);
+procedure SetControlEnabled(_Control: TControl; _Enabled: Boolean);
 begin
   TControl_SetEnabled(_Control, _Enabled);
 end;
 
-procedure TControl_SetEnabled(_Control: TControl; _Enabled: boolean);
+procedure TControl_SetEnabled(_Control: TControl; _Enabled: Boolean);
 var
-  i: integer;
+  i: Integer;
   Container: TWinControl;
   ctrl: TControl;
 begin
@@ -1343,15 +1543,19 @@ begin
   _Control.Enabled := _Enabled;
 end;
 
-procedure TComboBox_SetDropdownWidth(_cmb: TCustomCombobox; _Pixels: integer);
+type
+  TComboBoxHack = class(TCustomCombobox)
+  end;
+
+procedure TComboBox_SetDropdownWidth(_cmb: TCustomCombobox; _Pixels: Integer);
 begin
   _cmb.HandleNeeded;
   _cmb.Perform(CB_SETDROPPEDWIDTH, _Pixels, 0);
 end;
 
-function TComboBox_SelectByObject(_cmb: TCustomCombobox; _Value: pointer): boolean;
+function TComboBox_SelectByObject(_cmb: TCustomCombobox; _Value: pointer): Boolean;
 var
-  i: integer;
+  i: Integer;
 begin
   for i := 0 to _cmb.Items.Count - 1 do begin
     Result := (_cmb.Items.Objects[i] = _Value);
@@ -1360,12 +1564,12 @@ begin
       exit;
     end;
   end;
-  Result := false;
+  Result := False;
 end;
 
-function TComboBox_GetObjectCaption(_cmb: TCustomCombobox; _Obj: pointer; out _s: string): boolean;
+function TComboBox_GetObjectCaption(_cmb: TCustomCombobox; _Obj: pointer; out _s: string): Boolean;
 var
-  i: integer;
+  i: Integer;
 begin
   for i := 0 to _cmb.Items.Count - 1 do begin
     Result := (_cmb.Items.Objects[i] = _Obj);
@@ -1374,21 +1578,21 @@ begin
       exit;
     end;
   end;
-  Result := false;
+  Result := False;
 end;
 
-function TComboBox_GetSelectedObject(_cmb: TCustomCombobox; out _Obj: pointer; _FocusControl: boolean = false): boolean;
+function TComboBox_GetSelectedObject(_cmb: TCustomCombobox; out _Obj: pointer; _FocusControl: Boolean = False): Boolean;
 var
-  Idx: integer;
+  Idx: Integer;
 begin
   Result := TComboBox_GetSelectedObject(_cmb, Idx, _Obj, _FocusControl);
 end;
 
-function TComboBox_GetSelectedObject(_cmb: TCustomCombobox; out _Idx: integer;
-  out _Obj: pointer; _FocusControl: boolean = false): boolean;
+function TComboBox_GetSelectedObject(_cmb: TCustomCombobox; out _Idx: Integer;
+  out _Obj: pointer; _FocusControl: Boolean = False): Boolean;
 begin
   _Idx := _cmb.ItemIndex;
-  Result := _Idx <> -1;
+  Result := (_Idx <> -1);
   if Result then
     _Obj := _cmb.Items.Objects[_Idx]
   else if _FocusControl then
@@ -1396,9 +1600,9 @@ begin
 end;
 
 function TComboBox_GetSelected(_cmb: TCustomComboBox; out _Item: string;
-  _FocusControl: boolean = false): boolean;
+  _FocusControl: Boolean = False): Boolean;
 var
-  Idx: integer;
+  Idx: Integer;
 begin
   Idx := _cmb.ItemIndex;
   Result := Idx <> -1;
@@ -1415,9 +1619,9 @@ begin
 end;
 
 function TListBox_GetSelected(_lb: TCustomListBox; out _Item: string;
-  _FocusControl: boolean = false): boolean;
+  _FocusControl: Boolean = False): Boolean;
 var
-  Idx: integer;
+  Idx: Integer;
 begin
   Idx := _lb.ItemIndex;
   Result := Idx <> -1;
@@ -1433,7 +1637,15 @@ begin
     raise EdzListBoxNoSelection(_('No item selected in listbox'));
 end;
 
-function TListBox_GetSelected(_lb: TCustomListBox; _Selected: TStrings): integer;
+function TListBox_GetSelected(_lb: TCustomListBox; out _Idx: Integer; out _Item: string): Boolean;
+begin
+  _Idx := _lb.ItemIndex;
+  Result := _Idx <> -1;
+  if Result then
+    _Item := _lb.Items[_Idx]
+end;
+
+function TListBox_GetSelected(_lb: TCustomListBox; _Selected: TStrings): Integer;
 var
   i: Integer;
 begin
@@ -1447,7 +1659,16 @@ begin
   end;
 end;
 
-function TListBox_GetSelectedObject(_lst: TCustomListbox; out _Idx: integer; out _Obj: pointer): boolean;
+function TComboBox_IsSelected(_cmb: TCustomComboBox; _OkColor: TColor = clWindow; _ErrColor: TColor = clYellow): Boolean;
+begin
+  Result := (_cmb.ItemIndex <> -1);
+  if Result then
+    TComboBoxHack(_cmb).Color := _OkColor
+  else
+    TComboBoxHack(_cmb).Color := _ErrColor;
+end;
+
+function TListBox_GetSelectedObject(_lst: TCustomListbox; out _Idx: Integer; out _Obj: pointer): Boolean;
 begin
   _Idx := _lst.ItemIndex;
   Result := _Idx <> -1;
@@ -1455,7 +1676,7 @@ begin
     _Obj := _lst.Items.Objects[_Idx];
 end;
 
-function TListBox_DeleteSelected(_lst: TCustomListbox; out _Idx: integer): boolean;
+function TListBox_DeleteSelected(_lst: TCustomListbox; out _Idx: Integer): Boolean;
 begin
   _Idx := _lst.ItemIndex;
   Result := _Idx <> -1;
@@ -1463,7 +1684,7 @@ begin
     _lst.Items.Delete(_Idx);
 end;
 
-function TListBox_DeleteSelected(_lst: TCustomListBox; out _s: string): boolean; overload;
+function TListBox_DeleteSelected(_lst: TCustomListBox; out _s: string): Boolean; overload;
 var
   Idx: Integer;
 begin
@@ -1475,9 +1696,9 @@ begin
   end;
 end;
 
-function TListBox_DeleteSelected(_lst: TCustomListbox): boolean;
+function TListBox_DeleteSelected(_lst: TCustomListbox): Boolean;
 var
-  Idx: integer;
+  Idx: Integer;
 begin
   Result := TListBox_DeleteSelected(_lst, Idx);
 end;
@@ -1487,7 +1708,7 @@ var
   i: Integer;
 begin
   for i := 0 to _lb.Items.count - 1 do
-    _lb.Selected[i] := false;
+    _lb.Selected[i] := False;
 end;
 
 procedure TListbox_ClearWithObjects(_lst: TCustomListBox);
@@ -1496,7 +1717,7 @@ begin
   _lst.Items.Clear;
 end;
 
-function TCheckListBox_GetCheckedCount(_clb: TCheckListBox): integer;
+function TCheckListBox_GetCheckedCount(_clb: TCheckListBox): Integer;
 var
   i: Integer;
 begin
@@ -1506,7 +1727,7 @@ begin
       Inc(Result);
 end;
 
-procedure TCheckListBox_CheckAll(_clb: TCheckListBox; _IncludeDisabled: boolean = false);
+procedure TCheckListBox_CheckAll(_clb: TCheckListBox; _IncludeDisabled: Boolean = False);
 var
   i: Integer;
 begin
@@ -1522,7 +1743,7 @@ begin
     _clb.Checked[i] := False;
 end;
 
-procedure TCheckListBox_InvertCheckmarks(_clb: TCheckListBox; _IncludeDisabled: boolean = false);
+procedure TCheckListBox_InvertCheckmarks(_clb: TCheckListBox; _IncludeDisabled: Boolean = False);
 var
   i: Integer;
 begin
@@ -1530,34 +1751,34 @@ begin
     _clb.Checked[i] := not _clb.Checked[i] and (_IncludeDisabled or _clb.ItemEnabled[i]);
 end;
 
-procedure TCheckListBox_CheckSelected(_clb: TCheckListBox; _IncludeDisabled: boolean = false);
+procedure TCheckListBox_CheckSelected(_clb: TCheckListBox; _IncludeDisabled: Boolean = False);
 var
   i: Integer;
 begin
   for i := 0 to _clb.Items.Count - 1 do
     if _clb.Selected[i] and (_IncludeDisabled or _clb.ItemEnabled[i]) then
-      _clb.Checked[i] := true;
+      _clb.Checked[i] := True;
 end;
 
-procedure TCheckListBox_UncheckSelected(_clb: TCheckListBox; _IncludeDisabled: boolean = false);
+procedure TCheckListBox_UncheckSelected(_clb: TCheckListBox; _IncludeDisabled: Boolean = False);
 var
   i: Integer;
 begin
   for i := 0 to _clb.Items.Count - 1 do
     if _clb.Selected[i] and (_IncludeDisabled or _clb.ItemEnabled[i]) then
-      _clb.Checked[i] := false;
+      _clb.Checked[i] := False;
 end;
 
 procedure TCheckListBox_DeleteDisabled(_clb: TCheckListBox);
 var
-  i: integer;
+  i: Integer;
 begin
   for i := _clb.Items.Count - 1 downto 0 do
     if not _clb.ItemEnabled[i] then
       _clb.Items.Delete(i);
 end;
 
-procedure TCheckListBox_SetCheckedNoClick(_clb: TCheckListBox; _Idx: integer; _Checked: boolean);
+procedure TCheckListBox_SetCheckedNoClick(_clb: TCheckListBox; _Idx: Integer; _Checked: Boolean);
 var
   Event: TNotifyEvent;
 begin
@@ -1571,10 +1792,10 @@ begin
 end;
 
 function TCheckListBox_SetChecked(_clb: TCheckListBox; _Checked: TStrings;
-  _UncheckOthers: boolean = true; _SuppressClick: boolean = false): integer;
+  _UncheckOthers: Boolean = True; _SuppressClick: Boolean = False): Integer;
 var
-  i: integer;
-  Idx: integer;
+  i: Integer;
+  Idx: Integer;
 begin
   Result := 0;
   for i := 0 to _clb.Items.Count - 1 do begin
@@ -1594,7 +1815,7 @@ begin
   end;
 end;
 
-function TCheckListBox_GetChecked(_clb: TCheckListBox; _Checked: TStrings; _IncludeDisabled: boolean = false): integer;
+function TCheckListBox_GetChecked(_clb: TCheckListBox; _Checked: TStrings; _IncludeDisabled: Boolean = False): Integer;
 var
   i: Integer;
 begin
@@ -1604,7 +1825,7 @@ begin
   Result := _Checked.Count;
 end;
 
-function TCheckListBox_GetChecked(_clb: TCheckListbox; _IncludeDisabled: boolean = false): string; overload;
+function TCheckListBox_GetChecked(_clb: TCheckListbox; _IncludeDisabled: Boolean = False): string; overload;
 var
   sl: TStringList;
 begin
@@ -1617,7 +1838,7 @@ begin
   end;
 end;
 
-function TCheckListBox_GetCheckedObjects(_clb: TCheckListBox; _Objects: TList; _IncludeDisabled: boolean = false): integer;
+function TCheckListBox_GetCheckedObjects(_clb: TCheckListBox; _Objects: TList; _IncludeDisabled: Boolean = False): Integer;
 var
   i: Integer;
 begin
@@ -1630,7 +1851,7 @@ begin
   Result := _Objects.Count;
 end;
 
-function TComboBox_Select(_cmb: TCustomComboBox; const _Item: string; _DefaultIdx: integer = -1): integer;
+function TComboBox_Select(_cmb: TCustomComboBox; const _Item: string; _DefaultIdx: Integer = -1): Integer;
 begin
   Result := _Cmb.Items.IndexOf(_Item);
   if Result = -1 then
@@ -1638,7 +1859,16 @@ begin
   _Cmb.ItemIndex := Result;
 end;
 
-procedure TComboBox_SelectWithoutChangeEvent(_cmb: TComboBox; _Idx: integer);
+type
+  TComboHack = class(TCustomCombo)
+  end;
+
+procedure TComboBox_Change(_cmb: TCustomCombo);
+begin
+  TComboHack(_cmb).Change;
+end;
+
+procedure TComboBox_SelectWithoutChangeEvent(_cmb: TComboBox; _Idx: Integer);
 var
   Event: TNotifyEvent;
 begin
@@ -1651,7 +1881,7 @@ begin
   end;
 end;
 
-procedure TControl_SetReadonly(_ctrl: TControl; _ReadOnly: boolean);
+procedure TControl_SetReadonly(_ctrl: TControl; _ReadOnly: Boolean);
 var
   Panel: TPanel;
   comp: TComponent;
@@ -1687,10 +1917,10 @@ begin
   _ctrl.Top := 0;
   _ctrl.Left := 0;
   _ctrl.Parent := Panel;
-  Panel.Enabled := false;
+  Panel.Enabled := False;
 end;
 
-function TListBox_Select(_lb: TCustomListBox; const _Item: string; _DefaultIdx: integer = -1): integer;
+function TListBox_Select(_lb: TCustomListBox; const _Item: string; _DefaultIdx: Integer = -1): Integer;
 begin
   Result := _lb.Items.IndexOf(_Item);
   if Result = -1 then
@@ -1702,7 +1932,7 @@ type
   TRadioGroupHack = class(TCustomRadioGroup);
 
 function TRadioGroup_GetItemCaption(_rg: TCustomRadioGroup;
-  out _Caption: string; _Idx: integer = -1): boolean;
+  out _Caption: string; _Idx: Integer = -1): Boolean;
 var
   Hack: TRadioGroupHack;
 begin
@@ -1714,7 +1944,7 @@ begin
     _Caption := StripHotKey(Hack.Items[_Idx]);
 end;
 
-function TRadioGroup_Select(_rg: TCustomRadioGroup; const _Item: string; _DefaultIdx: integer = -1): integer;
+function TRadioGroup_Select(_rg: TCustomRadioGroup; const _Item: string; _DefaultIdx: Integer = -1): Integer;
 var
   Hack: TRadioGroupHack;
   i: Integer;
@@ -1730,7 +1960,7 @@ begin
   Result := Hack.ItemIndex;
 end;
 
-function TRadioGroup_GetSelectedObject(_rg: TCustomRadioGroup; out _Idx: integer; out _Obj: pointer): boolean;
+function TRadioGroup_GetSelectedObject(_rg: TCustomRadioGroup; out _Idx: Integer; out _Obj: pointer): Boolean;
 var
   Hack: TRadioGroupHack;
 begin
@@ -1790,7 +2020,7 @@ var
   st: TStringStream;
   Klasse: string;
   Data: string;
-  p: integer;
+  p: Integer;
   GraphicClass: TGraphicClass;
   GraphicObj: TGraphic;
 begin
@@ -1815,7 +2045,7 @@ begin
   end;
 end;
 
-function AddLabeledControl(_Idx: integer; const _Caption: string; _ctrl: TControl): TLabel;
+function AddLabeledControl(_Idx: Integer; const _Caption: string; _ctrl: TControl): TLabel;
 begin
   Result := TLabel.Create(_ctrl.Owner);
   Result.Parent := _ctrl.Parent;
@@ -1825,7 +2055,7 @@ begin
   Result.Top := _ctrl.Top + (_ctrl.Height - Result.Height) div 2;
 end;
 
-function CalcTextHeight(_Ctrl: TWinControl; const _Text: string; _Width: integer = -1): integer;
+function CalcTextHeight(_Ctrl: TWinControl; const _Text: string; _Width: Integer = -1): Integer;
 var
   Rect: TRect;
 begin
@@ -1841,7 +2071,7 @@ type
   TGraphicControlHack = class(TGraphicControl)
   end;
 
-function CalcTextHeight(_Ctrl: TGraphicControl; const _Text: string; _Width: integer = -1): integer; overload;
+function CalcTextHeight(_Ctrl: TGraphicControl; const _Text: string; _Width: Integer = -1): Integer; overload;
 var
   Rect: TRect;
 begin
@@ -1855,12 +2085,12 @@ end;
 type
   THackGrid = class(TCustomGrid);
 
-function TStringGrid_IsScrollBarVisible(_Grid: TCustomGrid; _Code: integer): boolean;
+function TStringGrid_IsScrollBarVisible(_Grid: TCustomGrid; _Code: Integer): Boolean;
 var
-  Min, Max: integer;
+  Min, Max: Integer;
   Grid: THackGrid;
 begin
-  Result := false;
+  Result := False;
   if not _Grid.HandleAllocated then
     exit;
   Grid := THackGrid(_Grid);
@@ -1877,17 +2107,17 @@ begin
   Result := IncludeTrailingPathDelimiter(ExtractFilePath(Application.ExeName));
 end;
 
-function TRichEdit_RowToCharIndex(_Re: TRichEdit; _Row: integer): integer;
+function TRichEdit_RowToCharIndex(_Re: TRichEdit; _Row: Integer): Integer;
 begin
   Result := _Re.Perform(EM_LINEINDEX, _Row, 0);
 end;
 
-function TRichEdit_CharIndexToRow(_Re: TRichEdit; _Idx: integer): integer;
+function TRichEdit_CharIndexToRow(_Re: TRichEdit; _Idx: Integer): Integer;
 begin
   Result := _Re.Perform(EM_LINEFROMCHAR, _Idx, 0);
 end;
 
-function TRichEdit_GetCurrentRow(_Re: TRichEdit): integer;
+function TRichEdit_GetCurrentRow(_Re: TRichEdit): Integer;
 begin
   Result := TRichEdit_CharIndexToRow(_Re, _Re.SelStart);
 end;
@@ -1916,16 +2146,16 @@ type
   THackCheckBox = class(TCustomCheckBox)
   end;
 
-procedure TCheckBox_SetCheckedNoOnClick(_Chk: TCustomCheckBox; _Checked: boolean);
+procedure TCheckBox_SetCheckedNoOnClick(_Chk: TCustomCheckBox; _Checked: Boolean);
 var
   Chk: THackCheckBox;
 begin
   Chk := THackCheckBox(_Chk);
-  Chk.ClicksDisabled := true;
+  Chk.ClicksDisabled := True;
   try
     Chk.Checked := _Checked;
   finally
-    Chk.ClicksDisabled := false;
+    Chk.ClicksDisabled := False;
   end;
 end;
 
@@ -1953,7 +2183,7 @@ begin
   end;
 end;
 
-function TWinControl_SetFocus(_Ctrl: TWinControl): boolean;
+function TWinControl_SetFocus(_Ctrl: TWinControl): Boolean;
 begin
   Result := _Ctrl.CanFocus;
   if Result then
@@ -2108,7 +2338,7 @@ begin
   Result := FileFormats;
 end;
 
-procedure TMemo_DeleteTopLines(_Memo: TMemo; _Retain: integer);
+procedure TMemo_DeleteTopLines(_Memo: TMemo; _Retain: Integer);
 const
   EmptyStr: PChar = '';
 var
@@ -2124,15 +2354,15 @@ begin
   if (Offset < 0) or (cnt = 0) then
     Offset := SendMessage(_Memo.Handle, EM_LINELENGTH, 0, 0);
   SendMessage(_Memo.Handle, EM_SETSEL, 0, Offset);
-  SendMessage(_Memo.Handle, EM_REPLACESEL, 0, Longint(EmptyStr));
+  SendMessage(_Memo.Handle, EM_REPLACESEL, 0, LongInt(EmptyStr));
 end;
 
-function TMemo_GetCursorPos(_Memo: TMemo): integer;
+function TMemo_GetCursorPos(_Memo: TMemo): Integer;
 begin
-  SendMessage(_Memo.Handle, EM_GETSEL, integer(@Result), 0);
+  SendMessage(_Memo.Handle, EM_GETSEL, Integer(@Result), 0);
 end;
 
-procedure TMemo_SetCursorPos(_Memo: TMemo; _CharIdx: integer);
+procedure TMemo_SetCursorPos(_Memo: TMemo; _CharIdx: Integer);
 begin
   SendMessage(_Memo.Handle, EM_SETSEL, _CharIdx, _CharIdx);
   TMemo_ScrollToCursorPos(_Memo);
@@ -2156,7 +2386,7 @@ begin
   Result := ExtractFilePath(Application.ExeName);
 end;
 
-function TApplication_HasVersionInfo: boolean;
+function TApplication_HasVersionInfo: Boolean;
 var
   Handle: THandle;
   Size: DWORD;
@@ -2215,7 +2445,22 @@ begin
   _lv.Clear;
 end;
 
-function TRadioGroup_GetButton(_rg: TRadioGroup; _ItemIdx: integer): TRadioButton;
+type
+  TListViewEndUpdateClass = class(TInterfacedObject, IInterface)
+  private
+    FListView: TListView;
+  public
+    constructor Create(_ListView: TListView);
+    destructor Destroy; override;
+  end;
+
+function TListView_BeginUpdate(_lv: TListView): IInterface;
+begin
+  _lv.Items.BeginUpdate;
+  Result := TListViewEndUpdateClass.Create(_lv);
+end;
+
+function TRadioGroup_GetButton(_rg: TRadioGroup; _ItemIdx: Integer): TRadioButton;
 // taken from http://delphi.about.com/od/adptips2006/qt/radiogroupbtns.htm
 begin
   if (_ItemIdx < 0) or (_ItemIdx >= _rg.Items.Count) then
@@ -2227,8 +2472,8 @@ end;
 function TRadioGroup_GetButton(_rg: TRadioGroup; _ItemText: string): TRadioButton;
 // taken from http://delphi.about.com/od/adptips2006/qt/radiogroupbtns.htm
 var
-  cnt: integer;
-  Idx: integer;
+  cnt: Integer;
+  Idx: Integer;
 begin
   Idx := -1;
   for cnt := 0 to -1 + _rg.Items.Count do begin
@@ -2244,12 +2489,12 @@ type
   THackButtonControl = class(TButtonControl)
   end;
 
-function TButtonControl_GetChecked(_bctrl: TButtonControl): boolean;
+function TButtonControl_GetChecked(_bctrl: TButtonControl): Boolean;
 begin
   Result := THackButtonControl(_bctrl).Checked;
 end;
 
-procedure TButtonControl_SetChecked(_bctrl: TButtonControl; _Value: boolean);
+procedure TButtonControl_SetChecked(_bctrl: TButtonControl; _Value: Boolean);
 begin
   THackButtonControl(_bctrl).Checked := _Value;
 end;
@@ -2259,7 +2504,7 @@ begin
   THackButtonControl(_bctrl).Caption := _Value;
 end;
 
-procedure TListView_UnselectAll(_lv: TListView; _WithSelectEvents: boolean = true);
+procedure TListView_UnselectAll(_lv: TListView; _WithSelectEvents: Boolean = True);
 var
   i: Integer;
   Event: TLVSelectItemEvent;
@@ -2269,13 +2514,13 @@ begin
     _lv.OnSelectItem := nil;
   try
     for i := 0 to _lv.Items.Count - 1 do
-      _lv.Items[i].Selected := false;
+      _lv.Items[i].Selected := False;
   finally
     _lv.OnSelectItem := Event;
   end;
 end;
 
-function TListView_GetSelectedCount(_lv: TListView): integer;
+function TListView_GetSelectedCount(_lv: TListView): Integer;
 var
   i: Integer;
 begin
@@ -2285,14 +2530,49 @@ begin
       Inc(Result);
 end;
 
-function TAction_SetCheckedExecute(_act: TCustomAction; _Checked: boolean): boolean;
+function TListView_GetSelected(_Lv: TListView; out _Idx: Integer): Boolean;
+var
+  Idx: Integer;
+begin
+  Idx := _Lv.ItemIndex;
+  Result := (Idx <> -1);
+  if Result then
+    _Idx := Idx;
+end;
+
+function TListView_GetSelected(_lv: TListView; out _Item: TListItem): Boolean;
+var
+  Item: TListItem;
+begin
+  Item := _lv.Selected;
+  Result := Assigned(Item);
+  if Result then
+    _Item := Item;
+end;
+
+function TAction_SetCheckedExecute(_act: TCustomAction; _Checked: Boolean): Boolean;
 begin
   Result := _act.Checked <> _Checked;
   if Result then
     Result := _act.Execute;
 end;
 
-function TStatusBar_GetClickedPanel(_sb: TStatusBar): integer;
+type
+  THackGroupBox = class(TCustomGroupBox)
+  end;
+
+function TGroupBox_SetFileCaption(_grp: TCustomGroupBox; const _Prefix: string; const _Filename: string): string;
+var
+  Len: Integer;
+  grp: THackGroupBox;
+begin
+  grp := THackGroupBox(_grp);
+  Len := grp.Canvas.TextWidth(_Prefix);
+  Result := _Prefix + MinimizeName(_Filename, grp.Canvas, grp.Width - Len);
+  grp.Caption := Result;
+end;
+
+function TStatusBar_GetClickedPanel(_sb: TStatusBar): Integer;
 // call this to determine which panel of a TStatusBar has been clicked
 // Note: This assumes, that the status bar actually was clicked, so only call it
 //       from the status bar's OnClick, OnMouseDown or OnMouseUp event handlers
@@ -2386,12 +2666,12 @@ constructor TWinControlLocker.Create(_Ctrl: TWinControl);
 begin
   inherited Create;
   FCtrl := _Ctrl;
-  SendMessage(FCtrl.Handle, WM_SETREDRAW, integer(LongBool(false)), 0);
+  SendMessage(FCtrl.Handle, WM_SETREDRAW, Integer(LongBool(False)), 0);
 end;
 
 destructor TWinControlLocker.Destroy;
 begin
-  SendMessage(FCtrl.Handle, WM_SETREDRAW, integer(LongBool(true)), 0);
+  SendMessage(FCtrl.Handle, WM_SETREDRAW, Integer(LongBool(True)), 0);
   RedrawWindow(FCtrl.Handle, nil, 0, RDW_ERASE or RDW_INVALIDATE or RDW_ALLCHILDREN);
   inherited;
 end;
@@ -2405,7 +2685,7 @@ type
 var
   gblCheckListBoxHelper: TCheckListBoxHelper = nil;
 
-procedure TCheckListBox_Readonly(_clb: TCheckListBox; _ReadOnly: boolean; _ChangeColor: boolean = true);
+procedure TCheckListBox_Readonly(_clb: TCheckListBox; _ReadOnly: Boolean; _ChangeColor: Boolean = True);
 begin
   if _ReadOnly then begin
     if not Assigned(gblCheckListBoxHelper) then
@@ -2423,7 +2703,7 @@ end;
 procedure TCheckListBoxHelper.HandleClickCheck(_Sender: TObject);
 var
   clb: TCheckListBox;
-  Idx: integer;
+  Idx: Integer;
 begin
   clb := _Sender as TCheckListBox;
   Idx := clb.ItemIndex;
@@ -2447,10 +2727,25 @@ begin
   inherited;
   if RightButton.Visible and (RightButton.Hint = '') then begin
     RightButton.Hint := _('Ctrl+Return to ''click'' right button.');
-    ShowHint := true;
+    ShowHint := True;
   end;
 end;
 {$ENDIF DELPHI2009_UP}
+
+{ TListViewEndUpdateClass }
+
+constructor TListViewEndUpdateClass.Create(_ListView: TListView);
+begin
+  inherited Create;
+  FListView := _ListView;
+end;
+
+destructor TListViewEndUpdateClass.Destroy;
+begin
+  if Assigned(FListView) then
+    FListView.Items.EndUpdate;
+  inherited;
+end;
 
 initialization
 finalization

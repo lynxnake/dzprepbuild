@@ -31,6 +31,7 @@ object f_dzInputDialog: Tf_dzInputDialog
     Height = 21
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 0
+    OnChange = ed_InputChange
   end
   object b_Ok: TButton
     Left = 240

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: dzLib\n"
-"POT-Creation-Date: 2010-11-20 12:52\n"
+"POT-Creation-Date: 2011-07-27 11:20\n"
 "PO-Revision-Date: 2010-10-10 20:17+0100\n"
 "Last-Translator: RH\n"
 "Language-Team: Thomas Mueller <dzlib@dummzeuch.de>\n"
@@ -17,111 +17,117 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 
-#: u_dzClassUtils.pas:382
+#: u_dzClassUtils.pas:464
 msgid "no matching object found"
 msgstr "aucun objet correspondant trouvé"
 
-#: u_dzClassUtils.pas:420
+#: u_dzClassUtils.pas:502
 #, object-pascal-format
 msgid "Invalid empty string value in ini file for [%s]%s"
 msgstr "Chaîne valeur non valide dans le fichier ini pour [%s]%s"
 
-#: u_dzClassUtils.pas:451
-#, object-pascal-format
-msgid "Invalid floating point value %s in ini file for [%s]%s"
+#: u_dzClassUtils.pas:545
+#, fuzzy, object-pascal-format
+msgid "Invalid floating point value \"%s\" in ini file for [%s]%s"
 msgstr "valeur du point flottante non valide %s dans le fichier ini pour [%s]%s"
 
-#: u_dzClassUtils.pas:465
+#: u_dzClassUtils.pas:567
+#, fuzzy, object-pascal-format
+msgid "Invalid date value \"%s\" in ini file for [%s]%s"
+msgstr "valeur entière non valide \"%s\" dans le fichier ini pour [%s]%s"
+
+#: u_dzClassUtils.pas:581
 #, object-pascal-format
 msgid "Invalid integer value \"%s\" in ini file for [%s]%s"
 msgstr "valeur entière non valide \"%s\" dans le fichier ini pour [%s]%s"
 
-#: u_dzConvertUtils.pas:397
+#: u_dzConvertUtils.pas:402
 #, object-pascal-format
 msgid "Digit out of range %s"
 msgstr "Chiffre hors d'echelle %s"
 
-#: u_dzConvertUtils.pas:410
+#: u_dzConvertUtils.pas:415
 #, object-pascal-format
 msgid "Digit #%d (%s) out of range"
 msgstr "Chiffre #%d (%s) hors d'echelle"
 
-#: u_dzConvertUtils.pas:618
+#: u_dzConvertUtils.pas:623
 #, object-pascal-format
 msgid "\"%s\" is not a valid integer value: %s"
 msgstr "\"%s\" n'est pas une valeur décimale correcte: %s"
 
-#: u_dzConvertUtils.pas:636
+#: u_dzConvertUtils.pas:652
 #, object-pascal-format
 msgid "\"%s\" is not a valid Int64 value: %s"
 msgstr "\"%s\" n'est pas une valeur Int64 correcte: %s"
 
-#: u_dzConvertUtils.pas:702
+#: u_dzConvertUtils.pas:718
 #, object-pascal-format
 msgid "\"%s\" is not a valid floating point value: %s"
 msgstr "\"%s\" n'est pas une nombre décimal valable: %s"
 
-#: u_dzConvertUtils.pas:708
+#: u_dzConvertUtils.pas:724
 #, no-object-pascal-format
 msgid "%.2f EiB"
 msgstr "%.2f Eio"
 
-#: u_dzConvertUtils.pas:710
+#: u_dzConvertUtils.pas:726
 #, no-object-pascal-format
 msgid "%.2f PiB"
 msgstr "%.2f Pio"
 
 # Terrabyte ?
-#: u_dzConvertUtils.pas:712
+#: u_dzConvertUtils.pas:728
 #, no-object-pascal-format
 msgid "%.2f TiB"
 msgstr "%.2f Tio"
 
-#: u_dzConvertUtils.pas:714
+#: u_dzConvertUtils.pas:730
 #, no-object-pascal-format
 msgid "%.2f GiB"
 msgstr "%.2f Gio"
 
-#: u_dzConvertUtils.pas:716
+#: u_dzConvertUtils.pas:732
 #, no-object-pascal-format
 msgid "%.2f MiB"
 msgstr "%.2f Mio"
 
-#: u_dzConvertUtils.pas:718
+#: u_dzConvertUtils.pas:734
 #, no-object-pascal-format
 msgid "%.2f KiB"
 msgstr "%.2f Kio"
 
-#: u_dzConvertUtils.pas:720
+#: u_dzConvertUtils.pas:736
 #, object-pascal-format
 msgid "%d Bytes"
 msgstr "%d Octets"
 
 #. Days and hours, ignore minutes and seconds
-#: u_dzConvertUtils.pas:727
+#: u_dzConvertUtils.pas:743
 #, object-pascal-format
 msgid "%dd %dh"
 msgstr "%dd %dh"
 
 #. Hours and minutes, ignore seconds
-#: u_dzConvertUtils.pas:730
+#: u_dzConvertUtils.pas:746
 #, object-pascal-format
 msgid "%dh %dm"
 msgstr "%dh %dm"
 
 #. Minutes and seconds
-#: u_dzConvertUtils.pas:733
+#: u_dzConvertUtils.pas:749
 #, object-pascal-format
 msgid "%dm %ds"
 msgstr "%dm %ds"
 
+# Label: ignore
 #. Seconds only
-#: u_dzConvertUtils.pas:736
+#: u_dzConvertUtils.pas:752
 #, object-pascal-format
 msgid "%ds"
 msgstr "%ds"
 
-#: u_dzConvertUtils.pas:776
+#: u_dzConvertUtils.pas:792
 #, object-pascal-format
 msgid "Length of byte array (%d) does not match size of a LongWord (%d)"
 msgstr "Longueur du tableau d'octets (%d) ne correspond pas à la taille d'un LongWord %d"
@@ -133,96 +139,126 @@ msgstr "Longueur du tableau d'octets (%d) ne correspond pas à la taille d'un Lo
 msgid "DLL entry point not initialized"
 msgstr "DLL entrée non initialisée"
 
-#. Do not use ParamByName -> only works if param is unique
-#: u_dzDatasetHelpers.pas:534 u_dzDatasetHelpers.pas:553
-#, object-pascal-format
-msgid "SetParamByName is not supported for a %s (only TQuery and TAdoDataset descendants)."
-msgstr "SetParamByName n'est pas supporté pour %s (seulement TQuery et TAdoDataset descendants)."
+#: u_dzDatasetHelpers.pas:238
+#, fuzzy, object-pascal-format
+msgid "Field \"%s\" not found in table \"%s\"."
+msgstr "Fichier non trouvé: \"%s\""
 
-#: u_dzDateUtils.pas:99
+#: u_dzDatasetHelpers.pas:479
+#, object-pascal-format
+msgid "SetParamByName is not supported for a %s."
+msgstr "SetParamByName n'est pas supporté pour %s."
+
+#: u_dzDatasetHelpers.pas:484
+#, object-pascal-format
+msgid "TrySetParamByName is not supported for a %s."
+msgstr "TrySetParamByName n'est pas supporté pour %s."
+
+#. Do not use ParamByName -> only works if param is unique
+#: u_dzDatasetHelpersADO.pas:69
+#, object-pascal-format
+msgid "SetParamByName is not supported for a %s (only TADODataSet descendants)."
+msgstr "SetParamByName n'est pas supporté pour %s (seulement TAdoDataset descendants)."
+
+#: u_dzDatasetHelpersADO.pas:82
+#, object-pascal-format
+msgid "TrySetParamByName is not supported for a %s (only TADODataSet descendants)."
+msgstr "TrySetParamByName n'est pas supporté pour %s (seulement TAdoDataset descendants)."
+
+#: u_dzDatasetHelpersBDE.pas:43
+#, object-pascal-format
+msgid "SetParamByName is not supported for a %s (only TQuery descendants)."
+msgstr "SetParamByName n'est pas supporté pour %s (seulement TQuery descendants)."
+
+#: u_dzDatasetHelpersBDE.pas:56
+#, object-pascal-format
+msgid "TrySetParamByName is not supported for a %s (only TQuery descendants)."
+msgstr "TrySetParamByName n'est pas supporté pour %s (seulement TQuery descendants)."
+
+#: u_dzDateUtils.pas:112
 msgid "Monday"
 msgstr "Lundi"
 
-#: u_dzDateUtils.pas:100
+#: u_dzDateUtils.pas:113
 msgid "Tuesday"
 msgstr "Mardi"
 
-#: u_dzDateUtils.pas:101
+#: u_dzDateUtils.pas:114
 msgid "Wednesday"
 msgstr "Mercredi"
 
-#: u_dzDateUtils.pas:102
+#: u_dzDateUtils.pas:115
 msgid "Thursday"
 msgstr "Jeudi"
 
-#: u_dzDateUtils.pas:103
+#: u_dzDateUtils.pas:116
 msgid "Friday"
 msgstr "Vendredi"
 
-#: u_dzDateUtils.pas:104
+#: u_dzDateUtils.pas:117
 msgid "Saturday"
 msgstr "Samedi"
 
-#: u_dzDateUtils.pas:105
+#: u_dzDateUtils.pas:118
 msgid "Sunday"
 msgstr "Dimanche"
 
 #. should never happen ...
-#: u_dzDateUtils.pas:108
+#: u_dzDateUtils.pas:121
 #, object-pascal-format
 msgid "Invalid value for DayOfWeek: %d"
 msgstr "Valeur non valide pour DayOfWeek: %d"
 
-#: u_dzDateUtils.pas:115
+#: u_dzDateUtils.pas:128
 msgid "January"
 msgstr "Janvier"
 
-#: u_dzDateUtils.pas:116
+#: u_dzDateUtils.pas:129
 msgid "February"
 msgstr "Février"
 
-#: u_dzDateUtils.pas:117
+#: u_dzDateUtils.pas:130
 msgid "March"
 msgstr "Mars"
 
-#: u_dzDateUtils.pas:118
+#: u_dzDateUtils.pas:131
 msgid "April"
 msgstr "Avril"
 
-#: u_dzDateUtils.pas:119
+#: u_dzDateUtils.pas:132
 msgid "May"
 msgstr "Mai"
 
-#: u_dzDateUtils.pas:120
+#: u_dzDateUtils.pas:133
 msgid "June"
 msgstr "Juin"
 
-#: u_dzDateUtils.pas:121
+#: u_dzDateUtils.pas:134
 msgid "July"
 msgstr "Juillet"
 
-#: u_dzDateUtils.pas:122
+#: u_dzDateUtils.pas:135
 msgid "August"
 msgstr "Août"
 
-#: u_dzDateUtils.pas:123
+#: u_dzDateUtils.pas:136
 msgid "September"
 msgstr "Septembre"
 
-#: u_dzDateUtils.pas:124
+#: u_dzDateUtils.pas:137
 msgid "October"
 msgstr "Octobre"
 
-#: u_dzDateUtils.pas:125
+#: u_dzDateUtils.pas:138
 msgid "November"
 msgstr "Novembre"
 
-#: u_dzDateUtils.pas:126
+#: u_dzDateUtils.pas:139
 msgid "December"
 msgstr "Décembre"
 
 #. should never happen ...
-#: u_dzDateUtils.pas:129
+#: u_dzDateUtils.pas:142
 #, object-pascal-format
 msgid "Invalid month number %d"
 msgstr "Numéro du mois non valide %d"
@@ -294,76 +330,77 @@ msgstr "StdErr n'a pas été redirigé"
 msgid "StdOut was not redirected"
 msgstr "StdOut n'a pas été redirigé"
 
-#: u_dzFileStreams.pas:259
+#: u_dzFileStreams.pas:257
 #, object-pascal-format
 msgid "%%1:s (%%0:d) trying to open \"%s\""
 msgstr "%%1:s (%%0:d) lors de la ouverture de \"%s\""
 
-#: u_dzFileStreams.pas:307
+#: u_dzFileStreams.pas:305
 msgid "Invalid file attributes"
 msgstr "Attributs fichiers non valide"
 
-#: u_dzFileStreams.pas:319
+#: u_dzFileStreams.pas:317
 msgid "Invalid file flags"
 msgstr "Flags fichiers non valide"
 
-#: u_dzFileStreams.pas:338
-msgid "Cannot change filename when file is open."
-msgstr "Ne peut pas changer le nom de fichier quand le fichier est ouvert."
-
 #. GetLastError must be called before _(), otherwise the error code gets lost
-#: u_dzFileUtils.pas:919
+#: u_dzFileUtils.pas:991
 #, no-object-pascal-format
 msgid "TFileSystem.GetTempPath: %1:s (code: %0:d) calling Windows.GetTempPath"
 msgstr "TFileSystem.GetTempPath: %1:s (code: %0:d) calling Windows.GetTempPath"
 
 #. GetLastError must be called before _(), otherwise the error code gets lost
-#: u_dzFileUtils.pas:927
+#: u_dzFileUtils.pas:999
 #, no-object-pascal-format
 msgid "TFileSystem.GetTempPath: %1:s (code: %0:d) calling Windows.GetTempPath (2nd)"
 msgstr "TFileSystem.GetTempPath: %1:s (code: %0:d) calling Windows.GetTempPath (2nd)"
 
+#: u_dzFileUtils.pas:1051
+msgid "<no volume name>"
+msgstr ""
+
 #. duplicate % so they get passed through the format function
 #. duplicate % so they get passed through the format function
-#: u_dzFileUtils.pas:944 u_dzFileUtils.pas:1502
+#: u_dzFileUtils.pas:1070 u_dzFileUtils.pas:1730
 #, object-pascal-format
 msgid "Error %%1:s (%%0:d) creating directory \"%s\""
 msgstr "Erreur %%1:s (%%0:d) lors de la création du répertoire \"%s\""
 
-#: u_dzFileUtils.pas:968
+#: u_dzFileUtils.pas:1094
 #, object-pascal-format
 msgid "Could not find a unique directory name based on \"%s\""
 msgstr "Impossible de trouver un nom de répertoire unique sur la base de \"%s\""
 
 #. GetLastError must be called before _(), otherwise the error code gets lost
-#: u_dzFileUtils.pas:986
+#: u_dzFileUtils.pas:1133
 #, no-object-pascal-format
 msgid "TFileSystem.GetTempFilename: %1:s (Code: %0:d) calling Windows.GetTempFileName"
 msgstr "TFileSystem.GetTempFilename: %1:s (Code: %0:d) calling Windows.GetTempFileName"
 
-#: u_dzFileUtils.pas:1041 u_dzFileUtils.pas:1047
+#: u_dzFileUtils.pas:1188 u_dzFileUtils.pas:1194
 #, object-pascal-format
 msgid "File not found: \"%s\""
 msgstr "Fichier non trouvé: \"%s\""
 
-#: u_dzFileUtils.pas:1092
+#: u_dzFileUtils.pas:1257
 #, no-object-pascal-format
 msgid "TFileSystem.GetShortPathname: %1:s (Code: %0:d) calling Windows.GetShortPathname"
 msgstr "TFileSystem.GetShortPathname: %1:s (Code: %0:d) calling Windows.GetShortPathname"
 
-#: u_dzFileUtils.pas:1094
+#: u_dzFileUtils.pas:1259
 #, object-pascal-format
 msgid "Short pathname is longer than MAX_PATH (%d) characters"
 msgstr "La longueur du chemin de fichier dépasse MAX_PATH (%d) caractères"
 
 #. duplicate % so they get passed through the format function
-#: u_dzFileUtils.pas:1106
+#. duplicate % so they get passed through the format function
+#: u_dzFileUtils.pas:1271 u_dzFileUtils.pas:1297
 #, object-pascal-format
 msgid "Error %%1:s (%%0:d) while trying to move \"%s\" to \"%s\"."
 msgstr "Erreur %%1:s (%%0:d) lors du déplacement de \"%s\" vers \"%s\"."
 
 #. duplicate % so they get passed through the format function
-#: u_dzFileUtils.pas:1124
+#: u_dzFileUtils.pas:1315
 #, object-pascal-format
 msgid "Error %%1:s (%%0:d) while changing the readonly flag of \"%s\""
 msgstr "Erreur %%1:s (%%0:d) lors du changement de l'indicateur lecture seule de \"%s\""
@@ -371,109 +408,109 @@ msgstr "Erreur %%1:s (%%0:d) lors du changement de l'indicateur lecture seule de
 #. duplicate % so they get passed through the format function
 #. duplicate % so they get passed through the format function
 #. duplicate % so they get passed through the format function
-#: u_dzFileUtils.pas:1144 u_dzFileUtils.pas:1270 u_dzFileUtils.pas:1343
+#: u_dzFileUtils.pas:1335 u_dzFileUtils.pas:1471 u_dzFileUtils.pas:1544
 #, object-pascal-format
 msgid "Error %%1:s (%%0:d) while trying to copy \"%s\" to \"%s\"."
 msgstr "Erreur %%1:s (%%0:d) lors de la copie de \"%s\" vers \"%s\"."
 
-#: u_dzFileUtils.pas:1258
+#: u_dzFileUtils.pas:1459
 #, object-pascal-format
 msgid "Error %s (%s) in progress callback while trying to copy \"%s\" to \"%s\"."
 msgstr "Erreur %s·(%s)  dans processus callback en essayant de copier \"%s\" vers \"%s\"."
 
 #. duplicate % so they get passed through the format function
-#: u_dzFileUtils.pas:1373
+#: u_dzFileUtils.pas:1574
 #, object-pascal-format
 msgid "Error %%1:s (%%0:d) deleting file \"%s\""
 msgstr "Erreur %%1:s (%%0:d) lors de l'effacement du fichier \"%s\""
 
-#: u_dzFileUtils.pas:1443
+#: u_dzFileUtils.pas:1644
 #, object-pascal-format
 msgid "File not found: %s"
 msgstr "Fichier non trouvé: %s"
 
-#: u_dzFileUtils.pas:1457
+#: u_dzFileUtils.pas:1658
 #, object-pascal-format
 msgid "Directory not found: %s"
 msgstr "Répertoire non trouvé: %s"
 
 #. ForceDirectories can raise EInOutError if the directory path contains empty parts
-#: u_dzFileUtils.pas:1494
+#: u_dzFileUtils.pas:1722
 #, object-pascal-format
 msgid "Error creating directory \"%s\": %s (%s)"
 msgstr "Erreur lors de la creation du répertoire \"%s\": %s (%s)"
 
 #. duplicate % so they get passed through the format function
-#: u_dzFileUtils.pas:1521
+#: u_dzFileUtils.pas:1749
 #, object-pascal-format
 msgid "Error %%1:s (%%0:d) deleting directory \"%s\""
 msgstr "Erreur %%1:s (%%0:d) lors de l'effacement du répertoire \"%s\""
 
-#: u_dzFileUtils.pas:1539
+#: u_dzFileUtils.pas:1767
 #, object-pascal-format
 msgid "\"%s\" does not exist or is not a directory"
 msgstr "\"%s\" n'existe pas ou n'est pas un répértoire"
 
-#: u_dzFileUtils.pas:1813
+#: u_dzFileUtils.pas:2041
 msgid "Combination of ResultContainsNumber and KeepOriginal is not allowed"
 msgstr "Combinaison de ResultContainsNumber et KeepOriginal n'est pas possible"
 
 # Label: auto
-#: u_dzGoogleTranslate.pas:238
+#: u_dzGoogleTranslate.pas:246
 #, fuzzy, object-pascal-format
 msgid "Parsing error on JSON answer: Root object size is %d not 3."
 msgstr "Erreur d'analyse sur la réponse JSON: taille de l'objet racine est %d non pas 3."
 
 # Label: auto
-#: u_dzGoogleTranslate.pas:243
+#: u_dzGoogleTranslate.pas:251
 #, fuzzy, object-pascal-format
 msgid "Parsing error on JSON answer: First pair name is \"%s\" not \"responseData\"."
 msgstr "Erreur d'analyse sur la réponse JSON: nom de la première paire est « %s »et non« responseData \"."
 
 # Label: auto
-#: u_dzGoogleTranslate.pas:250
+#: u_dzGoogleTranslate.pas:258
 #, fuzzy, object-pascal-format
 msgid "Parsing error on JSON answer: responseData object size is %d not 1."
 msgstr "Erreur d'analyse sur la réponse JSON: taille de l'objet est responseData %d n'est pas 1."
 
 # Label: auto
-#: u_dzGoogleTranslate.pas:254
+#: u_dzGoogleTranslate.pas:262
 #, fuzzy, object-pascal-format
 msgid "Parsing error on JSON answer: First responseData pair is \"%s\" not \"translatedText\"."
 msgstr "Erreur d'analyse sur la réponse JSON: paire responseData premier est \" %s \"et non\" translatedText \"."
 
 # Label: auto
-#: u_dzGoogleTranslate.pas:257
+#: u_dzGoogleTranslate.pas:265
 #, fuzzy
 msgid "Parsing error on JSON answer: translatedText data is not a string."
 msgstr "Erreur d'analyse sur la réponse JSON: données translatedText n'est pas une chaîne."
 
 # Label: auto
-#: u_dzGoogleTranslate.pas:260
+#: u_dzGoogleTranslate.pas:268
 #, fuzzy
 msgid "Parsing error on JSON answer: responseData is neither NULL nor an object."
 msgstr "Erreur d'analyse sur la réponse JSON: responseData n'est ni NULL, ni un objet."
 
 # Label: auto
-#: u_dzGoogleTranslate.pas:264
+#: u_dzGoogleTranslate.pas:272
 #, fuzzy, object-pascal-format
 msgid "Parsing error on JSON answer: Second pair name is \"%s\" not \"responseDetails\"."
 msgstr "Erreur d'analyse sur la réponse JSON: Deuxième paire nom est « %s »et non« responseDetails \"."
 
 # Label: auto
-#: u_dzGoogleTranslate.pas:271
+#: u_dzGoogleTranslate.pas:279
 #, fuzzy
 msgid "Parsing error on JSON answer: responseDetails is neither NULL nor a string."
 msgstr "Erreur d'analyse sur la réponse JSON: responseDetails n'est ni NULL ni une chaîne."
 
 # Label: auto
-#: u_dzGoogleTranslate.pas:275
+#: u_dzGoogleTranslate.pas:283
 #, fuzzy, object-pascal-format
 msgid "Parsing error on JSON answer: Thrid pair name is \"%s\" not \"responseStatus\"."
 msgstr "Erreur d'analyse sur la réponse JSON: Troisième paire nom est « %s »et non« responseStatus \"."
 
 # Label: auto
-#: u_dzGoogleTranslate.pas:278
+#: u_dzGoogleTranslate.pas:286
 #, fuzzy
 msgid "Parsing error on JSON answer: responseStatus is not a number."
 msgstr "Erreur d'analyse sur la réponse JSON: responseStatus n'est pas un nombre."
@@ -498,6 +535,7 @@ msgstr "Erreur système d'exploitation inconnue"
 msgid "Error \"%1:s (%0:d)\" while trying to acquire mutex."
 msgstr "Error \"%1:s (%0:d)\"  lors d'aquisition de mutex."
 
+#: u_dzNameValueList.pas:99 u_dzUnsortedNameValueList.pas:88
 #: u_dzNameValueList.pas:96
 #, object-pascal-format
 msgid "Entry \"%s\" not found."
@@ -557,7 +595,7 @@ msgstr "RESOURCEDLL \"%s\" n'est pas valide (Check # 2)"
 msgid "RESOURCEDLL \"%s\" is not valid (Check #3)"
 msgstr "RESOURCEDLL \"%s\" n'est pas valide (Check # 3)"
 
-#: u_dzRingBuffer.pas:247 u_dzRingBuffer.pas:258
+#: u_dzRingBuffer.pas:249 u_dzRingBuffer.pas:260
 #, object-pascal-format
 msgid "Index %d out of bounds."
 msgstr "Indice %d en dehors des limites."
@@ -587,6 +625,21 @@ msgstr "Valeur d'accès fichier non valide (%d)"
 #, object-pascal-format
 msgid "%s accessing file %s"
 msgstr "%s lors de l'accès de fichier %s"
+
+#: u_dzUnsortedNameValueList.pas:56
+#, object-pascal-format
+msgid "NameValue \"%s\" does not contain a \"=\"."
+msgstr ""
+
+#: u_dzUnsortedNameValueList.pas:102
+#, object-pascal-format
+msgid "Duplicate value name \"%s\"."
+msgstr ""
+
+#: u_dzUnsortedNameValueList.pas:106
+#, object-pascal-format
+msgid "Empty value for \"%s\"."
+msgstr ""
 
 #. do not translate
 #. do not translate
@@ -622,33 +675,37 @@ msgstr "La variation ne peut pas être convertie en %s: %s"
 msgid "Variant can not be converted to %s"
 msgstr "Un variant ne peut pas être converti en %s"
 
-#: u_dzVclUtils.pas:636
+#: u_dzVclUtils.pas:712
 #, object-pascal-format
 msgid "Glyph string contained invalid character at position %d."
 msgstr "Glyph chaîne contenue un caractère non valide à position %d."
 
-#: u_dzVclUtils.pas:894 u_dzVclUtils.pas:941
+#: u_dzVclUtils.pas:998 u_dzVclUtils.pas:1045
 #, object-pascal-format
 msgid "\"%s\" is not a valid floating point value."
 msgstr "\"%s\" n'est pas une valeur décimale correcte."
 
 # Integer = Dezimalzahl?
-#: u_dzVclUtils.pas:909 u_dzVclUtils.pas:973 u_dzVclUtils.pas:986
+#: u_dzVclUtils.pas:1013 u_dzVclUtils.pas:1185 u_dzVclUtils.pas:1198
 #, object-pascal-format
 msgid "\"%s\" is not a valid integer value."
 msgstr "\"%s\" n'est pas une valeur décimale correcte."
 
-#: u_dzVclUtils.pas:1382
+#: u_dzVclUtils.pas:1618
 msgid "No item selected in combobox"
 msgstr "Aucun élément sélectionné dans combobox"
 
-#: u_dzVclUtils.pas:1401
+#: u_dzVclUtils.pas:1637
 msgid "No item selected in listbox"
 msgstr "Aucun élément sélectionné dans listbox"
 
-#: u_dzVclUtils.pas:1965
+#: u_dzVclUtils.pas:2227
 msgid "JPEG Files"
 msgstr "Fichiers JPEG"
+
+#: u_dzVclUtils.pas:2729
+msgid "Ctrl+Return to 'click' right button."
+msgstr ""
 
 #: u_dzVersionInfo.pas:277
 #, object-pascal-format
@@ -721,11 +778,11 @@ msgstr "< &Précédent"
 msgid "Invalid modal result %d."
 msgstr "Résultat modal non valide %d."
 
-#: w_dzDialog.pas:519
+#: w_dzDialog.pas:526
 msgid "Do not show again."
 msgstr "Ne pas afficher de nouveau."
 
-#: w_dzDialog.pas:601
+#: w_dzDialog.pas:608
 #, object-pascal-format
 msgid ""
 "An error occurred:\n"
@@ -735,24 +792,24 @@ msgstr ""
 "%s"
 
 #. 400;
-#: w_dzDialog.pas:625
+#: w_dzDialog.pas:632
 msgid "Additional information:"
 msgstr "Informations complémentaires:"
 
-#: w_dzDialog.pas:645 w_dzDialog.pas:755 w_dzDialog.pas:802
+#: w_dzDialog.pas:652 w_dzDialog.pas:762 w_dzDialog.pas:809
 msgid "&Details >>"
 msgstr "&Détails >>"
 
-#: w_dzDialog.pas:805
+#: w_dzDialog.pas:812
 msgid "&Details <<"
 msgstr "&Détails <<"
 
-#: w_dzProgress.pas:95
+#: w_dzProgress.pas:96
 #, object-pascal-format
 msgid "Progress (%d%%)"
 msgstr "Avancement (%d%%)"
 
-#: w_dzProgress.pas:106
+#: w_dzProgress.pas:105
 msgid "Do you really want to abort?"
 msgstr "Voulez-vous vraiment faire abandonnerr?"
 

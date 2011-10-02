@@ -40,7 +40,20 @@ function Month2Str(_Month: TMonthNumbers): string;
 ///          'yyyy-mm-dd hh:mm:ss'
 /// </summary>
 function DateTime2Iso(_dt: TDateTime; _IncludeTime: boolean = false): string; inline;
-function Time2Iso(_dt: TDateTime; _IncludeSeconds: boolean = true): string; inline;
+
+/// <summary>
+/// Converts the time part of a TDateTime value to a string in ISO 8601 format
+/// @param dt is the TDateTime value to convert
+/// @param IncludeSeconds is a boolean that determines whether the time should be
+///                    included, defaults to true
+/// @param IncludeMilliseconds is a boolean that determines whether the milliseconds
+///                            should be incluced,
+///                            only used if IncludeSeconds is true, defaults to false
+/// @returns a string with the time in the format
+///          'hh:mm:ss.nnn'
+/// </summary>
+function Time2Iso(_dt: TDateTime; _IncludeSeconds: boolean = true;
+  _IncludeMilliSeconds: boolean = false): string; inline;
 /// <summary>
 /// converts a string that contains a time in ISO 8601 format to a TDateTime value
 /// @param s is the string to convert, it must be in the form 'hh:mm:ss' or 'hh:mm'
@@ -163,13 +176,17 @@ begin
   Result := StrToDate(_s, Settings);
 end;
 
-function Time2Iso(_dt: TDateTime; _IncludeSeconds: boolean = true): string;
+function Time2Iso(_dt: TDateTime; _IncludeSeconds: boolean = true;
+  _IncludeMilliSeconds: boolean = false): string; inline;
 var
   fmt: string;
 begin
   fmt := 'hh:nn'; // do not translate
-  if _IncludeSeconds then
-    fmt := fmt + ':ss'; // do not translate
+  if _IncludeSeconds then begin
+    fmt := fmt + ':ss';
+    if _IncludeMilliSeconds then
+      fmt := fmt + '.zzz'; // do not translate
+  end;
   DateTimeToString(Result, fmt, _dt);
 end;
 

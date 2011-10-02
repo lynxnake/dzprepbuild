@@ -20,7 +20,7 @@ type
     ///                 name and the value of attributes like this:
     ///                 ['name1', 'value1', 'name2', 'value2'] </summary>
     procedure StartEntity(const _Name: string; const _Attribs: array of string); overload;
-    procedure StartEntity(const _Name: string; _Attribs: TNameValueList); overload;
+    procedure StartEntity(const _Name: string; _Attribs: TdzNameValueList); overload;
     ///<summary> Same as StartEntity but excpects the attributes to be stored as
     ///          name=value pairs in the stringlist
     ///          @bold(If you add a name with an empty value to a stringlist, the class will
@@ -41,7 +41,7 @@ type
     ///                 name and the value of attributes like this:
     ///                 ['name1', 'value1', 'name2', 'value2'] </summary>
     procedure WriteEntity(const _Name: string; const _Attribs: array of string); overload;
-    procedure WriteEntity(const _Name: string; _Attribs: TNameValueList); overload;
+    procedure WriteEntity(const _Name: string; _Attribs: TdzNameValueList); overload;
     ///<summary> Same as WriteEntity but excpects the attributes to be stored as name=value pairs in the stringlist
     ///          @bold(If you add a name with an empty value to a stringlist, the class will
     ///                ignore this entry or remove an existing entry, e.g.:

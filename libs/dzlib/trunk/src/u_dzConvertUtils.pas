@@ -179,6 +179,11 @@ function Str2Int(_s: string; _Default: integer): integer; overload;
 /// </summary>
 function Str2Int(_s: string; const _Source: string): integer; overload;
 
+///<summary>
+/// Does the same as TryStrToInt but does not change Value if the string cannot be converted.
+///</summary>
+function TryStr2Int(_s: string; var _Value: integer): boolean;
+
 /// <summary>
 /// Converts a string to an int64.
 /// If s can not be converted, it returns the Default.
@@ -618,6 +623,17 @@ begin
     raise EStringConvertError.CreateFmt(_('"%s" is not a valid integer value: %s'), [_s, _Source]);
 end;
 
+function TryStr2Int(_s: string; var _Value: integer): boolean;
+var
+  e: integer;
+  v: integer;
+begin
+  Val(_s, v, e);
+  Result := (e = 0);
+  if Result then
+    _Value := v;
+end;
+
 function Str2Int64(_s: string; _Default: Int64): Int64;
 var
   e: integer;
@@ -738,20 +754,20 @@ end;
 
 function GetSystemDefaultLocaleSettings: TFormatSettings;
 begin
-{$ifdef RTL220_UP}
+{$IFDEF RTL220_UP}
   Result := TFormatSettings.Create(GetSystemDefaultLCID);
-{$else}
+{$ELSE}
   GetLocaleFormatSettings(GetSystemDefaultLCID, Result);
-{$endif}
+{$ENDIF}
 end;
 
 function GetUserDefaultLocaleSettings: TFormatSettings;
 begin
-{$ifdef RTL220_UP}
+{$IFDEF RTL220_UP}
   Result := TFormatSettings.Create(GetUserDefaultLCID);
-{$else}
+{$ELSE}
   GetLocaleFormatSettings(GetUserDefaultLCID, Result);
-{$endif}
+{$ENDIF}
 end;
 
 function LongWord2ByteArr(_Value: LongWord; _MsbFirst: boolean = false): TBytes;
@@ -790,7 +806,6 @@ function Swap32(_Value: LongWord): LongWord;
 asm
   bswap eax
 end;
-
 
 initialization
   DZ_FORMAT_DECIMAL_POINT := u_dzStringUtils.GetUserDefaultLocaleSettings;

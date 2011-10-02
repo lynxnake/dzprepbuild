@@ -235,6 +235,7 @@ begin
   FRedirectStdOut := false;
   FRedirectStdErr := false;
   FEnvironment := TEnvironmentBlockReader.Create;
+  FVisible := True;
   ZeroMemory(@FProcessInfo, SizeOf(FProcessInfo));
   FWorkingDir := 'c:\';
 end;
@@ -405,6 +406,9 @@ begin
   if not FVisible then begin
     StartupInfo.dwFlags := StartupInfo.dwFlags or STARTF_USESHOWWINDOW;
     StartupInfo.wShowWindow := SW_HIDE;
+  end else begin
+    StartupInfo.dwFlags := StartupInfo.dwFlags or STARTF_USESHOWWINDOW;
+    StartupInfo.wShowWindow := SW_SHOWNORMAL;
   end;
 
   if FExeName <> '' then begin

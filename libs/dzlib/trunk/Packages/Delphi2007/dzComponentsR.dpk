@@ -37,7 +37,12 @@ requires
   dbrtl,
   vclshlctrls,
   Jcl,
-  vcljpg;
+  vcljpg,
+  bdertl,
+  adortl,
+  JvSystemD11R,
+  JvCoreD11R,
+  JclVcl;
 
 contains
   c_dzVirtualStringGrid in '..\..\components\c_dzVirtualStringGrid.pas',
@@ -55,6 +60,9 @@ contains
   u_dzVersionInfo in '..\..\src\u_dzVersionInfo.pas',
   u_dzOsUtils in '..\..\src\u_dzOsUtils.pas',
   u_dzVclUtils in '..\..\src\u_dzVclUtils.pas',
-  c_dzShellControls in '..\..\components\c_dzShellControls.pas';
+  c_dzShellControls in '..\..\components\c_dzShellControls.pas',
+  u_dzTranslatorAdo in '..\..\src\u_dzTranslatorAdo.pas',
+  u_dzTranslatorDb in '..\..\src\u_dzTranslatorDb.pas',
+  u_dzTranslatorJVCL in '..\..\src\u_dzTranslatorJVCL.pas';
 
 end.

@@ -44,6 +44,16 @@ procedure TStrings_FreeWithObjects(_Strings: TStrings);
 /// </summary>
 function TStrings_FreeAllObjects(_Strings: TStrings): TStrings;
 
+///<summary>
+/// searches the TStrings for the given string and deletes it if it can find it
+/// @returns true, if it was found and deleted, false if not </summary>
+function TStrings_DeleteString(_Strings: TStrings; const _s: string): boolean;
+
+///<summary>
+/// Deletes all strings in toDelete from Strings, if they exist.
+/// @returns the number of strings that were deleted </summary>
+function TStrings_DeleteStrings(_Strings: TStrings; _toDelete: TStrings): integer;
+
 /// <summary>
 /// frees the object and delets the entry from the list
 /// </summary>
@@ -55,6 +65,11 @@ procedure TStrings_DeleteAndFreeObject(_Strings: TStrings; _Idx: integer);
 /// @param Idx will contain the index of the item, if found. Only valid if result is true
 /// @returns true, if found, false otherwise
 function TStrings_GetObjectIndex(_Strings: TStrings; _Obj: pointer; out _Idx: integer): boolean;
+
+///<summary>
+/// Convenience function that calls Strings.BeginUpdate and returns an interface which calls
+/// Strings.EndUpdate when it is freed. </summary>
+function TStrings_BeginUpdate(_Strings: TStrings): IInterface;
 
 /// <summary>
 /// Free a TList object an all TObjects it contains
@@ -163,6 +178,7 @@ function TIniFile_ReadString(_Ini: TCustomIniFile; const _Section, _Ident: strin
 /// @returns the number of strings read
 /// </summary>
 function TIniFile_ReadStrings(_Ini: TCustomIniFile; const _Section: string; _st: TStrings): integer;
+procedure TIniFile_WriteStrings(_Ini: TCustomIniFile; const _Section: string; _st: TStrings);
 
 ///<summary>
 /// Tries to read a floating point value from the ini-file, always using '.' as decimal separator.
@@ -181,17 +197,47 @@ procedure TIniFile_WriteFloat(_Ini: TCustomIniFile; const _Section, _Ident: stri
 /// Reads an integer from the ini-file, raises an exception if the value is not an integer </summary>
 function TIniFile_ReadInt(_Ini: TCustomIniFile; const _Section, _Ident: string): integer;
 
+///<summary>
+/// Reads a date in ISO format from the ini-file, raises an exception if the value is not a valid date </summary>
+function TIniFile_ReadDate(_Ini: TCustomIniFile; const _Section, _Ident: string): TDateTime;
+///<summary>
+/// Tries to read a date in ISO format from the ini-file
+/// @returns true, if the date could be read and converted </summary>
+function TIniFile_TryReadDate(_Ini: TCustomIniFile; const _Section, _Ident: string; out _Value: TDateTime): boolean;
+
+///<summary>
+/// Writes a date in ISO format to the ini file </summary>
+procedure TIniFile_WriteDate(_Ini: TCustomIniFile; const _Section, _Ident: string; const _Value: TDateTime);
+
+///<summary>
+/// Clears all entries in the given section but does not delete the section header.
+///</summary>
+procedure TIniFile_ClearSection(_Ini: TCustomIniFile; const _Section: string);
+
+///<summary>
+/// Clears all entries in the given section and writes the values from the TStrings to it
+/// </summary>
+procedure TIniFile_WriteSectionValues(_Ini: TCustomIniFile; const _Section: string; _sl: TStrings);
+
 /// <summary>
-/// Reads the given section from the given .INI file and returns it as a TStrings
+/// Reads the given section from the given .INI file and returns all its keys as a TStrings
+/// (This is short for opening the file, calling Ini.ReadSection and closing it.)
 /// @raises Exception if the section does not exist. </summary>
-procedure TIniFile_ReadSection(const _Filename, _Section: string; _sl: TStrings); inline;
+procedure TIniFile_ReadSectionKeys(const _Filename, _Section: string; _sl: TStrings); inline;
+
+/// <summary>
+/// Reads the given section from the given .INI file and returns it as Name=Value pairs.
+/// (This is short for opening the file, calling Ini.ReadSectionValues and closing it.)
+/// @raises Exception if the section does not exist. </summary>
+procedure TIniFile_ReadSectionValues(const _Filename, _Section: string; _sl: TStrings); inline;
 
 implementation
 
 uses
   StrUtils,
   u_dzConvertUtils,
-  u_dzStringUtils;
+  u_dzStringUtils,
+  u_dzDateUtils;
 
 function _(const _s: string): string; inline;
 begin
@@ -258,14 +304,36 @@ function TStrings_FreeAllObjects(_Strings: TStrings): TStrings;
 var
   i: Integer;
 begin
-  for i := 0 to _Strings.Count - 1 do
+  for i := 0 to _Strings.Count - 1 do begin
     _Strings.Objects[i].Free;
+    _Strings.Objects[i] := nil;
+  end;
   Result := _Strings;
 end;
 
 procedure TStrings_FreeWithObjects(_Strings: TStrings);
 begin
   TStrings_FreeAllObjects(_Strings).Free;
+end;
+
+function TStrings_DeleteString(_Strings: TStrings; const _s: string): boolean;
+var
+  Idx: integer;
+begin
+  Idx := _Strings.IndexOf(_s);
+  Result := (Idx <> -1);
+  if Result then
+    _Strings.Delete(Idx);
+end;
+
+function TStrings_DeleteStrings(_Strings: TStrings; _toDelete: TStrings): integer;
+var
+  i: integer;
+begin
+  Result := 0;
+  for i := 0 to _toDelete.Count - 1 do
+    if TStrings_DeleteString(_Strings, _toDelete[i]) then
+      Inc(Result);
 end;
 
 procedure TStrings_DeleteAndFreeObject(_Strings: TStrings; _Idx: integer);
@@ -286,6 +354,20 @@ begin
       exit;
     end;
   end;
+end;
+
+type
+  TStringsUpdateInt = class(TInterfacedObject, IInterface)
+  private
+    FStrings: TStrings;
+  public
+    constructor Create(_Strings: TStrings);
+    destructor Destroy; override;
+  end;
+
+function TStrings_BeginUpdate(_Strings: TStrings): IInterface;
+begin
+  Result := TStringsUpdateInt.Create(_Strings);
 end;
 
 function TStream_WriteString(_Stream: TStream; const _s: string): integer;
@@ -429,6 +511,18 @@ begin
     _st.Add(_Ini.ReadString(_Section, 'Item' + IntToStr(i), ''));
 end;
 
+procedure TIniFile_WriteStrings(_Ini: TCustomIniFile; const _Section: string; _st: TStrings);
+var
+  i: integer;
+begin
+  Assert(Assigned(_Ini));
+  Assert(Assigned(_st));
+
+  _Ini.WriteInteger(_Section, 'Count', _st.Count);
+  for i := 0 to _st.Count - 1 do
+    _Ini.WriteString(_Section, 'Item' + IntToStr(i), _st[i]);
+end;
+
 function TIniFile_TryReadFloat(_Ini: TCustomIniFile; const _Section, _Ident: string; out _Value: extended): boolean;
 var
   s: string;
@@ -448,12 +542,34 @@ var
 begin
   s := _Ini.ReadString(_Section, _Ident, '');
   if not TryStr2Float(s, Result) then
-    raise Exception.CreateFmt(_('Invalid floating point value %s in ini file for [%s]%s'), [s, _Section, _Ident]);
+    raise Exception.CreateFmt(_('Invalid floating point value "%s" in ini file for [%s]%s'), [s, _Section, _Ident]);
 end;
 
 procedure TIniFile_WriteFloat(_Ini: TCustomIniFile; const _Section, _Ident: string; _Value: extended);
 begin
   _Ini.WriteString(_Section, _Ident, Float2Str(_Value));
+end;
+
+function TIniFile_TryReadDate(_Ini: TCustomIniFile; const _Section, _Ident: string; out _Value: TDateTime): boolean;
+var
+  s: string;
+begin
+  s := _Ini.ReadString(_Section, _Ident, '');
+  Result := TryIso2Date(s, _Value);
+end;
+
+function TIniFile_ReadDate(_Ini: TCustomIniFile; const _Section, _Ident: string): TDateTime;
+var
+  s: string;
+begin
+  s := _Ini.ReadString(_Section, _Ident, '');
+  if not TryIso2Date(s, Result) then
+    raise Exception.CreateFmt(_('Invalid date value "%s" in ini file for [%s]%s'), [s, _Section, _Ident]);
+end;
+
+procedure TIniFile_WriteDate(_Ini: TCustomIniFile; const _Section, _Ident: string; const _Value: TDateTime);
+begin
+  _Ini.WriteString(_Section, _Ident, DateTime2Iso(_Value));
 end;
 
 function TIniFile_ReadInt(_Ini: TCustomIniFile; const _Section, _Ident: string): integer;
@@ -465,7 +581,34 @@ begin
     raise Exception.CreateFmt(_('Invalid integer value "%s" in ini file for [%s]%s'), [s, _Section, _Ident]);
 end;
 
-procedure TIniFile_ReadSection(const _Filename, _Section: string; _sl: TStrings);
+procedure TIniFile_ClearSection(_Ini: TCustomIniFile; const _Section: string);
+var
+  sl: TStringList;
+  i: integer;
+begin
+  sl := TStringlist.Create;
+  try
+    _Ini.ReadSection(_Section, sl);
+    for i := 0 to sl.Count - 1 do
+      _Ini.DeleteKey(_Section, sl[i]);
+  finally
+    FreeAndNil(sl);
+  end;
+end;
+
+procedure TIniFile_WriteSectionValues(_Ini: TCustomIniFile; const _Section: string; _sl: TStrings);
+var
+  i: integer;
+  Key: string;
+begin
+  TIniFile_ClearSection(_Ini, _Section);
+  for i := 0 to _sl.Count - 1 do begin
+    Key := _sl.Names[i];
+    _Ini.WriteString(_Section, Key, _sl.Values[Key]);
+  end;
+end;
+
+procedure TIniFile_ReadSectionKeys(const _Filename, _Section: string; _sl: TStrings);
 var
   Ini: TMemIniFile;
 begin
@@ -477,6 +620,36 @@ begin
   finally
     FreeAndNil(Ini);
   end;
+end;
+
+procedure TIniFile_ReadSectionValues(const _Filename, _Section: string; _sl: TStrings); inline;
+var
+  Ini: TMemIniFile;
+begin
+  Ini := TMemIniFile.Create(_Filename);
+  try
+    if not Ini.SectionExists(_Section) then
+      raise Exception.CreateFmt('Section %s does not exist in file %s.', [_Section, _Filename]);
+    Ini.ReadSectionValues(_Section, _sl);
+  finally
+    FreeAndNil(Ini);
+  end;
+end;
+
+{ TStringsUpdateInt }
+
+constructor TStringsUpdateInt.Create(_Strings: TStrings);
+begin
+  inherited Create;
+  FStrings := _Strings;
+  FStrings.BeginUpdate;
+end;
+
+destructor TStringsUpdateInt.Destroy;
+begin
+  if Assigned(FStrings) then
+    FStrings.EndUpdate;
+  inherited;
 end;
 
 end.

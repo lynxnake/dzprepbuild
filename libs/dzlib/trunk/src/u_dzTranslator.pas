@@ -18,7 +18,7 @@ uses
   SysUtils,
 {$IFDEF gnugettext}
   // NOTE: If you don't want any translations, define "NO_TRANSLATION" for your project
-  gnugettext, // libs\dxgettext
+  gnugettext, // libs\dxgettext\lib
   languagecodes,
 {$ENDIF}
   Classes;
@@ -85,7 +85,7 @@ begin
 {$ENDIF}
 end;
 
-function dzDGetText(const _s: string; const _TextDomain: string = ''): string; inline;
+function dzDGetText(const _s: string; const _TextDomain: string = ''): string; 
 begin
   Result := DGetText(_s, _TextDomain);
 end;

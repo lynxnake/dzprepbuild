@@ -45,13 +45,16 @@ type
     function Add(const _Name, _Value: string): integer; reintroduce; overload;
     function ByNameDef(const _Name, _Default: string): string;
     function Find(const _Name: string; out _Value: string): boolean; overload;
+    procedure LoadFrom(_Strings: TStrings);
+    procedure SaveTo(_Strings: TStrings);
+    procedure Delete(const _Name: string);
     property ByName[const _Name: string]: string read GetByName write SetByName;
   end;
 
 implementation
 
 uses
-  u_dztranslator;
+  u_dzTranslator;
 
 {$INCLUDE 't_dzSortedObjectListTemplate.tpl'}
 
@@ -94,6 +97,34 @@ function TNameValueList.GetByName(const _Name: string): string;
 begin
   if not Find(_Name, Result) then
     raise ENameNotFound.CreateFmt(_('Entry "%s" not found.'), [_Name]);
+end;
+
+procedure TNameValueList.Delete(const _Name: string);
+var
+  Idx: integer;
+begin
+  if Find(_Name, Idx) then
+    Extract(Idx).Free;
+end;
+
+procedure TNameValueList.LoadFrom(_Strings: TStrings);
+var
+  i: Integer;
+  Name: string;
+begin
+  Clear;
+  for i := 0 to _Strings.Count - 1 do begin
+    Name := _Strings.Names[i];
+    Add(Name, _Strings.Values[Name]);
+  end;
+end;
+
+procedure TNameValueList.SaveTo(_Strings: TStrings);
+var
+  i: Integer;
+begin
+  for i := 0 to Count - 1 do
+    _Strings.Values[Items[i].Name] := Items[i].Value;
 end;
 
 procedure TNameValueList.SetByName(const _Name, _Value: string);

@@ -34,8 +34,6 @@
     <BorlandProject>
 <BorlandProject><Delphi.Personality><Parameters><Parameters Name="UseLauncher">False</Parameters><Parameters Name="LoadAllSymbols">True</Parameters><Parameters Name="LoadUnspecifiedSymbols">False</Parameters></Parameters><Package_Options><Package_Options Name="ImplicitBuild">False</Package_Options><Package_Options Name="DesigntimeOnly">False</Package_Options><Package_Options Name="RuntimeOnly">True</Package_Options><Package_Options Name="LibSuffix">110</Package_Options><Package_Options Name="PackageDescription">dzCompoments runtime package</Package_Options></Package_Options><VersionInfo><VersionInfo Name="IncludeVerInfo">True</VersionInfo><VersionInfo Name="AutoIncBuild">False</VersionInfo><VersionInfo Name="MajorVer">1</VersionInfo><VersionInfo Name="MinorVer">0</VersionInfo><VersionInfo Name="Release">0</VersionInfo><VersionInfo Name="Build">0</VersionInfo><VersionInfo Name="Debug">False</VersionInfo><VersionInfo Name="PreRelease">False</VersionInfo><VersionInfo Name="Special">False</VersionInfo><VersionInfo Name="Private">False</VersionInfo><VersionInfo Name="DLL">False</VersionInfo><VersionInfo Name="Locale">1031</VersionInfo><VersionInfo Name="CodePage">1252</VersionInfo></VersionInfo><VersionInfoKeys><VersionInfoKeys Name="CompanyName"></VersionInfoKeys><VersionInfoKeys Name="FileDescription"></VersionInfoKeys><VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys><VersionInfoKeys Name="InternalName"></VersionInfoKeys><VersionInfoKeys Name="LegalCopyright"></VersionInfoKeys><VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys><VersionInfoKeys Name="OriginalFilename"></VersionInfoKeys><VersionInfoKeys Name="ProductName"></VersionInfoKeys><VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys><VersionInfoKeys Name="Comments"></VersionInfoKeys></VersionInfoKeys><Source><Source Name="MainSource">dzComponentsR.dpk</Source></Source><Excluded_Packages>
       
-      
-      
       <Excluded_Packages Name="$(BDS)\bin\dclIntraweb_90_100.bpl">VCL for the Web 9.0 Design Package for CodeGear RAD Studio</Excluded_Packages>
     </Excluded_Packages></Delphi.Personality></BorlandProject></BorlandProject>
   </ProjectExtensions>
@@ -46,14 +44,6 @@
     </DelphiCompile>
     <DCCReference Include="..\..\components\c_dzShellControls.pas" />
     <DCCReference Include="..\..\components\c_dzVirtualStringGrid.pas" />
-    <DCCReference Include="..\..\components\dbrtl.dcp" />
-    <DCCReference Include="..\..\components\Jcl.dcp" />
-    <DCCReference Include="..\..\components\rtl.dcp" />
-    <DCCReference Include="..\..\components\vcl.dcp" />
-    <DCCReference Include="..\..\components\vcldb.dcp" />
-    <DCCReference Include="..\..\components\vcljpg.dcp" />
-    <DCCReference Include="..\..\components\vclshlctrls.dcp" />
-    <DCCReference Include="..\..\components\vclx.dcp" />
     <DCCReference Include="..\..\src\u_dzClassUtils.pas" />
     <DCCReference Include="..\..\src\u_dzConvertUtils.pas" />
     <DCCReference Include="..\..\src\u_dzDateUtils.pas" />
@@ -65,8 +55,24 @@
     <DCCReference Include="..\..\src\u_dzShellApiUtils.pas" />
     <DCCReference Include="..\..\src\u_dzStringUtils.pas" />
     <DCCReference Include="..\..\src\u_dzTranslator.pas" />
+    <DCCReference Include="..\..\src\u_dzTranslatorAdo.pas" />
+    <DCCReference Include="..\..\src\u_dzTranslatorDb.pas" />
+    <DCCReference Include="..\..\src\u_dzTranslatorJVCL.pas" />
     <DCCReference Include="..\..\src\u_dzVariantUtils.pas" />
     <DCCReference Include="..\..\src\u_dzVclUtils.pas" />
     <DCCReference Include="..\..\src\u_dzVersionInfo.pas" />
+    <DCCReference Include="adortl.dcp" />
+    <DCCReference Include="bdertl.dcp" />
+    <DCCReference Include="dbrtl.dcp" />
+    <DCCReference Include="Jcl.dcp" />
+    <DCCReference Include="JclVcl.dcp" />
+    <DCCReference Include="JvCoreD11R.dcp" />
+    <DCCReference Include="JvSystemD11R.dcp" />
+    <DCCReference Include="rtl.dcp" />
+    <DCCReference Include="vcl.dcp" />
+    <DCCReference Include="vcldb.dcp" />
+    <DCCReference Include="vcljpg.dcp" />
+    <DCCReference Include="vclshlctrls.dcp" />
+    <DCCReference Include="vclx.dcp" />
   </ItemGroup>
 </Project>

@@ -376,6 +376,7 @@ var
   RowIdx: integer;
   FieldIdx: integer;
   Row: IdzDbTableRow;
+  s: string;
 begin
   if _Table.RowCount = 0 then
     exit;
@@ -405,8 +406,21 @@ begin
             end;
             tbl.Post;
           except
-            tbl.Cancel;
-            raise;
+            on e: Exception do begin
+              tbl.Cancel;
+              s := '';
+              for FieldIdx := 0 to Row.Count - 1 do begin
+                if s <> '' then
+                  s := s + ';';
+                if row.IsNull(FieldIdx) then
+                  s := s + '*NULL*'
+                else
+                  s := s + Row.Value[FieldIdx];
+              end;
+              raise Exception.CreateFmt('Error "%s" (%s) while trying to insert'#13#10
+                + '%s'#13#10
+                + 'into table %s', [e.Message, e.ClassName, s, tbl.TableName]);
+            end;
           end;
         end;
       finally

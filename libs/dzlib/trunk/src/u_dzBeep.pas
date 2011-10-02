@@ -38,16 +38,23 @@ type
   protected
     procedure Execute; override;
   public
+    ///<summary> Converts a string of the form '<frequency>/<duration>[,<frequency>/<duration> ...]'
+ ///          to a TBeepSequenceList </summary>
+    class function StrToBeepSequence(_Str: string; out _BeepSeq: TBeepSequenceList): Boolean; static;
     constructor Create;
     destructor Destroy; override;
     procedure Beep(_Frequency, _Duration: Cardinal); overload;
     procedure Beep(_Sequence: array of TBeepSequenceEntry); overload;
+    procedure Beep(_Sequence: string); overload;
   end;
 
 var
   Beeper: TBeeper = nil;
 
 implementation
+
+uses
+  u_dzStringUtils;
 
 { TBeeper }
 
@@ -74,11 +81,21 @@ begin
   end;
 end;
 
+procedure TBeeper.Beep(_Sequence: string);
+var
+  Arr: TBeepSequenceList;
+begin
+  if _Sequence = '' then
+    Exit;
+  StrToBeepSequence(_Sequence, Arr);
+  Beep(Arr);
+end;
+
 constructor TBeeper.Create;
 begin
   FMutex := TMutex.Create;
   FEvent := TEvent.Create;
-  inherited Create(false);
+  inherited Create(False);
 end;
 
 destructor TBeeper.Destroy;
@@ -92,7 +109,7 @@ end;
 procedure TBeeper.Execute;
 var
   wr: TWaitResult;
-  i: integer;
+  i: Integer;
 begin
   inherited;
   while not Terminated do begin
@@ -126,6 +143,29 @@ begin
   inherited Terminate;
   FEvent.SetEvent;
   WaitFor;
+end;
+
+class function TBeeper.StrToBeepSequence(_Str: string; out _BeepSeq: TBeepSequenceList): Boolean;
+var
+  FirstEntry: string;
+  Frequence: string;
+  FreqInt: Integer;
+  TimeInt: Integer;
+begin
+  Result := False;
+  SetLength(_BeepSeq, 0);
+  while ExtractFirstWord(_Str, [','], FirstEntry) do begin
+    Result := ExtractFirstWord(FirstEntry, ['/'], frequence);
+    if not Result then
+      Exit; // -->
+
+    Result := TryStrToInt(Frequence, Freqint) and TryStrToInt(FirstEntry, TimeInt);
+    if not Result then
+      Exit; //; -->
+
+    SetLength(_BeepSeq, Length(_BeepSeq) + 1);
+    _BeepSeq[High(_BeepSeq)] := TBeepSequenceEntry.Create(freqint, timeint);
+  end;
 end;
 
 { TBeepSequenceEntry }

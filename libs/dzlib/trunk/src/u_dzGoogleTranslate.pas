@@ -25,6 +25,9 @@ type
     /// @param TargetLang is the target language code, e.g. 'de', see the API description
     ///                   for a list of possible values. </summary>
     constructor Create(const _SourceLang, _TargetLang: string);
+    ///<summary>The Google Translate API license requires you to display this branding near
+    ///         the input and result of translations. </summary>
+    function GetBranding: string;
     function Translate(const _Input: string): string;
     ///<summary> Referrer is the url to the website using the translation service </summary>
     property Referrer: string read FReferrer write FReferrer;
@@ -129,6 +132,11 @@ begin
     Result := 1251
   else
     Result := 28591;
+end;
+
+function TGoogleTranslate.GetBranding: string;
+begin
+  Result := 'powered by Google';
 end;
 
 function TGoogleTranslate.Translate(const _Input: string): string;

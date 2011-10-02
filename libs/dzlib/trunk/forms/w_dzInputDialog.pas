@@ -20,12 +20,22 @@ type
     ed_Input: TEdit;
     b_Ok: TButton;
     b_Cancel: TButton;
+    procedure ed_InputChange(Sender: TObject);
+  public
+  {(*}
+  type
+    TOnCheckEvent = procedure(_Sender: TObject; const _Value: string; var _OK: Boolean) of object;
+  {*)}
   private
+    FOnCheck: TOnCheckEvent;
+    function doOnCheck(const _Value: string): Boolean;
   public
     class function InputQuery(const _Caption: string; const _Prompt: string; var _Value: string): Boolean;
     class function InputBox(const _Caption: string; const _Prompt: string; const _Default: string): string;
     class function Execute(_Owner: TWinControl; const _Caption: string; const _Prompt: string; var _Value: string): Boolean;
     class procedure Display(_Owner: TWinControl; const _Caption, _Prompt, _Value: string);
+    class function InputQueryChecked(_Owner: TWinControl; const _Caption, _Prompt: string;
+      _CheckCallback: TOnCheckEvent; var _Value: string): Boolean;
   end;
 
 implementation
@@ -47,12 +57,30 @@ begin
     frm.Caption := _Caption;
     frm.l_Query.Caption := _Prompt;
     frm.ed_Input.Text := _Value;
-    frm.b_Ok.Visible := false;
+    frm.b_Ok.Visible := False;
     frm.b_Cancel.Caption := 'Close';
-    frm.b_Cancel.Default := true;
+    frm.b_Cancel.Default := True;
     frm.ShowModal;
   finally
     FreeAndNil(frm);
+  end;
+end;
+
+function Tf_dzInputDialog.doOnCheck(const _Value: string): Boolean;
+begin
+  Result := True;
+  if Assigned(FOnCheck) then
+    FOnCheck(Self, _Value, Result);
+end;
+
+procedure Tf_dzInputDialog.ed_InputChange(Sender: TObject);
+begin
+  if doOnCheck(ed_Input.Text) then begin
+    ed_Input.Color := clWindow;
+    b_Ok.Enabled := True;
+  end else begin
+    ed_Input.Color := clYellow;
+    b_Ok.Enabled := False;
   end;
 end;
 
@@ -85,6 +113,26 @@ end;
 class function Tf_dzInputDialog.InputQuery(const _Caption, _Prompt: string; var _Value: string): Boolean;
 begin
   Result := Execute(nil, _Caption, _Prompt, _Value);
+end;
+
+class function Tf_dzInputDialog.InputQueryChecked(_Owner: TWinControl; const _Caption, _Prompt: string;
+  _CheckCallback: TOnCheckEvent; var _Value: string): Boolean;
+var
+  frm: Tf_dzInputDialog;
+begin
+  frm := Tf_dzInputDialog.Create(_Owner);
+  try
+    TForm_CenterOn(frm, _Owner);
+    frm.Caption := _Caption;
+    frm.l_Query.Caption := _Prompt;
+    frm.ed_Input.Text := _Value;
+    frm.FOnCheck := _CheckCallback;
+    Result := (frm.ShowModal = mrOk);
+    if Result then
+      _Value := frm.ed_Input.Text;
+  finally
+    FreeAndNil(frm);
+  end;
 end;
 
 end.

@@ -87,6 +87,7 @@ end;
 constructor Tf_dzProgress.Create(_Owner: tComponent);
 begin
   inherited;
+  TranslateComponent(Self, 'dzlib');
   FProgressTimeInterval := 200;
   FLastTickCount := 0;
   pb_Progress.Position := 0;
@@ -97,8 +98,6 @@ begin
   PopupMode := pmExplicit;
   if _Owner is TCustomForm then
     PopupParent := _Owner as TCustomForm;
-
-  TranslateComponent(Self, 'dzlib');
 end;
 
 procedure Tf_dzProgress.b_CancelClick(Sender: TObject);
