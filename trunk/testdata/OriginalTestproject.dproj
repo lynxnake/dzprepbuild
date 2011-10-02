@@ -1,0 +1,105 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{209412AC-0EC2-4F63-B92A-E78853FF142A}</ProjectGuid>
+			<MainSource>TestProject.dpr</MainSource>
+			<Config Condition="'$(Config)'==''">Debug</Config>
+			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+			<ProjectVersion>12.0</ProjectVersion>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+			<Cfg_1>true</Cfg_1>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+			<Cfg_2>true</Cfg_2>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Base)'!=''">
+			<DCC_ImageBase>00400000</DCC_ImageBase>
+			<DCC_UsePackage>rtl;vcl;vcldb;dbrtl;vclx;dbxcds;dbexpress;IndySystem;IndyCore;VclSmp;IndyProtocols;dsnap;adortl;vclactnband;vclshlctrls;JvCustomD9R;JvSystemD9R;JvCoreD9R;DJcl;JvStdCtrlsD9R;dzConfigd9;PerlRegExD2005;SynEdit_R2005;SynUni_D2005;JvAppFrmD9R;JvBandsD9R;JvBDED9R;JvCmpD9R;JvCryptD9R;JvCtrlsD9R;JvDlgsD9R;JvDockingD9R;JvDotNetCtrlsD9R;JvEDID9R;JvGlobusD9R;JvHMID9R;JvInspectorD9R;JvInterpreterD9R;JvJansD9R;JvManagedThreadsD9R;JvMMD9R;JvNetD9R;JvPageCompsD9R;JvPluginD9R;JvPrintPreviewD9R;JvTimeFrameworkD9R;JvUIBD9R;JvValidatorsD9R;JvWizardD9R;JvXPCtrlsD9R</DCC_UsePackage>
+			<DCC_DebugInformation>false</DCC_DebugInformation>
+			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;$(DCC_UnitAlias)</DCC_UnitAlias>
+			<DCC_Platform>x86</DCC_Platform>
+			<DCC_DependencyCheckOutputName>TestProject.exe</DCC_DependencyCheckOutputName>
+			<DCC_K>false</DCC_K>
+			<DCC_N>true</DCC_N>
+			<DCC_S>false</DCC_S>
+			<DCC_SymbolReferenceInfo>1</DCC_SymbolReferenceInfo>
+			<DCC_E>false</DCC_E>
+			<DCC_F>false</DCC_F>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_1)'!=''">
+			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_2)'!=''">
+			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+		</PropertyGroup>
+		<ItemGroup>
+			<DelphiCompile Include="TestProject.dpr">
+				<MainSource>MainSource</MainSource>
+			</DelphiCompile>
+			<BuildConfiguration Include="Base">
+				<Key>Base</Key>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Debug">
+				<Key>Cfg_2</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Release">
+				<Key>Cfg_1</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+		</ItemGroup>
+		<Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
+		<ProjectExtensions>
+			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Delphi.Personality>
+					<Source>
+						<Source Name="MainSource">TestProject.dpr</Source>
+					</Source>
+					<Parameters>
+						<Parameters Name="UseLauncher">False</Parameters>
+						<Parameters Name="LoadAllSymbols">True</Parameters>
+						<Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
+					</Parameters>
+					<VersionInfo>
+						<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
+						<VersionInfo Name="AutoIncBuild">False</VersionInfo>
+						<VersionInfo Name="MajorVer">1</VersionInfo>
+						<VersionInfo Name="MinorVer">0</VersionInfo>
+						<VersionInfo Name="Release">0</VersionInfo>
+						<VersionInfo Name="Build">0</VersionInfo>
+						<VersionInfo Name="Debug">False</VersionInfo>
+						<VersionInfo Name="PreRelease">False</VersionInfo>
+						<VersionInfo Name="Special">False</VersionInfo>
+						<VersionInfo Name="Private">False</VersionInfo>
+						<VersionInfo Name="DLL">False</VersionInfo>
+						<VersionInfo Name="Locale">1033</VersionInfo>
+						<VersionInfo Name="CodePage">1252</VersionInfo>
+					</VersionInfo>
+					<VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion"/>
+						<VersionInfoKeys Name="ProductVersion">2007-07-14</VersionInfoKeys>
+						<VersionInfoKeys Name="CompanyName">www.dummzeuch.de</VersionInfoKeys>
+						<VersionInfoKeys Name="FileDescription">Testproject</VersionInfoKeys>
+						<VersionInfoKeys Name="InternalName">testproject</VersionInfoKeys>
+						<VersionInfoKeys Name="LegalCopyright">Copyright 2002-2007 by Thomas Mueller</VersionInfoKeys>
+						<VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys>
+						<VersionInfoKeys Name="OriginalFilename">testproject.exe</VersionInfoKeys>
+						<VersionInfoKeys Name="ProductName">Testproduct</VersionInfoKeys>
+						<VersionInfoKeys Name="Comments">internal use only</VersionInfoKeys>
+					</VersionInfoKeys>
+				</Delphi.Personality>
+			</BorlandProject>
+			<ProjectFileVersion>12</ProjectFileVersion>
+		</ProjectExtensions>
+	</Project>
