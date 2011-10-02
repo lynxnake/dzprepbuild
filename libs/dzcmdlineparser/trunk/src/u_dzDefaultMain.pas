@@ -93,7 +93,7 @@ uses
   Classes,
   Dialogs,
   u_dzLogging,
-  w_dzDialog;
+  w_dzDialog; // libs\dzlib\forms
 
 function _(const _s: string): string; inline;
 begin
