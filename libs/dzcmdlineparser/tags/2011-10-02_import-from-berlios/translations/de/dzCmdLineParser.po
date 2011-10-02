@@ -1,0 +1,99 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dzCmdLineParser 1.0\n"
+"POT-Creation-Date: 2010-10-13 17:20\n"
+"PO-Revision-Date: 2010-04-27 17:26+0100\n"
+"Last-Translator: Thomas Mueller <info@schniering.com>\n"
+"Language-Team: twm <nospam@dummzeuch.de>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: dxgettext 1.2.2\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+
+#: u_dzGetOpt.pas:237
+msgid "%s is not a registered option."
+msgstr "%s ist keine registrierte Option"
+
+#: u_dzGetOpt.pas:170
+msgid "[options]"
+msgstr "[Optionen]"
+
+#: u_dzGetOpt.pas:387
+msgid "display parameter help"
+msgstr "Parameter Hilfe anzeigen"
+
+#: u_dzDefaultMain.pas:145
+msgid "Error: %s"
+msgstr "Fehler: %s"
+
+#: u_dzCmdLineParserStates.pas:197  u_dzCmdLineParserStates.pas:217
+#: u_dzCmdLineParserStates.pas:231 u_dzCmdLineParserStates.pas:254
+#: u_dzCmdLineParserStates.pas:270 u_dzCmdLineParserStates.pas:313
+#: u_dzCmdLineParserStates.pas:335 u_dzCmdLineParserStates.pas:377
+msgid "Invalid character \"%s\"."
+msgstr "Ungültiges Zeichen \"%s\""
+
+#: u_dzGetOpt.pas:339
+msgid "Option %s is unknown"
+msgstr "Option %s ist nicht bekannt"
+
+#: u_dzGetOpt.pas:343
+msgid "Option %s requires a value."
+msgstr "Option %s benötigt einen Wert."
+
+#: u_dzOptionDescList.pas:120
+msgid "Option name cannot be empty."
+msgstr "Optionsname kann nicht leer sein."
+
+#: u_dzOptionDescList.pas:126
+msgid "Option name contains invalid character \"%s\" at position %d."
+msgstr "Optionsname enthält ungültiges Zeichen \"%s\" bei Position %d."
+
+#: u_dzOptionDescList.pas:123
+msgid "Option name must start with an alphanumeric character."
+msgstr "Optionsname muss mit einem alphanumerischen Zeichen beginnen."
+
+#: u_dzDefaultMain.pas:152
+msgid "Options:"
+msgstr "Optionen:"
+
+#: u_dzDefaultMain.pas:150
+msgid "Parameters:"
+msgstr "Parameter:"
+
+#: u_dzDefaultMain.pas:149
+msgid "Synopsis: %s %s"
+msgstr "Aufruf: %s %s"
+
+#: u_dzGetOpt.pas:326  u_dzGetOpt.pas:332
+msgid "There are not enough %s parameters (min: %d)"
+msgstr "Nicht genügend %s Parameter (min: %d)"
+
+#: u_dzGetOpt.pas:316
+msgid "There are too many parameters."
+msgstr "Zuviele Parameter"
+
+#: u_dzDefaultMain.pas:136
+msgid "This program does nothing yet."
+msgstr "Dieses Programm macht noch nichts."
+
+#: u_dzGetOpt.pas:159
+msgid "Unknown option %s"
+msgstr "Unbekannte Option %s"
+
+#. should never happen
+#: u_dzOptionDescList.pas:136  u_dzOptionDescList.pas:141
+msgid "value"
+msgstr "Wert"
+
+#: u_dzDefaultMain.pas:163
+msgid "Write a startup log to the given file."
+msgstr "Startup-Log in angegebene Datei schreiben."
+
