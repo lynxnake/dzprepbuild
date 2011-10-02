@@ -48,6 +48,12 @@ goto :eof
 @echo ** handling language %LNG% **
 
 @rem merge translations
+set LocaleDir=locale\%LNG%\lc_messages
+if exist %LocaleDir%\default.po goto PoExists
+echo %LNG% skipped, %LocaleDir%\default.po does not exist.
+goto :eof
+
+:PoExists
 %~dp0\msgmerge --no-wrap --update locale\%LNG%\lc_messages\default.po default.po
 
 @rem compile

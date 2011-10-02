@@ -18,9 +18,9 @@ pushd src
 msbuild %project%.dproj
 popd
 popd
-endlocal
 
 if errorlevel 1 goto error
+endlocal
 if "%BatchBuild%"=="1" goto nopause
 pause
 :nopause
@@ -30,6 +30,7 @@ goto :eof
 echo ************************************
 echo ***** Error building %project% *****
 echo ************************************
+endlocal
 pause
 goto :eof
 

@@ -32,7 +32,7 @@ set LNG=en
 @call :HandLng
 
 @echo bind all translations to the executable
-%~dp0\assemble --dxgettext %1.exe
+%~dp0assemble %1.exe --dxgettext
 echo off
 
 echo * %0 exiting
@@ -43,7 +43,8 @@ goto :eof
 
 @echo ** handling language %LNG% **
 if exist locale\%LNG%\lc_messages goto lcmsgexists
-mkdir locale\%LNG%\lc_messages
+echo *** subdir locale\%LNG%\lc_messages does not exist skipping language %LNG% ***
+goto :eof
 :lcmsgexists
 
 if not exist %ProjectDir%\libs\dspack\translations\%LNG%\dspack.po goto nodspack
@@ -65,6 +66,11 @@ if not exist %ProjectDir%\libs\dxgettext\translations\%LNG%\delphi2007.po goto n
 @echo compile %LNG% delphi2007.po
 %~dp0\msgfmt %ProjectDir%\libs\dxgettext\translations\%LNG%\delphi2007.po -o locale\%LNG%\lc_messages\delphi2007.mo
 :nodelphi
+
+if not exist %ProjectDir%\libs\comport\locale\%LNG%\LC_MESSAGES\cport.po goto nocomport
+@echo compile %LNG% cport.po
+%~dp0\msgfmt %ProjectDir%\libs\comport\locale\%LNG%\LC_MESSAGES\cport.po -o locale\%LNG%\lc_messages\cport.mo
+:nocomport
 
 @echo compile %LNG% default.po
 %~dp0\msgfmt %ProjectDir%\locale\%LNG%\lc_messages\default.po -o locale\%LNG%\lc_messages\default.mo
