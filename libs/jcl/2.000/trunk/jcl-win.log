@@ -1,0 +1,13 @@
+action success.
+starting action: Save log to file jcl-win.log
+Saving log to file jcl-win.log
+LogSave jcl-win.log
+action success.
+starting action: Create directory sandbox
+Created directory sandbox
+action success.
+starting action: Execute %SVN% in directory sandbox with parameters export -rBASE --native-eol CRLF --force ..\..\..\jcl\ .
+Executing C:\Program Files\Subversion\bin\svn.exe export -rBASE --native-eol CRLF --force ..\..\..\jcl\ . in directory sandbox
+Fin d'exportation.
+Execution success, return value was: 0
+action success.

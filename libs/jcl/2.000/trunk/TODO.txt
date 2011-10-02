@@ -1,0 +1,26 @@
+JclDebug
+--------
+* (Florent) TJclLocationInfoEx should replace TJclLocationInfo
+
+* ? merge TJclDebugThreadInfo/TJclDebugThreadList and TJclThreadInfo/TJclThreadInfoList
+  - investigate if the stack can stay a TJclStackInfoList and if the location information can be retrieved later correctly
+
+* remove AsCSV                                                                                           
+
+
+Expert
+------
+* serialization 
+  - (Done?) saving/loading
+  - (Done?) which classes for the viewer?
+    (for exam. JclDebug.TJclModuleInfoList vs. JclDebugStackUtils.TModuleList;
+     TJclModuleInfoList doesn't store the module name, because
+     this can be get from the handle which doesn't work in the viewer)
+
+* icon's
+
+* clean up/minor things
+  - use updated TJclFileEnumerator instead of TFileSearcher
+
+* integrate it into the installation
+  - commit packages for D5-D7, D9, D10
