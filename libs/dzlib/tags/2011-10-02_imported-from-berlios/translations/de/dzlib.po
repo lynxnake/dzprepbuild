@@ -1,0 +1,832 @@
+# dzlib
+# Copyright (C) 2008
+# This file is distributed under the same license as the dzlib package.
+# Thomas Mueller <dzlib@dummzeuch.de>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dzLib 1.0\n"
+"POT-Creation-Date: 2010-11-20 12:52\n"
+"PO-Revision-Date: 2010-07-13 10:18+0100\n"
+"Last-Translator: Thomas Mueller <info@schniering.com>\n"
+"Language-Team: Thomas Mueller <dzlib@dummzeuch.de>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: dxgettext 1.2.1\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+
+#: u_dzClassUtils.pas:382
+msgid "no matching object found"
+msgstr "kein passendes Objekt gefunden"
+
+#: u_dzClassUtils.pas:420
+#, object-pascal-format
+msgid "Invalid empty string value in ini file for [%s]%s"
+msgstr "Ungültige Leerstring-Wert in ini-Datei für [%s]%s"
+
+#: u_dzClassUtils.pas:451
+#, object-pascal-format
+msgid "Invalid floating point value %s in ini file for [%s]%s"
+msgstr "Ungültiger Fließkomawert %s in ini-Datei für [%s]%s"
+
+#: u_dzClassUtils.pas:465
+#, object-pascal-format
+msgid "Invalid integer value \"%s\" in ini file for [%s]%s"
+msgstr "Ungültiger Ganzzahlwert \"%s\" in ini-Datei für [%s]%s"
+
+#: u_dzConvertUtils.pas:397
+#, object-pascal-format
+msgid "Digit out of range %s"
+msgstr "Ungültige Ziffer %s"
+
+#: u_dzConvertUtils.pas:410
+#, object-pascal-format
+msgid "Digit #%d (%s) out of range"
+msgstr "Ungültige Ziffer #%d (%s)"
+
+#: u_dzConvertUtils.pas:618
+#, object-pascal-format
+msgid "\"%s\" is not a valid integer value: %s"
+msgstr "\"%s\" ist kein gültiger Integerwert: %s"
+
+#: u_dzConvertUtils.pas:636
+#, object-pascal-format
+msgid "\"%s\" is not a valid Int64 value: %s"
+msgstr "\"%s\" ist kein gültiger Int64 Wert: %s"
+
+#: u_dzConvertUtils.pas:702
+#, object-pascal-format
+msgid "\"%s\" is not a valid floating point value: %s"
+msgstr "\"%s\" ist kein gültiger Fließkommawert: %s"
+
+#: u_dzConvertUtils.pas:708
+#, no-object-pascal-format
+msgid "%.2f EiB"
+msgstr "%.2f EiB"
+
+#: u_dzConvertUtils.pas:710
+#, no-object-pascal-format
+msgid "%.2f PiB"
+msgstr "%.2f PiB"
+
+#: u_dzConvertUtils.pas:712
+#, no-object-pascal-format
+msgid "%.2f TiB"
+msgstr "%.2f TiB"
+
+#: u_dzConvertUtils.pas:714
+#, no-object-pascal-format
+msgid "%.2f GiB"
+msgstr "%.2f GiB"
+
+#: u_dzConvertUtils.pas:716
+#, no-object-pascal-format
+msgid "%.2f MiB"
+msgstr "%.2f MiB"
+
+#: u_dzConvertUtils.pas:718
+#, no-object-pascal-format
+msgid "%.2f KiB"
+msgstr "%.2f KiB"
+
+#: u_dzConvertUtils.pas:720
+#, object-pascal-format
+msgid "%d Bytes"
+msgstr "%d Bytes"
+
+#. Days and hours, ignore minutes and seconds
+#: u_dzConvertUtils.pas:727
+#, object-pascal-format
+msgid "%dd %dh"
+msgstr "%dd %dh"
+
+#. Hours and minutes, ignore seconds
+#: u_dzConvertUtils.pas:730
+#, object-pascal-format
+msgid "%dh %dm"
+msgstr "%dh %dm"
+
+#. Minutes and seconds
+#: u_dzConvertUtils.pas:733
+#, object-pascal-format
+msgid "%dm %ds"
+msgstr "%dm %ds"
+
+#. Seconds only
+#: u_dzConvertUtils.pas:736
+#, object-pascal-format
+msgid "%ds"
+msgstr "%ds"
+
+#: u_dzConvertUtils.pas:776
+#, object-pascal-format
+msgid "Length of byte array (%d) does not match size of a LongWord (%d)"
+msgstr "Länge des Byte-Arrays (%d) stimmt nicht mit der Größe eines Longwords (%d) überein"
+
+#: u_dzCustomDllLoader.pas:115 u_dzCustomDllLoader.pas:120
+#: u_dzCustomDllLoader.pas:125 u_dzCustomDllLoader.pas:130
+#: u_dzCustomDllLoader.pas:135 u_dzCustomDllLoader.pas:140
+#: u_dzCustomDllLoader.pas:145
+msgid "DLL entry point not initialized"
+msgstr "DLL Einsprungpunkt nicht initialisiert"
+
+#. Do not use ParamByName -> only works if param is unique
+#: u_dzDatasetHelpers.pas:534 u_dzDatasetHelpers.pas:553
+#, object-pascal-format
+msgid "SetParamByName is not supported for a %s (only TQuery and TAdoDataset descendants)."
+msgstr "SetParamByName wird für %s nicht unterstützt (nur TQuery- und TAdoDataset-Abkömmlinge)"
+
+#: u_dzDateUtils.pas:99
+msgid "Monday"
+msgstr "Montag"
+
+#: u_dzDateUtils.pas:100
+msgid "Tuesday"
+msgstr "Dienstag"
+
+#: u_dzDateUtils.pas:101
+msgid "Wednesday"
+msgstr "Mittwoch"
+
+#: u_dzDateUtils.pas:102
+msgid "Thursday"
+msgstr "Donnerstag"
+
+#: u_dzDateUtils.pas:103
+msgid "Friday"
+msgstr "Freitag"
+
+#: u_dzDateUtils.pas:104
+msgid "Saturday"
+msgstr "Samstag"
+
+#: u_dzDateUtils.pas:105
+msgid "Sunday"
+msgstr "Sonntag"
+
+#. should never happen ...
+#: u_dzDateUtils.pas:108
+#, object-pascal-format
+msgid "Invalid value for DayOfWeek: %d"
+msgstr "Ungültiger Wert für DayOfWeek: %d"
+
+#: u_dzDateUtils.pas:115
+msgid "January"
+msgstr "Januar"
+
+#: u_dzDateUtils.pas:116
+msgid "February"
+msgstr "Februar"
+
+#: u_dzDateUtils.pas:117
+msgid "March"
+msgstr "März"
+
+#: u_dzDateUtils.pas:118
+msgid "April"
+msgstr "April"
+
+#: u_dzDateUtils.pas:119
+msgid "May"
+msgstr "Mai"
+
+#: u_dzDateUtils.pas:120
+msgid "June"
+msgstr "Juni"
+
+#: u_dzDateUtils.pas:121
+msgid "July"
+msgstr "Juli"
+
+#: u_dzDateUtils.pas:122
+msgid "August"
+msgstr "August"
+
+#: u_dzDateUtils.pas:123
+msgid "September"
+msgstr "September"
+
+#: u_dzDateUtils.pas:124
+msgid "October"
+msgstr "Oktober"
+
+#: u_dzDateUtils.pas:125
+msgid "November"
+msgstr "November"
+
+#: u_dzDateUtils.pas:126
+msgid "December"
+msgstr "Dezember"
+
+#. should never happen ...
+#: u_dzDateUtils.pas:129
+#, object-pascal-format
+msgid "Invalid month number %d"
+msgstr "Ungültige Monatsnummer %d"
+
+#: u_dzDllLoader.pas:98
+#, object-pascal-format
+msgid "Could not load %s."
+msgstr "Konnte %s nicht laden."
+
+#: u_dzDllLoader.pas:119 u_dzResourceDllLoader.pas:423
+#, object-pascal-format
+msgid ""
+"Could not find entry point %s in %s\n"
+"ERROR= %%d, %%s"
+msgstr ""
+"Konnte Einsprungpunkt %s nicht in %s finden\n"
+"Fehler: %%d, %%s"
+
+#: u_dzExecutor.pas:247
+msgid "Can not free Executor while a process using redirection is still running."
+msgstr "Kann Executor nicht freigeben während noch ein Prozess mit Ein-/Ausgabeumleitung läuft."
+
+#: u_dzExecutor.pas:285
+#, object-pascal-format
+msgid ""
+"Process has not yet been started.\n"
+"%s"
+msgstr ""
+"Prozess wurde noch nicht gestarted.\n"
+"%s"
+
+#: u_dzExecutor.pas:286
+#, object-pascal-format
+msgid ""
+"Process is still running.\n"
+"%s"
+msgstr ""
+"Prozess läuft noch.\n"
+"%s"
+
+#: u_dzExecutor.pas:287
+#, object-pascal-format
+msgid ""
+"Process has terminated.\n"
+"%s"
+msgstr ""
+"Prozess ist beendet.\n"
+"%s"
+
+#: u_dzExecutor.pas:318
+msgid "Process has not yet been started"
+msgstr "Prozess wurde noch nicht gestartet"
+
+#: u_dzExecutor.pas:356
+msgid "Process has already been started."
+msgstr "Prozess wurde bereits gestartet"
+
+#. pointer to PROCESS_INF
+#: u_dzExecutor.pas:447
+#, object-pascal-format
+msgid "%%1:s (%%0:d) in CreateProcess(\"%s\", \"%s\")"
+msgstr "%%1:s (%%0:d) in CreateProcess(\"%s\", \"%s\")"
+
+#: u_dzExecutor.pas:473
+msgid "StdErr was not redirected"
+msgstr "StdErr wurde nicht umgeleitet"
+
+#: u_dzExecutor.pas:489
+msgid "StdOut was not redirected"
+msgstr "StdOut wurde nicht umgeleitet"
+
+#: u_dzFileStreams.pas:259
+#, object-pascal-format
+msgid "%%1:s (%%0:d) trying to open \"%s\""
+msgstr "%%1:s (%%0:d) beim Öffnen von \"%s\""
+
+#: u_dzFileStreams.pas:307
+msgid "Invalid file attributes"
+msgstr "Ungültige Dateiattribute"
+
+#: u_dzFileStreams.pas:319
+msgid "Invalid file flags"
+msgstr "Ungültige Dateiflags"
+
+#: u_dzFileStreams.pas:338
+msgid "Cannot change filename when file is open."
+msgstr "Kann Dateinamen nicht ändern wenn Datei geöffnet ist."
+
+#. GetLastError must be called before _(), otherwise the error code gets lost
+#: u_dzFileUtils.pas:919
+#, no-object-pascal-format
+msgid "TFileSystem.GetTempPath: %1:s (code: %0:d) calling Windows.GetTempPath"
+msgstr "TFileSystem.GetTempPath: %1:s (code: %0:d) beim Aufruf von Windows.GetTempPath"
+
+#. GetLastError must be called before _(), otherwise the error code gets lost
+#: u_dzFileUtils.pas:927
+#, no-object-pascal-format
+msgid "TFileSystem.GetTempPath: %1:s (code: %0:d) calling Windows.GetTempPath (2nd)"
+msgstr "TFileSystem.GetTempPath: %1:s (code: %0:d) beim Aufruf von Windows.GetTempPath (zweiter)"
+
+#. duplicate % so they get passed through the format function
+#. duplicate % so they get passed through the format function
+#: u_dzFileUtils.pas:944 u_dzFileUtils.pas:1502
+#, object-pascal-format
+msgid "Error %%1:s (%%0:d) creating directory \"%s\""
+msgstr "Fehler %%1:s (%%0:d) beim Erstellen des Verzeichnisses \"%s\""
+
+#: u_dzFileUtils.pas:968
+#, object-pascal-format
+msgid "Could not find a unique directory name based on \"%s\""
+msgstr "Konnte keinen eindeutigen Verzeichnisnamen basierend auf \"%s\" finden."
+
+#. GetLastError must be called before _(), otherwise the error code gets lost
+#: u_dzFileUtils.pas:986
+#, no-object-pascal-format
+msgid "TFileSystem.GetTempFilename: %1:s (Code: %0:d) calling Windows.GetTempFileName"
+msgstr "TFileSystem.GetTempFilename: %1:s (Code: %0:d) beim Aufruf von Windows.GetTempFileName"
+
+#: u_dzFileUtils.pas:1041 u_dzFileUtils.pas:1047
+#, object-pascal-format
+msgid "File not found: \"%s\""
+msgstr "Datei nicht gefunden: \"%s\""
+
+#: u_dzFileUtils.pas:1092
+#, no-object-pascal-format
+msgid "TFileSystem.GetShortPathname: %1:s (Code: %0:d) calling Windows.GetShortPathname"
+msgstr "TFileSystem.GetShortPathname: %1:s (Code: %0:d) beim Aufruf von Windows.GetShortPathname"
+
+#: u_dzFileUtils.pas:1094
+#, object-pascal-format
+msgid "Short pathname is longer than MAX_PATH (%d) characters"
+msgstr "Kurzer Pfad ist länger als MAX_PATH (%d) Zeichen"
+
+#. duplicate % so they get passed through the format function
+#: u_dzFileUtils.pas:1106
+#, object-pascal-format
+msgid "Error %%1:s (%%0:d) while trying to move \"%s\" to \"%s\"."
+msgstr "Fehler %%1:s (%%0:d) beim Verschieben von \"%s\" nach \"%s\"."
+
+#. duplicate % so they get passed through the format function
+#: u_dzFileUtils.pas:1124
+#, object-pascal-format
+msgid "Error %%1:s (%%0:d) while changing the readonly flag of \"%s\""
+msgstr "Fehler %%1:s (%%0:d) beim Ändern des Schreibschutz-Flags von \"%s\""
+
+#. duplicate % so they get passed through the format function
+#. duplicate % so they get passed through the format function
+#. duplicate % so they get passed through the format function
+#: u_dzFileUtils.pas:1144 u_dzFileUtils.pas:1270 u_dzFileUtils.pas:1343
+#, object-pascal-format
+msgid "Error %%1:s (%%0:d) while trying to copy \"%s\" to \"%s\"."
+msgstr "Fehler %%1:s (%%0:d) beim Kopieren von \"%s\" nach \"%s\"."
+
+#: u_dzFileUtils.pas:1258
+#, object-pascal-format
+msgid "Error %s (%s) in progress callback while trying to copy \"%s\" to \"%s\"."
+msgstr "Fehler %s (%s) im Fortschritts-Callback beim Kopieren von \"%s\" nach \"%s\"."
+
+#. duplicate % so they get passed through the format function
+#: u_dzFileUtils.pas:1373
+#, object-pascal-format
+msgid "Error %%1:s (%%0:d) deleting file \"%s\""
+msgstr "Fehler %%1:s (%%0:d) beim Löschen der Datei \"%s\""
+
+#: u_dzFileUtils.pas:1443
+#, object-pascal-format
+msgid "File not found: %s"
+msgstr "Datei nicht gefunden: %s"
+
+#: u_dzFileUtils.pas:1457
+#, object-pascal-format
+msgid "Directory not found: %s"
+msgstr "Verzeichnis nicht gefunden: \"%s\""
+
+#. ForceDirectories can raise EInOutError if the directory path contains empty parts
+#: u_dzFileUtils.pas:1494
+#, object-pascal-format
+msgid "Error creating directory \"%s\": %s (%s)"
+msgstr "Fehler beim Erstellen des Verzeichnisses \"%s\": %s (%s)"
+
+#. duplicate % so they get passed through the format function
+#: u_dzFileUtils.pas:1521
+#, object-pascal-format
+msgid "Error %%1:s (%%0:d) deleting directory \"%s\""
+msgstr "Fehler %%1:s (%%0:d) beim Löschen des Verzeichnisses \"%s\""
+
+#: u_dzFileUtils.pas:1539
+#, object-pascal-format
+msgid "\"%s\" does not exist or is not a directory"
+msgstr "\"%s\" existiert nicht oder ist kein Verzeichnis"
+
+#: u_dzFileUtils.pas:1813
+msgid "Combination of ResultContainsNumber and KeepOriginal is not allowed"
+msgstr "Kombination von ResultContainsNumber und KeepOriginal ist nicht erlaubt"
+
+#: u_dzGoogleTranslate.pas:238
+#, object-pascal-format
+msgid "Parsing error on JSON answer: Root object size is %d not 3."
+msgstr "Parsing-Fehler der JSON Antwort: Größe des Root Objekts ist %d nicht 3."
+
+#: u_dzGoogleTranslate.pas:243
+#, object-pascal-format
+msgid "Parsing error on JSON answer: First pair name is \"%s\" not \"responseData\"."
+msgstr "Parsing-Fehler der JSON Antwort: Das erste Paar ist \"%s\" nicht \"responseData\"."
+
+#: u_dzGoogleTranslate.pas:250
+#, object-pascal-format
+msgid "Parsing error on JSON answer: responseData object size is %d not 1."
+msgstr "Parsing-Fehler der JSON Antwort: Größé des responseData Objekts ist %d nicht 1."
+
+#: u_dzGoogleTranslate.pas:254
+#, object-pascal-format
+msgid "Parsing error on JSON answer: First responseData pair is \"%s\" not \"translatedText\"."
+msgstr "Parsing-Fehler der JSON Antwort: Erstes responseData Paar ist \"%s\" nicht \"translatedText\"."
+
+#: u_dzGoogleTranslate.pas:257
+msgid "Parsing error on JSON answer: translatedText data is not a string."
+msgstr "Parsing-Fehler der JSON Antwort: translatedText ist keine Zeichenkette."
+
+#: u_dzGoogleTranslate.pas:260
+msgid "Parsing error on JSON answer: responseData is neither NULL nor an object."
+msgstr "Parsing-Fehler der JSON Antwort: responseData ist weder NULL noch ein Objekt."
+
+#: u_dzGoogleTranslate.pas:264
+#, object-pascal-format
+msgid "Parsing error on JSON answer: Second pair name is \"%s\" not \"responseDetails\"."
+msgstr "Parsing-Fehler der JSON Antwort: Name des zweiten Paares ist \"%s\" nicht \"responseDetails\"."
+
+#: u_dzGoogleTranslate.pas:271
+msgid "Parsing error on JSON answer: responseDetails is neither NULL nor a string."
+msgstr "Parsing-Fehler der JSON Antwort: responseDetails ist weder NULL noch eine Zeichenkette."
+
+#: u_dzGoogleTranslate.pas:275
+#, object-pascal-format
+msgid "Parsing error on JSON answer: Thrid pair name is \"%s\" not \"responseStatus\"."
+msgstr "Parsing-Fehler der JSON Antwort: Name des dritten Paares ist \"%s\" nicht \"responseStatus\"."
+
+#: u_dzGoogleTranslate.pas:278
+msgid "Parsing error on JSON answer: responseStatus is not a number."
+msgstr "Parsing-Fehler der JSON Antwort: responsestatus ist keine Zahl."
+
+#. do not translate
+#: u_dzMiscUtils.pas:254
+#, no-object-pascal-format
+msgid "unknown Registry Root Key %x"
+msgstr "unbekannter Registry Rook-Key %x"
+
+#. do not translate
+#: u_dzMiscUtils.pas:267
+msgid "unknown RegDataType"
+msgstr "unbekannter RegDataType"
+
+#: u_dzMiscUtils.pas:296 u_dzMiscUtils.pas:314
+msgid "unknown OS error"
+msgstr "Unbekannter Betriebssystemfehler"
+
+#: u_dzMutex.pas:48
+#, no-object-pascal-format
+msgid "Error \"%1:s (%0:d)\" while trying to acquire mutex."
+msgstr "Fehler %1:s (%0:d) beim Versuch das Mutex zu erwerben."
+
+#: u_dzNameValueList.pas:96
+#, object-pascal-format
+msgid "Entry \"%s\" not found."
+msgstr "Eintrag \"%s\" nicht gefunden."
+
+#: u_dzNullableDateTime.pas:183
+msgid "NullableDateTime is invalid"
+msgstr "NullableDateTime ist ungültig"
+
+#: u_dzOsUtils.pas:149
+#, object-pascal-format
+msgid "%s (code %d) calling Windows.GetUsername"
+msgstr "%s (Code %d) beim Aufruf von Windows.GetUsername"
+
+#. 16 KB should be enough for everybody... ;-)
+#: u_dzOsUtils.pas:169
+#, no-object-pascal-format
+msgid "Error %1:s (%0:d) calling Windows.ExpandEnvironmentStrings"
+msgstr "Fehler %1:s (%0:d) beim Aufruf von Windows.ExpandEnvironmentStrings"
+
+#: u_dzOsUtils.pas:359 u_dzOsUtils.pas:374
+#, object-pascal-format
+msgid "No version information available for %s"
+msgstr "Keine Versionsinfirmationen fuer %s verfügbar"
+
+#: u_dzRecordArray.pas:67
+msgid "New capacity cannot be less than current length."
+msgstr "Neue Kapazität kann nicht kleiner sein als aktuelle Länge."
+
+#: u_dzResourceDllLoader.pas:220
+#, object-pascal-format
+msgid "Could not find RESOURCEDLL \"%s\""
+msgstr "Konnte RESOURCEDLL \"%s\" nicht finden"
+
+#: u_dzResourceDllLoader.pas:224
+#, object-pascal-format
+msgid "Could not load RESOURCEDLL \"%s\""
+msgstr "Konnte RESOURCEDLL \"%s\" nicht laden."
+
+#: u_dzResourceDllLoader.pas:228
+#, object-pascal-format
+msgid "Could not lock RESOURCEDLL \"%s\""
+msgstr "Konnte RESOURCEDLL \"%s\" nicht sperren."
+
+#: u_dzResourceDllLoader.pas:233
+#, object-pascal-format
+msgid "RESOURCEDLL \"%s\" is not valid (Check #1)"
+msgstr "RESOURCEDLL \"%s\" ist nicht gültig (Prüfung #1)"
+
+#: u_dzResourceDllLoader.pas:237
+#, object-pascal-format
+msgid "RESOURCEDLL \"%s\" is not valid (Check #2)"
+msgstr "RESOURCEDLL \"%s\" ist nicht gültig (Prüfung #2)"
+
+#: u_dzResourceDllLoader.pas:242
+#, object-pascal-format
+msgid "RESOURCEDLL \"%s\" is not valid (Check #3)"
+msgstr "RESOURCEDLL \"%s\" ist nicht gültig (Prüfung #3)"
+
+#: u_dzRingBuffer.pas:247 u_dzRingBuffer.pas:258
+#, object-pascal-format
+msgid "Index %d out of bounds."
+msgstr "Index %d nicht im gültigen Bereich."
+
+#: u_dzStatistics.pas:69
+msgid "Cannot calculate moving average on zero elements"
+msgstr "Kann gleitenden Mittelwert nicht für Null Elemente berechnen"
+
+#: u_dzStringUtils.pas:458
+msgid "nthWord: 0th word not available"
+msgstr "nthWord: 0tes Wort ist nicht verfügbar"
+
+#: u_dzStringUtils.pas:971
+msgid "Cannot center string that is larger than the maximum length."
+msgstr "Kann keinen String zentrieren, der länger als die maximale Länge ist."
+
+#: u_dzStringUtils.pas:1047
+msgid "Strings do not have a 0th character."
+msgstr "Strings haben kein 0tes Zeichen."
+
+#: u_dzTextFile.pas:54
+#, object-pascal-format
+msgid "Invalid file access value (%d)"
+msgstr "Ungültiger Dateizugriffswert (%d)"
+
+#: u_dzTextFile.pas:58
+#, object-pascal-format
+msgid "%s accessing file %s"
+msgstr "%s beim Zugriff auf Datei %s"
+
+#. do not translate
+#. do not translate
+#. do not translate
+#. do not translate
+#. do not translate
+#. do not translate
+#: u_dzVariantUtils.pas:300 u_dzVariantUtils.pas:329 u_dzVariantUtils.pas:355
+#: u_dzVariantUtils.pas:456 u_dzVariantUtils.pas:472 u_dzVariantUtils.pas:524
+#, object-pascal-format
+msgid "Variant is Null, should be %s: %s"
+msgstr "Variant ist Null, sollte %s sein: %s"
+
+#: u_dzVariantUtils.pas:302 u_dzVariantUtils.pas:331 u_dzVariantUtils.pas:357
+#: u_dzVariantUtils.pas:458 u_dzVariantUtils.pas:474 u_dzVariantUtils.pas:526
+#, object-pascal-format
+msgid "Variant is Empty, should be %s: %s"
+msgstr "Variant ist leer, sollte %s sein: %s"
+
+#: u_dzVariantUtils.pas:307 u_dzVariantUtils.pas:336 u_dzVariantUtils.pas:362
+#: u_dzVariantUtils.pas:463 u_dzVariantUtils.pas:479 u_dzVariantUtils.pas:531
+#, object-pascal-format
+msgid "Variant can not be converted to %s: %s"
+msgstr "Variant kann nicht nach %s konvertiert werden: %s"
+
+#. do not translate
+#. do not translate
+#. do not translate
+#. do not translate
+#: u_dzVariantUtils.pas:413 u_dzVariantUtils.pas:427 u_dzVariantUtils.pas:441
+#: u_dzVariantUtils.pas:509
+#, object-pascal-format
+msgid "Variant can not be converted to %s"
+msgstr "Variant kann nicht nach %s konvertiert werden"
+
+#: u_dzVclUtils.pas:636
+#, object-pascal-format
+msgid "Glyph string contained invalid character at position %d."
+msgstr "Der Glyph-Text beinhaltet ein ungültiges Zeichen an Position %d."
+
+#: u_dzVclUtils.pas:894 u_dzVclUtils.pas:941
+#, object-pascal-format
+msgid "\"%s\" is not a valid floating point value."
+msgstr "\"%s\" ist kein gültiger Fließkommawert."
+
+#: u_dzVclUtils.pas:909 u_dzVclUtils.pas:973 u_dzVclUtils.pas:986
+#, object-pascal-format
+msgid "\"%s\" is not a valid integer value."
+msgstr "\"%s\" ist kein gültiger Integerwert."
+
+#: u_dzVclUtils.pas:1382
+msgid "No item selected in combobox"
+msgstr "Kein Eintrag der Combobox ausgewählt"
+
+#: u_dzVclUtils.pas:1401
+msgid "No item selected in listbox"
+msgstr "Kein Eintrag der Listbox ausgewählt"
+
+#: u_dzVclUtils.pas:1965
+msgid "JPEG Files"
+msgstr "JPEG Dateien"
+
+#: u_dzVersionInfo.pas:277
+#, object-pascal-format
+msgid "Invalid version part (%d)"
+msgstr "Ungültiger Versions-Teil (%d)"
+
+#: u_dzVersionInfo.pas:280
+msgid "<no version information>"
+msgstr "<Keine Versionsinfirmationen>"
+
+#: u_dzVersionInfo.pas:322
+msgid "Invalid version info"
+msgstr "Ungültige Versionsinformationen"
+
+#. f_dzInputDialog..Caption
+#: w_dzInputDialog.dfm:5
+msgid "InputQuery"
+msgstr "InputQuery"
+
+#. f_dzInputDialog..l_Query..Caption
+#: w_dzInputDialog.dfm:25
+msgid "Query goes here"
+msgstr "Die Frage kommt hierher"
+
+#. f_dzInputDialog..b_Ok..Caption
+#: w_dzInputDialog.dfm:41
+msgid "OK"
+msgstr "OK"
+
+#. f_dzInputDialog..b_Cancel..Caption
+#. f_dzWizard..p_Buttons..b_Cancel..Caption
+#. f_dzWizardForm..p_Buttons..b_Cancel..Caption
+#: w_dzInputDialog.dfm:53 w_dzWizard.dfm:1223 w_dzWizardForm.dfm:1223
+#: w_dzWizard.pas:340 w_dzWizardForm.pas:225
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#. f_dzProgress..Caption
+#: w_dzProgress.dfm:6
+msgid "Progress"
+msgstr "Fortschritt"
+
+#. f_dzProgress..l_Action..Caption
+#: w_dzProgress.dfm:25
+msgid "Action"
+msgstr "Aktion"
+
+#. f_dzProgress..b_Cancel..Caption
+#: w_dzProgress.dfm:42
+msgid "Abort"
+msgstr "Abbrechen"
+
+#. f_dzWizard..p_Buttons..b_Next..Caption
+#. f_dzWizardForm..p_Buttons..b_Next..Caption
+#: w_dzWizard.dfm:1210 w_dzWizardForm.dfm:1210 w_dzWizard.pas:341
+#: w_dzWizardForm.pas:226
+msgid "&Next >"
+msgstr "&Weiter >"
+
+#. f_dzWizard..p_Buttons..b_Prev..Caption
+#. f_dzWizardForm..p_Buttons..b_Prev..Caption
+#: w_dzWizard.dfm:1233 w_dzWizardForm.dfm:1233 w_dzWizard.pas:339
+#: w_dzWizardForm.pas:224
+msgid "< &Previous"
+msgstr "< &Zurück"
+
+#: w_dzDialog.pas:332
+#, object-pascal-format
+msgid "Invalid modal result %d."
+msgstr "Ungültiger modaler Rückgabewert %d."
+
+#: w_dzDialog.pas:519
+msgid "Do not show again."
+msgstr "Nicht nochmal anzeigen."
+
+#: w_dzDialog.pas:601
+#, object-pascal-format
+msgid ""
+"An error occurred:\n"
+"%s"
+msgstr ""
+"Es ist ein Fehler aufgetreten:\n"
+"%s"
+
+#. 400;
+#: w_dzDialog.pas:625
+msgid "Additional information:"
+msgstr "Erweiterte Informationen:"
+
+#: w_dzDialog.pas:645 w_dzDialog.pas:755 w_dzDialog.pas:802
+msgid "&Details >>"
+msgstr "&Details >>"
+
+#: w_dzDialog.pas:805
+msgid "&Details <<"
+msgstr "&Details <<"
+
+#: w_dzProgress.pas:95
+#, object-pascal-format
+msgid "Progress (%d%%)"
+msgstr "Fortschritt (%d%%)"
+
+#: w_dzProgress.pas:106
+msgid "Do you really want to abort?"
+msgstr "Wollen Sie wirklich abbrechen?"
+
+#: w_dzProgress.pas:170
+#, no-object-pascal-format
+msgid "must not contain a % at the end"
+msgstr "darf am Ende kein % enthalten"
+
+#: w_dzProgress.pas:179
+#, no-object-pascal-format
+msgid "\"%\" must be followed by \"d\" or \"%\"."
+msgstr "Auf \"%\" muss \"d\" oder \"%\" folgen"
+
+#: w_dzProgress.pas:185
+msgid "too many parameters"
+msgstr "Zuviele Parameter"
+
+#: w_dzProgress.pas:197
+#, object-pascal-format
+msgid "Invalid FormCaption, %s"
+msgstr "Ungültige Formularüberschrift \"%s\""
+
+#: w_dzWizard.pas:342 w_dzWizardForm.pas:227
+msgid "&Finish"
+msgstr "&Fertigstellen"
+
+#: w_dzWizard.pas:478
+msgid "Already on first page."
+msgstr "Bereits auf erster Seite."
+
+#: u_dzDbCreatorDescription.pas:754
+msgid "Invalid TNullAllowed value"
+msgstr "Ungültiger TNullAllowed Wert"
+
+#: u_dzDbCreatorDescription.pas:765
+#, object-pascal-format
+msgid "%s is not in 'yes'/'no'"
+msgstr "%s ist nicht in 'yes'/'no'"
+
+#: u_dzDbCreatorDescription.pas:774
+msgid "Invalid TSortOrder value"
+msgstr "Ungültiger TSortOrder Wert"
+
+#: u_dzDbCreatorDescription.pas:785
+#, object-pascal-format
+msgid "%s is not a valid TSortOrder name"
+msgstr "\"%s\" ist kein gültiger TSortOrder Name"
+
+#: u_dzDbCreatorDescription.pas:798
+msgid "Invalid TFieldDataType value"
+msgstr "Ungültiger TFieldDataType-Wert"
+
+#: u_dzDbCreatorDescription.pas:817
+#, object-pascal-format
+msgid "%s is not a valid TFieldDataType name"
+msgstr "%s ist kein gültiger TFieldDataTyp-Name"
+
+#: u_dzDbCreatorDescription.pas:835
+msgid "Invalid boolean value"
+msgstr "Ungültiger Wahrheitswert"
+
+#: u_dzDbCreatorDescription.pas:896
+msgid "Data type of foreign key and primary key of referenced table do not match"
+msgstr "Datentyp des Fremdschlüssels und des Primärschlüssels der referenzierten Tabelle sind unterschiedlich"
+
+#: u_dzDbCreatorDescription.pas:1181
+#, object-pascal-format
+msgid "Could not append index %s. Table %s already has a primary key."
+msgstr "Konnte Index %s nicht hinzufügen. Tabelle %s hat schon einen Primärschlüssel."
+
+#: u_dzDbCreatorDescription.pas:1186
+#, object-pascal-format
+msgid "Could not append index %s. Table %s already has a index with that name."
+msgstr "Konnte Index %s nicht hinzufügen. Tabelle %s hat schon einen Index mit diesem Namen."
+
+#: u_dzDbCreatorDescription.pas:1536
+msgid "Cyclic table references detected"
+msgstr "Zyklische Tabellenreferenz gefunden"
+
+#: u_dzDbCreatorDescription.pas:1626 u_dzDbCreatorDescription.pas:1635
+#, object-pascal-format
+msgid "Table has no column with name \"%s\""
+msgstr "Tabelle hat keine Spalte mit dem Namen \"%s\""
+
+#: u_dzDbCreatorDescription.pas:1797
+#, object-pascal-format
+msgid "Can not apply default %s, no variable with that name."
+msgstr "Kann Default %s nicht benutzen, es gibt keine Variable mit diesem Namen."
+
+#: u_dzDbCreatorDescription.pas:2196
+#, object-pascal-format
+msgid "There is no script named %s in this db type"
+msgstr "Es gibt kein Script mit dem Namen %s für diesen DB-Typ"
+
