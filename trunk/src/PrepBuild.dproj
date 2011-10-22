@@ -26,16 +26,17 @@
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base)'!=''">
+			<DCC_DcuOutput>..\$(Config)\$(Platform)\dcu</DCC_DcuOutput>
 			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;$(DCC_UnitAlias)</DCC_UnitAlias>
-			<DCC_UnitSearchPath>$(BDS)\lib\Debug;..\libs\dzlib\src;..\libs\dztemplates\templates;..\libs\dztemplates\units;..\libs\dzCmdLineParser\src;..\libs\jcl\source\include;..\libs\jcl\source\common;..\libs\jcl\source\windows;..\libs\jcl\source\vcl;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+			<DCC_UnitSearchPath>$(BDS)\lib\Debug;..\libs\dzlib\src;..\libs\dzlib\templates;..\libs\jcl\source\include;..\libs\jcl\source\common;..\libs\jcl\source\windows;..\libs\jcl\source\vcl;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
 			<DCC_DependencyCheckOutputName>PrepBuild.exe</DCC_DependencyCheckOutputName>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_1)'!=''">
+			<DCC_ExeOutput>..</DCC_ExeOutput>
 			<Version>7.0</Version>
 			<DCC_DebugInformation>False</DCC_DebugInformation>
 			<DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
 			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
-			<DCC_DcuOutput>dcu</DCC_DcuOutput>
 			<DCC_ObjOutput>dcu</DCC_ObjOutput>
 			<DCC_HppOutput>dcu</DCC_HppOutput>
 			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
@@ -43,7 +44,6 @@
 		<PropertyGroup Condition="'$(Cfg_2)'!=''">
 			<DCC_DependencyCheckOutputName>..\PrepBuild.exe</DCC_DependencyCheckOutputName>
 			<Version>7.0</Version>
-			<DCC_DcuOutput>$(TEMP)\dzprepbuild\dcu\</DCC_DcuOutput>
 			<DCC_ObjOutput>z:\dcu\dzprepbuild</DCC_ObjOutput>
 			<DCC_HppOutput>z:\dcu\dzprepbuild</DCC_HppOutput>
 			<DCC_Define>DEBUG;no_translation;NO_TRANSLATION_HINT;$(DCC_Define)</DCC_Define>
@@ -127,10 +127,10 @@
 			<DCCReference Include="u_CentralIniVersionInfo.pas"/>
 			<DCCReference Include="u_PrepBuildMain.pas"/>
 			<DCCReference Include="u_VersionInfo.pas"/>
-			<DCCReference Include="..\libs\dzCmdLineParser\src\u_dzDefaultMain.pas"/>
 			<DCCReference Include="..\libs\dzlib\forms\w_dzDialog.pas">
 				<Form>f_dzDialog</Form>
 			</DCCReference>
+			<DCCReference Include="..\libs\dzlib\src\u_dzDefaultMain.pas"/>
 			<BuildConfiguration Include="Debug">
 				<Key>Cfg_2</Key>
 				<CfgParent>Base</CfgParent>

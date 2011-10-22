@@ -12,7 +12,7 @@ pushd %directory%
 
 echo building project %project%.dproj
 
-call buildtools\InitForDelphi2011.cmd
+call buildtools\InitForDelphiXE.cmd
 
 pushd src
 msbuild %project%.dproj
