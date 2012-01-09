@@ -87,7 +87,7 @@ begin
     WriteLn(t, {    } '}');
     if _Icon <> '' then begin
       WriteLn(t);
-      WriteLn(t, Format('MAINICON ICON LOADONCALL MOVEABLE DISCARDABLE IMPURE %s', [ChangeFileExt(_Icon, '.ico')]));
+      WriteLn(t, Format('MAINICON ICON LOADONCALL MOVEABLE DISCARDABLE IMPURE "%s"', [ChangeFileExt(_Icon, '.ico')]));
     end;
   finally
     Close(t);
@@ -193,24 +193,29 @@ begin
     DumpCmd;
 
   Project := '';
-  if FGetOpt.OptionPassed('ReadDof', Project) then
+  if FGetOpt.OptionPassed('ReadDof', Project) then begin
+    Project := UnquoteStr(Project);
     VerInfoAccess := TDofVersionInfo.Create(Project);
+  end;
 
   if FGetOpt.OptionPassed('ReadBdsProj', Project) then begin
     if Assigned(VerInfoAccess) then
       raise Exception.Create(_('You can only pass one of --ReadDof, --ReadBdsproj, --ReadDproj or --ReadIni'));
+    Project := UnquoteStr(Project);
     VerInfoAccess := Tdm_BdsProjVersionInfo.Create(Project);
   end;
 
   if FGetOpt.OptionPassed('ReadIni', Project) then begin
     if Assigned(VerInfoAccess) then
       raise Exception.Create(_('You can only pass one of --ReadDof, --ReadBdsproj, --ReadDproj  or --ReadIni'));
+    Project := UnquoteStr(Project);
     VerInfoAccess := TCentralIniVersionInfo.Create(Project);
   end;
 
   if FGetOpt.OptionPassed('ReadDproj', Project) then begin
     if Assigned(VerInfoAccess) then
       raise Exception.Create(_('You can only pass one of --ReadDof, --ReadBdsproj, --ReadDproj  or --ReadIni'));
+    Project := UnquoteStr(Project);
     VerInfoAccess := Tdm_DProjVersionInfo.Create(Project);
   end;
 
@@ -327,16 +332,19 @@ begin
       VerInfoAccess.WriteToFile(VersionInfo);
     end;
 
-    if FGetOpt.OptionPassed('Icon', IconFile) then
-      WriteLn('Adding icon to rcfile from ', IconFile)
-    else
+    if FGetOpt.OptionPassed('Icon', IconFile) then begin
+      IconFile := UnquoteStr(IconFile);
+      WriteLn('Adding icon to rcfile from ', IconFile);
+    end else
       IconFile := '';
 
     if FGetOpt.OptionPassed('WriteRc', Param) then begin
+      Param := UnquoteStr(Param);
       WriteRcFile(Param, VersionInfo, IconFile);
     end;
 
     if FGetOpt.OptionPassed('Exec', Param) then begin
+      Param := UnquoteStr(Param);
       WriteLn('Executing ', Param);
       Flush(Output);
       HandleExecOption(Param, VersionInfo, Project);
