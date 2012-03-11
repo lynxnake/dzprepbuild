@@ -1,6 +1,6 @@
 @echo off
-REM - nimmt an, dass das uebergeordnete Verzeichnis gleichzeitig der Name des Projekts ist,
-REM - extrahiert ihn und ruft dann msbuild mit %projekt%.dproj auf.
+REM - assumes that the parent directory is also the project name, extracts it
+REM - and calls msbuild with %project%.dproj
 
 setlocal
 if not "%project%"=="" goto projgiven
@@ -10,17 +10,19 @@ pushd %directory%
 
 :projgiven
 
-echo building project %project%.dproj
+echo building project %project%.dproj using Delphi XE
 
-call buildtools\InitForDelphiXE.cmd
+call buildtools\delphiversions.cmd
+
+call "%DelphiXEDir%\bin\rsvars.bat"
 
 pushd src
-msbuild %project%.dproj
+msbuild %project%.dproj | ..\buildtools\msbuildfilter
 popd
 popd
-endlocal
 
 if errorlevel 1 goto error
+endlocal
 if "%BatchBuild%"=="1" goto nopause
 pause
 :nopause
@@ -30,15 +32,16 @@ goto :eof
 echo ************************************
 echo ***** Error building %project% *****
 echo ************************************
+endlocal
 pause
 goto :eof
 
 :GetLastDir
-rem Pfad extrahieren
+rem extract path
 set directory=%~p1%
-rem backslash (=letztes Zeichen)  entfernen
+rem remove backslash (=last character)
 set directory=%directory:~0,-1%
-rem "Dateinamen" (= letztes Verzeichnis des Pfades) extrahieren
+rem extract "filename" (= last directory of path)
 call :LastItem %directory%
 goto :eof
 
