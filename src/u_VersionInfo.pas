@@ -25,6 +25,8 @@ type
     FOriginalFilename: string;
     FComments: string;
     FSource: string;
+    FSvnRevision: Integer;
+    FBuildDateTime: string;
     function ResolveVariable(const _s: string): string;
     procedure AdjustFilename(var _Filename: string);
   protected
@@ -62,6 +64,10 @@ type
     procedure SetOriginalFilename(_OriginalFilename: string); virtual;
     procedure SetProductName(_ProductName: string); virtual;
     procedure SetProductVersion(_ProductVersion: string); virtual;
+    function GetSvnRevision: Integer; virtual;
+    function GetBuildDateTime: string; virtual;
+    procedure SetSvnRevision(const _SvnRevision: Integer); virtual;
+    procedure SetBuildDateTime(const _BuildDateTime: string); virtual;
   public
     procedure UpdateFileVersion;
     function ResolveVariables(const _s: string): string;
@@ -85,6 +91,8 @@ type
     property OriginalFilename: string read GetOriginalFilename write SetOriginalFilename;
     property ProductName: string read GetProductName write SetProductName;
     property ProductVersion: string read GetProductVersion write SetProductVersion;
+    property SvnRevision: Integer read GetSvnRevision write SetSvnRevision;
+    property BuildDateTime: string read GetBuildDateTime write SetBuildDateTime;
   end;
 
 implementation
@@ -120,6 +128,8 @@ begin
   OriginalFilename := _VersionInfo.OriginalFilename;
   ProductName := _VersionInfo.ProductName;
   ProductVersion := _VersionInfo.ProductVersion;
+  SvnRevision := _VersionInfo.SvnRevision;
+  BuildDateTime := _VersionInfo.BuildDateTime;
 end;
 
 procedure TVersionInfo.AdjustFilename(var _Filename: string);
@@ -197,6 +207,11 @@ begin
   Result := FBuild;
 end;
 
+function TVersionInfo.GetBuildDateTime: string;
+begin
+  Result := FBuildDateTime;
+end;
+
 function TVersionInfo.GetComments: string;
 begin
   Result := FComments;
@@ -262,6 +277,11 @@ begin
   Result := FRelease;
 end;
 
+function TVersionInfo.GetSvnRevision: Integer;
+begin
+  Result := FSvnRevision;
+end;
+
 procedure TVersionInfo.SetAutoIncBuild(_AutoIncBuild: boolean);
 begin
   FAutoIncBuild := _AutoIncBuild;
@@ -270,6 +290,11 @@ end;
 procedure TVersionInfo.SetBuild(_Build: integer);
 begin
   FBuild := _Build;
+end;
+
+procedure TVersionInfo.SetBuildDateTime(const _BuildDateTime: string);
+begin
+  FBuildDateTime := _BuildDateTime;
 end;
 
 procedure TVersionInfo.SetComments(const _Comments: string);
@@ -335,6 +360,11 @@ end;
 procedure TVersionInfo.SetRelease(_Release: integer);
 begin
   FRelease := _Release;
+end;
+
+procedure TVersionInfo.SetSvnRevision(const _SvnRevision: Integer);
+begin
+  FSvnRevision := _SvnRevision;
 end;
 
 procedure TVersionInfo.UpdateFileVersion;

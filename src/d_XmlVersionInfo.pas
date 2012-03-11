@@ -138,6 +138,8 @@ begin
   _VerInfo.OriginalFilename := GetVersionInfoKey('OriginalFilename');
   _VerInfo.ProductName := GetVersionInfoKey('ProductName');
   _VerInfo.ProductVersion := GetVersionInfoKey('ProductVersion');
+  _VerInfo.SvnRevision := StrToIntDef(GetVersionInfoKey('Revision'), 0);
+  _VerInfo.BuildDateTime := GetVersionInfoKey('BuildDateTime');
 end;
 
 procedure Tdm_XmlVersionInfo.WriteToFile(_VerInfo: TVersionInfo);
@@ -157,6 +159,8 @@ begin
   SetVersionInfoKey('ProductName', _VerInfo.ProductName);
   SetVersionInfoKey('ProductVersion', _VerInfo.ProductVersion);
   SetVersionInfo('Release', IntToStr(_VerInfo.Release));
+  SetVersionInfo('Revision', IntToStr(_VerInfo.SvnRevision));
+  SetVersionInfoKey('BuildDateTime', _VerInfo.BuildDateTime);
   ProjDoc.SaveToFile(FXmlFilename);
 end;
 

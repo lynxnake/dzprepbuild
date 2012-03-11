@@ -129,6 +129,8 @@ begin
   _VerInfo.OriginalFilename := ReadString(FInfoKeysSection, 'OriginalFilename', '');
   _VerInfo.ProductName := ReadString(FInfoKeysSection, 'ProductName', '');
   _VerInfo.ProductVersion := ReadString(FInfoKeysSection, 'ProductVersion', '');
+  _VerInfo.SvnRevision := ReadInteger(FInfoKeysSection, 'Revision', 0);
+  _VerInfo.BuildDateTime := ReadString(FInfoKeysSection, 'BuildDateTime', '');
 end;
 
 procedure TIniVersionInfo.WriteToFile(_VerInfo: TVersionInfo);
@@ -148,6 +150,8 @@ begin
   WriteString(FInfoKeysSection, 'ProductName', _VerInfo.ProductName);
   WriteString(FInfoKeysSection, 'ProductVersion', _VerInfo.ProductVersion);
   WriteInteger(FInfoSection, 'Release', _VerInfo.Release);
+  WriteInteger(FInfoSection, 'Revision', _VerInfo.SvnRevision);
+  WriteString(FInfoKeysSection, 'BuildDateTime', _VerInfo.BuildDateTime);
   FIniFile.UpdateFile;
 end;
 

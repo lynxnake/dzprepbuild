@@ -78,6 +78,8 @@ begin
     WriteLn(t, Format('   VALUE "ProductName", "%s\000"', [_VersionInfo.ResolveVariables(_VersionInfo.ProductName)]));
     WriteLn(t, Format('   VALUE "ProductVersion", "%s\000"', [_VersionInfo.ResolveVariables(_VersionInfo.ProductVersion)]));
     WriteLn(t, Format('   VALUE "Comments", "%s\000"', [_VersionInfo.ResolveVariables(_VersionInfo.Comments)]));
+    WriteLn(t, Format('   VALUE "Revision", "%s\000"', [_VersionInfo.ResolveVariables(IntToStr(_VersionInfo.SvnRevision))]));
+    WriteLn(t, Format('   VALUE "BuildDateTime", "%s\000"', [_VersionInfo.ResolveVariables(_VersionInfo.BuildDateTime)]));
     WriteLn(t, {    } '  }');
     WriteLn(t, {    } ' }');
     WriteLn(t, {    } ' BLOCK "VarFileInfo"');
@@ -138,6 +140,8 @@ begin
       Executor.Environment.Values[DZ_VERSION + 'Copyright'] := _VersionInfo.LegalCopyright;
       Executor.Environment.Values[DZ_VERSION + 'Trademark'] := _VersionInfo.LegalTrademarks;
       Executor.Environment.Values[DZ_VERSION + 'Comments'] := _VersionInfo.Comments;
+      Executor.Environment.Values[DZ_VERSION + 'Revision'] := IntToStr(_VersionInfo.SvnRevision);
+      Executor.Environment.Values[DZ_VERSION + 'BuildDateTime'] := _VersionInfo.BuildDateTime;
     end;
 
     Executor.Execute;
@@ -300,6 +304,16 @@ begin
       WriteLn('Setting Comments to ', VersionInfo.Comments);
     end;
 
+    if FGetOpt.OptionPassed('SvnRevision', Param) then begin
+      VersionInfo.SvnRevision := StrToIntDef(UnquoteStr(Param), 0);
+      WriteLn('Setting SvnRevision to ', IntToStr(VersionInfo.SvnRevision));
+    end;
+
+    if FGetOpt.OptionPassed('BuildDateTime', Param) then begin
+      VersionInfo.BuildDateTime := UnquoteStr(Param);
+      WriteLn('Setting BuildDateTime to ', VersionInfo.BuildDateTime);
+    end;
+
     if FGetOpt.OptionPassed('IncBuild') then begin
       VersionInfo.Build := VersionInfo.Build + 1;
       WriteLn('Incrementing build number to ', VersionInfo.Build);
@@ -382,6 +396,8 @@ begin
   FGetOpt.RegisterOption('Trademark', _('set the legal trademark (overwrites value from -ReadXxx option)'), true);
   FGetOpt.RegisterOption('Comments', _('set the comments (overwrites value from -ReadXxx option)'), true);
 
+  FGetOpt.RegisterOption('SvnRevision', _('set the SvnRevision (overwrites value from -ReadXxx option)'), true);
+  FGetOpt.RegisterOption('BuildDateTime', _('set the BuildDateTime (overwrites value from -ReadXxx option)'), true);
   FGetOpt.RegisterOption('IncBuild', _('increment the build number'), false);
 
   FGetOpt.RegisterOption('UpdateDof', _('update a .dof file with the version information'), true);
