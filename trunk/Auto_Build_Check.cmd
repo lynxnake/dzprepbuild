@@ -8,8 +8,9 @@ svn update
 if errorlevel 1 goto Error
 
 set BatchBuild=1
-call build_project.cmd
+call _BuildProject.cmd
 
+if not exist src\*_version.ini goto :eof
 svn revert src\*_version.ini
 if errorlevel 1 goto error
 
