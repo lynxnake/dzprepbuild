@@ -166,17 +166,8 @@ begin
 end;
 
 function UnquoteStr(const _s: string): string;
-var
-  s: PChar;
-  p: PChar;
 begin
-  s := StrNew(PChar(_s));
-  try
-    p := s;
-    Result := AnsiExtractQuotedStr(p, '"');
-  finally
-    StrDispose(s);
-  end;
+  Result := AnsiDequotedStr(_s, '"');
 end;
 
 function TPrepBuildMain.doExecute: integer;
