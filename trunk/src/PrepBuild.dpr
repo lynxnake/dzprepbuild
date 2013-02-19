@@ -15,7 +15,8 @@ uses
   u_PrepBuildMain in 'u_PrepBuildMain.pas',
   u_VersionInfo in 'u_VersionInfo.pas',
   w_dzDialog in '..\libs\dzlib\forms\w_dzDialog.pas' {f_dzDialog},
-  u_dzDefaultMain in '..\libs\dzlib\src\u_dzDefaultMain.pas';
+  u_dzDefaultMain in '..\libs\dzlib\src\u_dzDefaultMain.pas',
+  d_ManifestVersionInfo in 'd_ManifestVersionInfo.pas';
 
 {$R *_icon.res}
 {$R *_version.res}

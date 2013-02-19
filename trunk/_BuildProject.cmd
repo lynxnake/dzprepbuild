@@ -14,7 +14,7 @@ echo building project %project%.dproj using Delphi XE
 
 call buildtools\delphiversions.cmd
 
-call "%DelphiXEDir%\bin\rsvars.bat"
+call "%DelphiXE2Dir%\bin\rsvars.bat"
 
 pushd src
 msbuild %project%.dproj | ..\buildtools\msbuildfilter
