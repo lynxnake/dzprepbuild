@@ -5,14 +5,20 @@
 			<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
 			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
 			<DCC_DependencyCheckOutputName>..\PrepBuild.exe</DCC_DependencyCheckOutputName>
-			<ProjectVersion>12.3</ProjectVersion>
+			<ProjectVersion>13.4</ProjectVersion>
 			<Config Condition="'$(Config)'==''">Debug</Config>
 			<Base>True</Base>
-			<Platform>Win32</Platform>
 			<AppType>Application</AppType>
 			<FrameworkType>VCL</FrameworkType>
+			<Platform Condition="'$(Platform)'==''">Win32</Platform>
+			<TargetedPlatforms>1</TargetedPlatforms>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
+			<Base_Win32>true</Base_Win32>
+			<CfgParent>Base</CfgParent>
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
@@ -26,14 +32,28 @@
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base)'!=''">
+			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+			<DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;Xml.Win;$(DCC_Namespace)</DCC_Namespace>
+			<VerInfo_Locale>2057</VerInfo_Locale>
 			<DCC_Define>no_translation;NO_TRANSLATION_HINT;$(DCC_Define)</DCC_Define>
 			<DCC_ExeOutput>..</DCC_ExeOutput>
 			<DCC_UNIT_PLATFORM>false</DCC_UNIT_PLATFORM>
 			<DCC_SYMBOL_PLATFORM>false</DCC_SYMBOL_PLATFORM>
 			<DCC_DcuOutput>..\$(Config)\$(Platform)\dcu</DCC_DcuOutput>
-			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;$(DCC_UnitAlias)</DCC_UnitAlias>
 			<DCC_UnitSearchPath>..\libs\dzlib\src;..\libs\dzlib\templates;..\libs\jcl\source\include;..\libs\jcl\source\common;..\libs\jcl\source\windows;..\libs\jcl\source\vcl;..\libs\jcl\source\include\jedi;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
 			<DCC_DependencyCheckOutputName>PrepBuild.exe</DCC_DependencyCheckOutputName>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Base_Win32)'!=''">
+			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+			<PreBuildEvent><![CDATA[..\buildtools\prebuild.cmd $(PROJECTPATH)
+$(PreBuildEvent)]]></PreBuildEvent>
+			<DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+			<Debugger_RunParams>--incbuild --readini=testdata\testproject --updateini=testdata\testproject --writerc=testdata\testproject</Debugger_RunParams>
+			<VerInfo_Locale>1033</VerInfo_Locale>
+			<PostBuildEvent><![CDATA[..\buildtools\postbuild.cmd $(OUTPUTDIR)$(OUTPUTNAME)
+$(PostBuildEvent)]]></PostBuildEvent>
+			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+			<Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_1)'!=''">
 			<DCC_ExeOutput>..</DCC_ExeOutput>
@@ -103,13 +123,14 @@
 				</Delphi.Personality>
 				<ModelSupport>False</ModelSupport>
 				<Platforms>
+					<Platform value="Win64">False</Platform>
 					<Platform value="Win32">True</Platform>
 				</Platforms>
 			</BorlandProject>
 			<ProjectFileVersion>12</ProjectFileVersion>
 		</ProjectExtensions>
 		<ItemGroup>
-			<DelphiCompile Include="PrepBuild.dpr">
+			<DelphiCompile Include="$(MainSource)">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
 			<DCCReference Include="d_XmlVersionInfo.pas">
@@ -146,10 +167,23 @@
 				<CfgParent>Base</CfgParent>
 			</BuildConfiguration>
 		</ItemGroup>
-		<Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
-		<Import Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\8.0\UserTools.proj" Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\8.0\UserTools.proj')"/>
-		<PropertyGroup>
-			<PreBuildEvent><![CDATA[..\buildtools\prebuild.cmd $(PROJECTPATH)]]></PreBuildEvent>
-			<PostBuildEvent><![CDATA[..\buildtools\postbuild.cmd $(OUTPUTDIR)$(OUTPUTNAME)]]></PostBuildEvent>
+		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
+		<Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\8.0\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\8.0\UserTools.proj"/>
+		<Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj"/>
+		<PropertyGroup Condition="'$(Config)'=='Release' And '$(Platform)'=='Win32'">
+			<PreBuildEvent>..\buildtools\prebuild.cmd $(PROJECTPATH)</PreBuildEvent>
+			<PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
+			<PreLinkEvent/>
+			<PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
+			<PostBuildEvent>..\buildtools\postbuild.cmd $(OUTPUTDIR)$(OUTPUTNAME)</PostBuildEvent>
+			<PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Debug' And '$(Platform)'=='Win32'">
+			<PreBuildEvent>..\buildtools\prebuild.cmd $(PROJECTPATH)</PreBuildEvent>
+			<PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
+			<PreLinkEvent/>
+			<PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
+			<PostBuildEvent>..\buildtools\postbuild.cmd $(OUTPUTDIR)$(OUTPUTNAME)</PostBuildEvent>
+			<PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
 		</PropertyGroup>
 	</Project>

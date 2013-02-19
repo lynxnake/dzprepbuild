@@ -6,7 +6,7 @@ setlocal
 call buildtools\delphiversions.cmd
 call :GetLastDir %0
 set project=%result%
-start "Delphi XE" "%DelphiXEDir%\bin\bds.exe" -pDelphi src\%project%.dproj
+start "Delphi XE2" "%DelphiXE2Dir%\bin\bds.exe" -pDelphi src\%project%.dproj
 endlocal
 goto :eof
 
