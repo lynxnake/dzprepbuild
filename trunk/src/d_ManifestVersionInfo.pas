@@ -33,7 +33,7 @@ type
     FAssemblyIdentityNode: IXMLNode;
     procedure InitVersionNodes; virtual;
   public
-    constructor Create(const _FullFilename: string); reintroduce;
+    constructor Create(const _ManifestFile: string; const _InputFile: string = ''); reintroduce;
   end;
 
 implementation
@@ -50,14 +50,16 @@ uses
 
 { Tdm_ManifestVersionInfo }
 
-constructor Tdm_ManifestVersionInfo.Create(const _FullFilename: string);
+constructor Tdm_ManifestVersionInfo.Create(const _ManifestFile: string; const _InputFile: string = '');
 begin
   inherited Create(nil);
 
-  FOutputFilename := ChangeFileExt(_FullFilename, '.manifest');
-  FInputFilename := FOutputFilename + '.in';
-  if not TFileSystem.FileExists(FInputFilename) then
+  FOutputFilename := ChangeFileExt(_ManifestFile, '.manifest');
+  FInputFilename := _InputFile;
+  if FInputFilename = '' then
     FInputFilename := FOutputFilename;
+
+  TFileSystem.FileExists(FInputFilename, True);
 
   ProjDoc.FileName := FInputFilename;
   ProjDoc.Active := True;
