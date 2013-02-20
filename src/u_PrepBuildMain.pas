@@ -35,7 +35,8 @@ uses
   u_DofVersionInfo,
   d_BdsProjVersionInfo,
   u_CentralIniVersionInfo,
-  d_DProjVersionInfo;
+  d_DProjVersionInfo,
+  d_ManifestVersionInfo;
 
 { TPrepBuildMain }
 
@@ -337,6 +338,12 @@ begin
       VerInfoAccess.WriteToFile(VersionInfo);
     end;
 
+    if FGetOpt.OptionPassed('UpdateManifest', Param) then begin
+      VerInfoAccess := Tdm_ManifestVersionInfo.Create(Param);
+      WriteLn('Updating ', VerInfoAccess.VerInfoFilename);
+      VerInfoAccess.WriteToFile(VersionInfo);
+    end;
+
     if FGetOpt.OptionPassed('Icon', IconFile) then begin
       IconFile := UnquoteStr(IconFile);
       WriteLn('Adding icon to rcfile from ', IconFile);
@@ -395,6 +402,7 @@ begin
   FGetOpt.RegisterOption('UpdateBdsproj', _('update a .bdsproj file with the version information'), true);
   FGetOpt.RegisterOption('UpdateIni', _('update a .ini file with the version information'), true);
   FGetOpt.RegisterOption('UpdateDproj', _('update a .dproj file with the version information'), true);
+  FGetOpt.RegisterOption('UpdateManifest', _('update a .manifest file with the version information'), true);
 
   FGetOpt.RegisterOption('Icon', _('Assign an icon file to add to the .rc file'), true);
 
