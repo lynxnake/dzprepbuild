@@ -94,6 +94,7 @@ $(PostBuildEvent)]]></PostBuildEvent>
 			<DCC_Optimize>False</DCC_Optimize>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+			<Debugger_RunParams>--incbuild --readini=testdata\testproject --updateini=testdata\testproject --writerc=testdata\testproject --updatemanifest=testdata\testproject</Debugger_RunParams>
 			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
 			<VerInfo_Locale>1033</VerInfo_Locale>
 		</PropertyGroup>
@@ -166,6 +167,10 @@ $(PostBuildEvent)]]></PostBuildEvent>
 				<Form>dm_BdsProjVersionInfo</Form>
 				<DesignClass>TDataModule</DesignClass>
 			</DCCReference>
+			<DCCReference Include="d_ManifestVersionInfo.pas">
+				<Form>dm_ManifestVersionInfo</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
 			<DCCReference Include="i_VersionInfoAccess.pas"/>
 			<DCCReference Include="u_DofVersionInfo.pas"/>
 			<DCCReference Include="u_IniVersionInfo.pas"/>
@@ -176,7 +181,6 @@ $(PostBuildEvent)]]></PostBuildEvent>
 				<Form>f_dzDialog</Form>
 			</DCCReference>
 			<DCCReference Include="..\libs\dzlib\src\u_dzDefaultMain.pas"/>
-			<DCCReference Include="d_ManifestVersionInfo.pas"/>
 			<BuildConfiguration Include="Debug">
 				<Key>Cfg_2</Key>
 				<CfgParent>Base</CfgParent>

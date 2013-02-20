@@ -8,6 +8,7 @@ uses
   d_XmlVersionInfo in 'd_XmlVersionInfo.pas' {dm_XmlVersionInfo: TDataModule},
   d_DprojVersionInfo in 'd_DprojVersionInfo.pas' {dm_DprojVersionInfo: TDataModule},
   d_BdsProjVersionInfo in 'd_BdsProjVersionInfo.pas' {dm_BdsProjVersionInfo: TDataModule},
+  d_ManifestVersionInfo in 'd_ManifestVersionInfo.pas' {dm_ManifestVersionInfo: TDataModule},
   i_VersionInfoAccess in 'i_VersionInfoAccess.pas',
   u_DofVersionInfo in 'u_DofVersionInfo.pas',
   u_IniVersionInfo in 'u_IniVersionInfo.pas',
@@ -15,8 +16,7 @@ uses
   u_PrepBuildMain in 'u_PrepBuildMain.pas',
   u_VersionInfo in 'u_VersionInfo.pas',
   w_dzDialog in '..\libs\dzlib\forms\w_dzDialog.pas' {f_dzDialog},
-  u_dzDefaultMain in '..\libs\dzlib\src\u_dzDefaultMain.pas',
-  d_ManifestVersionInfo in 'd_ManifestVersionInfo.pas';
+  u_dzDefaultMain in '..\libs\dzlib\src\u_dzDefaultMain.pas';
 
 {$R *_icon.res}
 {$R *_version.res}
