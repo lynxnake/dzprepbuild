@@ -17,6 +17,7 @@ type
     function HandleExecOption(const _Command: string; _VersionInfo: TVersionInfo; const _Project: string): integer;
     procedure WriteRcFile(const _Project: string; _VersionInfo: TVersionInfo; const _Icon: string);
     procedure DumpCmd;
+    procedure WriteMainfestRcFile(const _Project: string; const _ManifestFile: string);
   protected
     procedure InitCmdLineParser; override;
     function doExecute: integer; override;
@@ -92,6 +93,24 @@ begin
       WriteLn(t);
       WriteLn(t, Format('MAINICON ICON LOADONCALL MOVEABLE DISCARDABLE IMPURE "%s"', [ChangeFileExt(_Icon, '.ico')]));
     end;
+  finally
+    Close(t);
+  end;
+end;
+
+procedure TPrepBuildMain.WriteMainfestRcFile(const _Project: string; const _ManifestFile: string);
+var
+  fn: string;
+  t: TextFile;
+begin
+  fn := ChangeFileExt(_Project, '_Manifest.rc');
+  WriteLn('Writing mainfest rc file ', fn);
+  Assignfile(t, fn);
+  Rewrite(t);
+  try
+    WriteLn(t, '#define MANIFEST_RESOURCE_ID 1');
+    WriteLn(t, '#define RT_MANIFEST 24');
+    WriteLn(t, Format('MANIFEST_RESOURCE_ID RT_MANIFEST "%s"', [ChangeFileExt(_ManifestFile, '.manifest')]));
   finally
     Close(t);
   end;
@@ -179,6 +198,9 @@ var
   IntValue: integer;
   IconFile: string;
   Project: string;
+  InputManifest: string;
+  Manifest: string;
+  IgnoreManifestErrors: Boolean;
 begin
   WriteLn('dzPrepBuild version ' + TApplication_GetFileVersion + ' built ' + TApplication_GetProductVersion);
 
@@ -338,10 +360,40 @@ begin
       VerInfoAccess.WriteToFile(VersionInfo);
     end;
 
-    if FGetOpt.OptionPassed('UpdateManifest', Param) then begin
-      VerInfoAccess := Tdm_ManifestVersionInfo.Create(Param);
-      WriteLn('Updating ', VerInfoAccess.VerInfoFilename);
-      VerInfoAccess.WriteToFile(VersionInfo);
+    if FGetOpt.OptionPassed('InputManifest', Param) then begin
+      InputManifest := UnquoteStr(Param);
+    end else
+      InputManifest := '';
+
+    if FGetOpt.OptionPassed('Manifest', Param) then begin
+      Manifest := Param;
+    end else
+      Manifest := '';
+
+    if FGetOpt.OptionPassed('IgnoreManifestErrors') then
+      IgnoreManifestErrors := true
+    else
+      IgnoreManifestErrors := false;
+
+    if FGetOpt.OptionPassed('UpdateManifest') then begin
+      try
+        if InputManifest <> '' then
+          WriteLn('Reading manifest from ', InputManifest);
+        VerInfoAccess := Tdm_ManifestVersionInfo.Create(Manifest, InputManifest);
+        WriteLn('Updating ', VerInfoAccess.VerInfoFilename);
+        VerInfoAccess.WriteToFile(VersionInfo);
+      except
+        on e: Exception do begin
+          if IgnoreManifestErrors then
+            WriteLn('Ignoring manifest error: ', e.Message, '(', e.ClassName, ')')
+          else
+            raise;
+        end;
+      end;
+    end;
+
+    if FGetOpt.OptionPassed('WriteManifestRc', Param) then begin
+      WriteMainfestRcFile(Param, Manifest);
     end;
 
     if FGetOpt.OptionPassed('Icon', IconFile) then begin
@@ -402,7 +454,12 @@ begin
   FGetOpt.RegisterOption('UpdateBdsproj', _('update a .bdsproj file with the version information'), true);
   FGetOpt.RegisterOption('UpdateIni', _('update a .ini file with the version information'), true);
   FGetOpt.RegisterOption('UpdateDproj', _('update a .dproj file with the version information'), true);
-  FGetOpt.RegisterOption('UpdateManifest', _('update a .manifest file with the version information'), true);
+
+  FGetOpt.RegisterOption('InputManifest', _('read the contents for the .manifest for the UpdateManifest option from this file'), true);
+  Fgetopt.RegisterOption('Manifest', _('Name of the .manifest file for the UpdateManifest and WriteManifestRc options'), true);
+  FGetOpt.RegisterOption('UpdateManifest', _('update the .manifest file (given with the Manifest option) with the version information'));
+  FGetOpt.RegisterOption('IgnoreManifestErrors', _('ignore any errors caused by the UpdateManifest option'));
+  FGetOpt.RegisterOption('WriteManifestRc', _('Write an .rc file for embedding the .manifest file given with the Manifest option'), true);
 
   FGetOpt.RegisterOption('Icon', _('Assign an icon file to add to the .rc file'), true);
 
