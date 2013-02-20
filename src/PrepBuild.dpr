@@ -20,6 +20,7 @@ uses
 
 {$R *_icon.res}
 {$R *_version.res}
+{$R *_manifest.res}
 
 begin
   Application.Initialize;
