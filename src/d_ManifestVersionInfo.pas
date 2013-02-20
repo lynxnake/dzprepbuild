@@ -17,7 +17,8 @@ type
   Tdm_ManifestVersionInfo = class(TDataModule, IVersionInfoAccess)
     ProjDoc: TXMLDocument;
   private
-    FXmlFilename: string;
+    FInputFilename: string;
+    FOutputFilename: string;
   protected // IInterface
     FRefCount: integer;
     function QueryInterface(const IID: TGUID; out Obj): HResult; override; stdcall;
@@ -40,6 +41,7 @@ implementation
 
 uses
   StrUtils,
+  u_dzFileUtils,
   u_dzStringUtils,
   u_dzVariantUtils,
   u_dzConvertUtils,
@@ -50,8 +52,13 @@ uses
 constructor Tdm_ManifestVersionInfo.Create(const _FullFilename: string);
 begin
   inherited Create(nil);
-  FXmlFilename := ChangeFileExt(_FullFilename, '.manifest');
-  ProjDoc.FileName := FXmlFilename;
+
+  FOutputFilename := ChangeFileExt(_FullFilename, '.manifest');
+  FInputFilename := FOutputFilename + '.in';
+  if not TFileSystem.FileExists(FInputFilename) then
+    FInputFilename := FOutputFilename;
+
+  ProjDoc.FileName := FInputFilename;
   ProjDoc.Active := True;
 
   InitVersionNodes;
@@ -80,7 +87,7 @@ end;
 
 function Tdm_ManifestVersionInfo.VerInfoFilename: string;
 begin
-  Result := FXmlFilename;
+  Result := FOutputFilename;
 end;
 
 procedure Tdm_ManifestVersionInfo.ReadFromFile(_VerInfo: TVersionInfo);
@@ -112,7 +119,7 @@ procedure Tdm_ManifestVersionInfo.WriteToFile(_VerInfo: TVersionInfo);
 begin
   FAssemblyIdentity.Attributes['name'] := _VerInfo.FileDescription;
   FAssemblyIdentity.Attributes['version'] := _VerInfo.FileVersion;
-  ProjDoc.SaveToFile(FXmlFilename);
+  ProjDoc.SaveToFile(FOutputFilename);
 end;
 
 // standard TInterfacedObject implementation of IInterface
