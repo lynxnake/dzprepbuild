@@ -4,9 +4,9 @@
   or registry access.
  -->
   <assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
-  <assemblyIdentity version="11.0.2804.9245"
+  <assemblyIdentity version="FileVersion goes here"
     processorArchitecture="*"
-    name="CodeGear RAD Studio"
+    name="InternalName goes here"
     type="win32"/>
 <!-- We do not want themes support
   <dependency>
@@ -20,7 +20,7 @@
       </dependentassembly>
   <dependency>
  -->
-  <description>This is a TUEV Rheinland Schniering GmbH Application</description>
+  <description>FileDescription goes here</description>
   <!-- COMPATIBILITY SECTION SPECIFIES IF APP IS COMPLIANT 
        DISABLES PCA IF SPECIFIED -->
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">

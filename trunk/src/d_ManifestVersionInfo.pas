@@ -19,6 +19,7 @@ type
   private
     FInputFilename: string;
     FOutputFilename: string;
+    FDescriptionNode: IXMLNode;
   protected // IInterface
     FRefCount: integer;
     function QueryInterface(const IID: TGUID; out Obj): HResult; override; stdcall;
@@ -29,7 +30,7 @@ type
     procedure ReadFromFile(_VerInfo: TVersionInfo);
     procedure WriteToFile(_VerInfo: TVersionInfo);
   protected
-    FAssemblyIdentity: IXMLNode;
+    FAssemblyIdentityNode: IXMLNode;
     procedure InitVersionNodes; virtual;
   public
     constructor Create(const _FullFilename: string); reintroduce;
@@ -82,7 +83,9 @@ var
   Assembly: IXMLNode;
 begin
   Assembly := ProjDoc.DocumentElement;
-  FAssemblyIdentity := Assembly.ChildNodes[0];
+
+  FAssemblyIdentityNode := Assembly.ChildNodes['assemblyIdentity'];
+  FDescriptionNode := Assembly.ChildNodes['description'];
 end;
 
 function Tdm_ManifestVersionInfo.VerInfoFilename: string;
@@ -101,10 +104,10 @@ begin
   raise Exception.Create(_('Reading version info from Manifest files is not supported.'));
 
   _VerInfo.Source := VerInfoFilename;
-  _VerInfo.FileDescription := Var2Str(FAssemblyIdentity.Attributes['name'], '');
-  Version := Var2Str(FAssemblyIdentity.Attributes['version'], '');
+  _VerInfo.InternalName := Var2Str(FAssemblyIdentityNode.Attributes['name'], '');
+  Version := Var2Str(FAssemblyIdentityNode.Attributes['version'], '');
   _VerInfo.FileVersion := Version;
-  _VerInfo.ProductName := _VerInfo.FileDescription;
+  _VerInfo.FileDescription := FDescriptionNode.Text;
   Major := ExtractStr(Version, '.');
   Minor := ExtractStr(Version, '.');
   Release := ExtractStr(Version, '.');
@@ -117,8 +120,9 @@ end;
 
 procedure Tdm_ManifestVersionInfo.WriteToFile(_VerInfo: TVersionInfo);
 begin
-  FAssemblyIdentity.Attributes['name'] := _VerInfo.FileDescription;
-  FAssemblyIdentity.Attributes['version'] := _VerInfo.FileVersion;
+  FAssemblyIdentityNode.Attributes['name'] := _VerInfo.InternalName;
+  FAssemblyIdentityNode.Attributes['version'] := _VerInfo.FileVersion;
+  FDescriptionNode.Text := _VerInfo.FileDescription;
   ProjDoc.SaveToFile(FOutputFilename);
 end;
 
