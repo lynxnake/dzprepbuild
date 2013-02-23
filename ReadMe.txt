@@ -116,8 +116,8 @@ that are usually set):
 %dzProject% - the project name passed by the --ReadDof / --ReadBdsProj
               or --ReadIni option without extension
 
-The following values are read from the .dof / .bdsproj / .dproj / .ini file and
-also passed as environment variables:
+The following values are read from the .dof / .bdsproj / .dproj / .ini file
+and also passed as environment variables:
 
 %dzVersion.MajorVer% - the major version number
 %dzVersion.MinorVer% - the minor version number
