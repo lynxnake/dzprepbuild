@@ -122,6 +122,10 @@ end;
 
 procedure Tdm_ManifestVersionInfo.WriteToFile(_VerInfo: TVersionInfo);
 begin
+  if _VerInfo.InternalName = '' then
+    raise Exception.Create(_('InternalName must not be empty because assemblyIdentity.name requires a value'));
+  if _VerInfo.FileVersion = '' then
+    raise Exception.Create(_('FileVersion must not be empty because assemblyIdentity.version requires a value'));
   FAssemblyIdentityNode.Attributes['name'] := _VerInfo.InternalName;
   FAssemblyIdentityNode.Attributes['version'] := _VerInfo.FileVersion;
   FDescriptionNode.Text := _VerInfo.FileDescription;
