@@ -8,10 +8,10 @@ uses
 type
   TVersionInfo = class
   private
-    FMajorVer: integer;
-    FMinorVer: integer;
-    FRelease: integer;
-    FBuild: integer;
+    FMajorVer: Integer;
+    FMinorVer: Integer;
+    FRelease: Integer;
+    FBuild: Integer;
 
     FFileVersion: string;
     FProductVersion: string;
@@ -19,18 +19,22 @@ type
     FLegalTrademarks: string;
     FLegalCopyright: string;
     FCompanyName: string;
-    FAutoIncBuild: boolean;
+    FAutoIncBuild: Boolean;
     FFileDescription: string;
     FInternalName: string;
     FOriginalFilename: string;
     FComments: string;
     FSource: string;
-    FSvnRevision: Integer;
+    FSCMRevision: string;
     FBuildDateTime: string;
+    FIsPrivateBuild: Boolean;
+    FIsSpecialBuild: Boolean;
+    FPrivateBuildComments: string;
+    FSpecialBuildComments: string;
     function ResolveVariable(const _s: string): string;
     procedure AdjustFilename(var _Filename: string);
   protected
-    function GetAutoIncBuild: boolean;
+    function GetAutoIncBuild: Boolean;
     procedure SetAutoIncBuild(_AutoIncBuild: Boolean); virtual;
     //
     procedure Assign(_VersionInfo: TVersionInfo); virtual;
@@ -64,35 +68,48 @@ type
     procedure SetOriginalFilename(_OriginalFilename: string); virtual;
     procedure SetProductName(_ProductName: string); virtual;
     procedure SetProductVersion(_ProductVersion: string); virtual;
-    function GetSvnRevision: Integer; virtual;
+    function GetSCMRevision: string; virtual;
     function GetBuildDateTime: string; virtual;
-    procedure SetSvnRevision(const _SvnRevision: Integer); virtual;
+    procedure SetSCMRevision(const _SCMRevision: string); virtual;
     procedure SetBuildDateTime(const _BuildDateTime: string); virtual;
+    function GetIsPrivateBuild: Boolean; virtual;
+    function GetIsSpecialBuild: Boolean; virtual;
+    function GetPrivateBuildComments: string; virtual;
+    function GetSpecialBuildComments: string; virtual;
+    procedure SetIsPrivateBuild(const _IsPrivateBuild: Boolean); virtual;
+    procedure SetIsSpecialBuild(const _IsSpecialBuild: Boolean); virtual;
+    procedure SetPrivateBuildComments(const _PrivateBuildComments: string); virtual;
+    procedure SetSpecialBuildComments(const _SpecialBuildComments: string); virtual;
+
   public
     procedure UpdateFileVersion;
     function ResolveVariables(const _s: string): string;
 
     property Source: string read FSource write FSource;
     //
-    property AutoIncBuild: boolean read GetAutoIncBuild write SetAutoIncBuild;
+    property AutoIncBuild: Boolean read GetAutoIncBuild write SetAutoIncBuild;
     //
-    property MajorVer: integer read GetMajorVer write SetMajorVer;
-    property MinorVer: integer read GetMinorVer write SetMinorVer;
-    property Release: integer read GetRelease write SetRelease;
-    property Build: integer read GetBuild write SetBuild;
+    property MajorVer: Integer read GetMajorVer write SetMajorVer;
+    property MinorVer: Integer read GetMinorVer write SetMinorVer;
+    property Release: Integer read GetRelease write SetRelease;
+    property Build: Integer read GetBuild write SetBuild;
     //
     property Comments: string read GetComments write SetComments;
     property CompanyName: string read GetCompanyName write SetCompanyName;
     property FileDescription: string read GetFileDescription write SetFileDescription;
     property FileVersion: string read GetFileVersion write SetFileVersion;
     property InternalName: string read GetInternalName write SetInternalName;
-    property LegalCopyright: string read GetLegalCopyright write SetLegalCopyright;
+    property LegalCopyRight: string read GetLegalCopyright write SetLegalCopyright;
     property LegalTrademarks: string read GetLegalTrademarks write SetLegalTrademarks;
     property OriginalFilename: string read GetOriginalFilename write SetOriginalFilename;
     property ProductName: string read GetProductName write SetProductName;
     property ProductVersion: string read GetProductVersion write SetProductVersion;
-    property SvnRevision: Integer read GetSvnRevision write SetSvnRevision;
+    property SCMRevision: string read GetSCMRevision write SetSCMRevision;
     property BuildDateTime: string read GetBuildDateTime write SetBuildDateTime;
+    property IsPrivateBuild: Boolean read GetIsPrivateBuild write SetIsPrivateBuild;
+    property IsSpecialBuild: Boolean read GetIsSpecialBuild write SetIsSpecialBuild;
+    property PrivateBuildComments: string read GetPrivateBuildComments write SetPrivateBuildComments;
+    property SpecialBuildComments: string read GetSpecialBuildComments write SetSpecialBuildComments;
   end;
 
 implementation
@@ -123,13 +140,17 @@ begin
   FileDescription := _VersionInfo.FileDescription;
   FileVersion := _VersionInfo.FileVersion;
   InternalName := _VersionInfo.InternalName;
-  LegalCopyright := _VersionInfo.LegalCopyright;
+  LegalCopyRight := _VersionInfo.LegalCopyRight;
   LegalTrademarks := _VersionInfo.LegalTrademarks;
   OriginalFilename := _VersionInfo.OriginalFilename;
   ProductName := _VersionInfo.ProductName;
   ProductVersion := _VersionInfo.ProductVersion;
-  SvnRevision := _VersionInfo.SvnRevision;
+  SCMRevision := _VersionInfo.SCMRevision;
   BuildDateTime := _VersionInfo.BuildDateTime;
+  IsPrivateBuild := _VersionInfo.IsPrivateBuild;
+  IsSpecialBuild := _VersionInfo.IsSpecialBuild;
+  PrivateBuildComments := _VersionInfo.PrivateBuildComments;
+  SpecialBuildComments := _VersionInfo.SpecialBuildComments;
 end;
 
 procedure TVersionInfo.AdjustFilename(var _Filename: string);
@@ -179,7 +200,7 @@ var
   Match: TMatch;
   s: string;
   Start: Integer;
-  Ende: integer;
+  Ende: Integer;
 begin
   Result := '';
   Start := 1;
@@ -197,12 +218,12 @@ begin
   Result := Result + TailStr(_s, Start);
 end;
 
-function TVersionInfo.GetAutoIncBuild: boolean;
+function TVersionInfo.GetAutoIncBuild: Boolean;
 begin
   Result := FAutoIncBuild;
 end;
 
-function TVersionInfo.GetBuild: integer;
+function TVersionInfo.GetBuild: Integer;
 begin
   Result := FBuild;
 end;
@@ -237,6 +258,16 @@ begin
   Result := FInternalName;
 end;
 
+function TVersionInfo.GetIsPrivateBuild: Boolean;
+begin
+  Result := FIsPrivateBuild;
+end;
+
+function TVersionInfo.GetIsSpecialBuild: Boolean;
+begin
+  Result := FIsSpecialBuild;
+end;
+
 function TVersionInfo.GetLegalCopyright: string;
 begin
   Result := FLegalCopyright;
@@ -247,12 +278,12 @@ begin
   Result := FLegalTrademarks;
 end;
 
-function TVersionInfo.GetMajorVer: integer;
+function TVersionInfo.GetMajorVer: Integer;
 begin
   Result := FMajorVer;
 end;
 
-function TVersionInfo.GetMinorVer: integer;
+function TVersionInfo.GetMinorVer: Integer;
 begin
   Result := FMinorVer;
 end;
@@ -260,6 +291,11 @@ end;
 function TVersionInfo.GetOriginalFilename: string;
 begin
   Result := FOriginalFilename;
+end;
+
+function TVersionInfo.GetPrivateBuildComments: string;
+begin
+  Result := FPrivateBuildComments;
 end;
 
 function TVersionInfo.GetProductName: string;
@@ -272,22 +308,27 @@ begin
   Result := FProductVersion;
 end;
 
-function TVersionInfo.GetRelease: integer;
+function TVersionInfo.GetRelease: Integer;
 begin
   Result := FRelease;
 end;
 
-function TVersionInfo.GetSvnRevision: Integer;
+function TVersionInfo.GetSpecialBuildComments: string;
 begin
-  Result := FSvnRevision;
+  Result := FSpecialBuildComments;
 end;
 
-procedure TVersionInfo.SetAutoIncBuild(_AutoIncBuild: boolean);
+function TVersionInfo.GetSCMRevision: string;
+begin
+  Result := FSCMRevision;
+end;
+
+procedure TVersionInfo.SetAutoIncBuild(_AutoIncBuild: Boolean);
 begin
   FAutoIncBuild := _AutoIncBuild;
 end;
 
-procedure TVersionInfo.SetBuild(_Build: integer);
+procedure TVersionInfo.SetBuild(_Build: Integer);
 begin
   FBuild := _Build;
 end;
@@ -322,6 +363,16 @@ begin
   FInternalName := _InternalName;
 end;
 
+procedure TVersionInfo.SetIsPrivateBuild(const _IsPrivateBuild: Boolean);
+begin
+  FIsPrivateBuild := _IsPrivateBuild;
+end;
+
+procedure TVersionInfo.SetIsSpecialBuild(const _IsSpecialBuild: Boolean);
+begin
+  FIsSpecialBuild := _IsSpecialBuild;
+end;
+
 procedure TVersionInfo.SetLegalCopyright(_LegalCopyright: string);
 begin
   FLegalCopyright := _LegalCopyright;
@@ -332,12 +383,12 @@ begin
   FLegalTrademarks := _LegalTrademarks;
 end;
 
-procedure TVersionInfo.SetMajorVer(_MajorVer: integer);
+procedure TVersionInfo.SetMajorVer(_MajorVer: Integer);
 begin
   FMajorVer := _MajorVer;
 end;
 
-procedure TVersionInfo.SetMinorVer(_MinorVer: integer);
+procedure TVersionInfo.SetMinorVer(_MinorVer: Integer);
 begin
   FMinorVer := _MinorVer;
 end;
@@ -345,6 +396,11 @@ end;
 procedure TVersionInfo.SetOriginalFilename(_OriginalFilename: string);
 begin
   FOriginalFilename := _OriginalFilename;
+end;
+
+procedure TVersionInfo.SetPrivateBuildComments(const _PrivateBuildComments: string);
+begin
+  FPrivateBuildComments := _PrivateBuildComments;
 end;
 
 procedure TVersionInfo.SetProductName(_ProductName: string);
@@ -357,14 +413,19 @@ begin
   FProductVersion := _ProductVersion;
 end;
 
-procedure TVersionInfo.SetRelease(_Release: integer);
+procedure TVersionInfo.SetRelease(_Release: Integer);
 begin
   FRelease := _Release;
 end;
 
-procedure TVersionInfo.SetSvnRevision(const _SvnRevision: Integer);
+procedure TVersionInfo.SetSpecialBuildComments(const _SpecialBuildComments: string);
 begin
-  FSvnRevision := _SvnRevision;
+  FSpecialBuildComments := _SpecialBuildComments;
+end;
+
+procedure TVersionInfo.SetSCMRevision(const _SCMRevision: string);
+begin
+  FSCMRevision := _SCMRevision;
 end;
 
 procedure TVersionInfo.UpdateFileVersion;
