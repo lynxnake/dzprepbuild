@@ -25,10 +25,10 @@ type
     procedure SetVersionInfo(const _Name, _Value: string);
     procedure SetVersionInfoKey(const _Name, _Value: string);
   protected // IInterface
-    FRefCount: integer;
+    FRefCount: Integer;
     function QueryInterface(const IID: TGUID; out Obj): HResult; override; stdcall;
-    function _AddRef: integer; stdcall;
-    function _Release: integer; stdcall;
+    function _AddRef: Integer; stdcall;
+    function _Release: Integer; stdcall;
   protected // implementation of IVersionInfo
     function VerInfoFilename: string;
     procedure ReadFromFile(_VerInfo: TVersionInfo);
@@ -63,7 +63,7 @@ begin
     if Node.nodeName = _NodeName then begin
       if SameText(Node.Attributes['Name'], _AttrName) then begin
         Result := Node.Text;
-        exit;
+        Exit;
       end;
     end;
     Node := Node.nextSibling;
@@ -90,7 +90,7 @@ begin
     if Node.nodeName = _NodeName then begin
       if SameText(Node.Attributes['Name'], _AttrName) then begin
         Node.Text := _Value;
-        exit;
+        Exit;
       end;
     end;
     Node := Node.nextSibling;
@@ -133,13 +133,19 @@ begin
   _VerInfo.FileDescription := GetVersionInfoKey('FileDescription');
   _VerInfo.FileVersion := GetVersionInfoKey('FileVersion');
   _VerInfo.InternalName := GetVersionInfoKey('InternalName');
-  _VerInfo.LegalCopyright := GetVersionInfoKey('LegalCopyright');
+  _VerInfo.LegalCopyRight := GetVersionInfoKey('LegalCopyright');
   _VerInfo.LegalTrademarks := GetVersionInfoKey('LegalTrademarks');
   _VerInfo.OriginalFilename := GetVersionInfoKey('OriginalFilename');
   _VerInfo.ProductName := GetVersionInfoKey('ProductName');
   _VerInfo.ProductVersion := GetVersionInfoKey('ProductVersion');
-  _VerInfo.SvnRevision := StrToIntDef(GetVersionInfoKey('Revision'), 0);
+  _VerInfo.SCMRevision := GetVersionInfoKey('Revision');
   _VerInfo.BuildDateTime := GetVersionInfoKey('BuildDateTime');
+
+  _VerInfo.IsPrivateBuild := StrToBool(GetVersionInfo('IsPrivateBuild'));
+  _VerInfo.IsSpecialBuild := StrToBool(GetVersionInfo('IsSpecialBuild'));
+  _VerInfo.PrivateBuildComments := GetVersionInfoKey('PrivateBuild');
+  _VerInfo.SpecialBuildComments := GetVersionInfoKey('SpecialBuild');
+
 end;
 
 procedure Tdm_XmlVersionInfo.WriteToFile(_VerInfo: TVersionInfo);
@@ -151,7 +157,7 @@ begin
   SetVersionInfoKey('FileDescription', _VerInfo.FileDescription);
   SetVersionInfoKey('FileVersion', _VerInfo.FileVersion);
   SetVersionInfoKey('InternalName', _VerInfo.InternalName);
-  SetVersionInfoKey('LegalCopyright', _VerInfo.LegalCopyright);
+  SetVersionInfoKey('LegalCopyright', _VerInfo.LegalCopyRight);
   SetVersionInfoKey('LegalTrademarks', _VerInfo.LegalTrademarks);
   SetVersionInfo('MajorVer', IntToStr(_VerInfo.MajorVer));
   SetVersionInfo('MinorVer', IntToStr(_VerInfo.MinorVer));
@@ -159,8 +165,14 @@ begin
   SetVersionInfoKey('ProductName', _VerInfo.ProductName);
   SetVersionInfoKey('ProductVersion', _VerInfo.ProductVersion);
   SetVersionInfo('Release', IntToStr(_VerInfo.Release));
-  SetVersionInfo('Revision', IntToStr(_VerInfo.SvnRevision));
+  SetVersionInfo('Revision', _VerInfo.SCMRevision);
   SetVersionInfoKey('BuildDateTime', _VerInfo.BuildDateTime);
+
+  SetVersionInfo('IsPrivateBuild', BoolToStr(_VerInfo.IsPrivateBuild, True));
+  SetVersionInfo('IsSpecialBuild', BoolToStr(_VerInfo.IsSpecialBuild, True));
+  SetVersionInfoKey('PrivateBuild', _VerInfo.PrivateBuildComments);
+  SetVersionInfoKey('SpecialBuild', _VerInfo.SpecialBuildComments);
+
   ProjDoc.SaveToFile(FXmlFilename);
 end;
 
@@ -189,12 +201,12 @@ begin
     Result := E_NOINTERFACE
 end;
 
-function Tdm_XmlVersionInfo._AddRef: integer;
+function Tdm_XmlVersionInfo._AddRef: Integer;
 begin
   Result := InterlockedIncrement(FRefCount);
 end;
 
-function Tdm_XmlVersionInfo._Release: integer;
+function Tdm_XmlVersionInfo._Release: Integer;
 begin
   Result := InterlockedDecrement(FRefCount);
   if Result = 0 then

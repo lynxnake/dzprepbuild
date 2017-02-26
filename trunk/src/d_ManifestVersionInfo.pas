@@ -21,10 +21,10 @@ type
     FOutputFilename: string;
     FDescriptionNode: IXMLNode;
   protected // IInterface
-    FRefCount: integer;
+    FRefCount: Integer;
     function QueryInterface(const IID: TGUID; out Obj): HResult; override; stdcall;
-    function _AddRef: integer; stdcall;
-    function _Release: integer; stdcall;
+    function _AddRef: Integer; stdcall;
+    function _Release: Integer; stdcall;
   protected // IVersionInfoAccess
     function VerInfoFilename: string;
     procedure ReadFromFile(_VerInfo: TVersionInfo);
@@ -142,12 +142,12 @@ begin
     Result := E_NOINTERFACE
 end;
 
-function Tdm_ManifestVersionInfo._AddRef: integer;
+function Tdm_ManifestVersionInfo._AddRef: Integer;
 begin
   Result := InterlockedIncrement(FRefCount);
 end;
 
-function Tdm_ManifestVersionInfo._Release: integer;
+function Tdm_ManifestVersionInfo._Release: Integer;
 begin
   Result := InterlockedDecrement(FRefCount);
   if Result = 0 then

@@ -14,13 +14,14 @@ uses
 type
   TPrepBuildMain = class(TDefaultMain)
   private
-    function HandleExecOption(const _Command: string; _VersionInfo: TVersionInfo; const _Project: string): integer;
+    function HandleExecOption(const _Command: string; _VersionInfo: TVersionInfo; const _Project: string): Integer;
     procedure WriteRcFile(const _Project: string; _VersionInfo: TVersionInfo; const _Icon: string);
     procedure DumpCmd;
     procedure WriteMainfestRcFile(const _Project: string; const _ManifestFile: string);
+    function FileMaskOptionsToStr(const _IsPrivateBuild, _IsSpecialBuild: Boolean): string;
   protected
     procedure InitCmdLineParser; override;
-    function doExecute: integer; override;
+    function doExecute: Integer; override;
   public
 
   end;
@@ -46,9 +47,37 @@ begin
   SysUtils.DateTimeToString(Result, _Format, _dt);
 end;
 
+function TPrepBuildMain.FileMaskOptionsToStr(const _IsPrivateBuild, _IsSpecialBuild: Boolean): string;
+
+  procedure AddParam(var _Output: string; const _Param: string);
+  begin
+    if (_Output <> '') then begin
+      _Output := _Output + '|';
+    end;
+    _Output := _Output + _Param;
+  end;
+
+begin
+  Result := '';
+
+  if _IsPrivateBuild then begin
+    AddParam(Result, 'VS_FF_PRIVATEBUILD');
+  end;
+
+  if _IsSpecialBuild then begin
+    AddParam(Result, 'VS_FF_SPECIALBUILD');
+  end;
+
+  if (Result = '') then begin
+    Result := '0';
+  end;
+end;
+
 procedure TPrepBuildMain.WriteRcFile(const _Project: string; _VersionInfo: TVersionInfo; const _Icon: string);
 var
   fn: string;
+  FileFlags: string;
+  CommentText: string;
   t: TextFile;
 begin
   fn := ChangeFileExt(_Project, '_Version.rc');
@@ -56,6 +85,7 @@ begin
   Assignfile(t, fn);
   Rewrite(t);
   try
+    FileFlags := FileMaskOptionsToStr(_VersionInfo.IsPrivateBuild, _VersionInfo.IsSpecialBuild);
     WriteLn(t, {    } 'LANGUAGE LANG_ENGLISH,SUBLANG_ENGLISH_US');
     WriteLn(t);
     WriteLn(t, {    } '1 VERSIONINFO LOADONCALL MOVEABLE DISCARDABLE IMPURE');
@@ -63,6 +93,9 @@ begin
     WriteLn(t, Format('PRODUCTVERSION %d, %d, %d, %d',
       [_VersionInfo.MajorVer, _VersionInfo.MinorVer, _VersionInfo.Release, _VersionInfo.Build]));
     WriteLn(t, {    } 'FILEFLAGSMASK VS_FFI_FILEFLAGSMASK');
+    if FileFlags <> '0' then begin
+      WriteLn(t, Format('FILEFLAGS %s', [FileFlags]));
+    end;
     WriteLn(t, {    } 'FILEOS VOS__WINDOWS32');
     WriteLn(t, {    } 'FILETYPE VFT_APP');
     WriteLn(t, {    } '{');
@@ -74,14 +107,22 @@ begin
     WriteLn(t, Format('   VALUE "FileDescription", "%s\000"', [_VersionInfo.ResolveVariables(_VersionInfo.FileDescription)]));
     WriteLn(t, Format('   VALUE "FileVersion", "%s\000"', [_VersionInfo.ResolveVariables(_VersionInfo.FileVersion)]));
     WriteLn(t, Format('   VALUE "InternalName", "%s\000"', [_VersionInfo.ResolveVariables(_VersionInfo.InternalName)]));
-    WriteLn(t, Format('   VALUE "LegalCopyright", "%s\000"', [_VersionInfo.ResolveVariables(_VersionInfo.LegalCopyright)]));
+    WriteLn(t, Format('   VALUE "LegalCopyright", "%s\000"', [_VersionInfo.ResolveVariables(_VersionInfo.LegalCopyRight)]));
     WriteLn(t, Format('   VALUE "LegalTrademarks", "%s\000"', [_VersionInfo.ResolveVariables(_VersionInfo.LegalTrademarks)]));
     WriteLn(t, Format('   VALUE "OriginalFilename", "%s\000"', [_VersionInfo.ResolveVariables(_VersionInfo.OriginalFilename)]));
     WriteLn(t, Format('   VALUE "ProductName", "%s\000"', [_VersionInfo.ResolveVariables(_VersionInfo.ProductName)]));
     WriteLn(t, Format('   VALUE "ProductVersion", "%s\000"', [_VersionInfo.ResolveVariables(_VersionInfo.ProductVersion)]));
     WriteLn(t, Format('   VALUE "Comments", "%s\000"', [_VersionInfo.ResolveVariables(_VersionInfo.Comments)]));
-    WriteLn(t, Format('   VALUE "Revision", "%s\000"', [_VersionInfo.ResolveVariables(IntToStr(_VersionInfo.SvnRevision))]));
+    WriteLn(t, Format('   VALUE "Revision", "%s\000"', [_VersionInfo.ResolveVariables(_VersionInfo.SCMRevision)]));
     WriteLn(t, Format('   VALUE "BuildDateTime", "%s\000"', [_VersionInfo.ResolveVariables(_VersionInfo.BuildDateTime)]));
+    CommentText := _VersionInfo.ResolveVariables(_VersionInfo.PrivateBuildComments);
+    if _VersionInfo.IsPrivateBuild or (CommentText <> '') then begin
+      WriteLn(t, Format('   VALUE "PrivateBuild", "%s\000"', [CommentText]));
+    end;
+    CommentText := _VersionInfo.ResolveVariables(_VersionInfo.SpecialBuildComments);
+    if _VersionInfo.IsSpecialBuild or (CommentText <> '') then begin
+      WriteLn(t, Format('   VALUE "SpecialBuild", "%s\000"', [CommentText]));
+    end;
     WriteLn(t, {    } '  }');
     WriteLn(t, {    } ' }');
     WriteLn(t, {    } ' BLOCK "VarFileInfo"');
@@ -116,7 +157,7 @@ begin
   end;
 end;
 
-function TPrepBuildMain.HandleExecOption(const _Command: string; _VersionInfo: TVersionInfo; const _Project: string): integer;
+function TPrepBuildMain.HandleExecOption(const _Command: string; _VersionInfo: TVersionInfo; const _Project: string): Integer;
 const
   DZ_MY_DOCUMENTS = 'dzMyDocuments';
   DZ_DATE = 'dzDate';
@@ -157,11 +198,15 @@ begin
       Executor.Environment.Values[DZ_VERSION + 'Product'] := _VersionInfo.ProductName;
       Executor.Environment.Values[DZ_VERSION + 'ProductVersion'] := _VersionInfo.ProductVersion;
       Executor.Environment.Values[DZ_VERSION + 'Company'] := _VersionInfo.CompanyName;
-      Executor.Environment.Values[DZ_VERSION + 'Copyright'] := _VersionInfo.LegalCopyright;
+      Executor.Environment.Values[DZ_VERSION + 'Copyright'] := _VersionInfo.LegalCopyRight;
       Executor.Environment.Values[DZ_VERSION + 'Trademark'] := _VersionInfo.LegalTrademarks;
       Executor.Environment.Values[DZ_VERSION + 'Comments'] := _VersionInfo.Comments;
-      Executor.Environment.Values[DZ_VERSION + 'Revision'] := IntToStr(_VersionInfo.SvnRevision);
+      Executor.Environment.Values[DZ_VERSION + 'Revision'] := _VersionInfo.SCMRevision;
       Executor.Environment.Values[DZ_VERSION + 'BuildDateTime'] := _VersionInfo.BuildDateTime;
+      Executor.Environment.Values[DZ_VERSION + 'IsPrivateBuild'] := BoolToStr(_VersionInfo.IsPrivateBuild, True);
+      Executor.Environment.Values[DZ_VERSION + 'IsSpecialBuild'] := BoolToStr(_VersionInfo.IsSpecialBuild, True);
+      Executor.Environment.Values[DZ_VERSION + 'PrivateBuild'] := _VersionInfo.PrivateBuildComments;
+      Executor.Environment.Values[DZ_VERSION + 'SpecialBuild'] := _VersionInfo.SpecialBuildComments;
     end;
 
     Executor.Execute;
@@ -190,12 +235,12 @@ begin
   Result := AnsiDequotedStr(_s, '"');
 end;
 
-function TPrepBuildMain.doExecute: integer;
+function TPrepBuildMain.doExecute: Integer;
 var
   Param: string;
   VerInfoAccess: IVersionInfoAccess;
   VersionInfo: TVersionInfo;
-  IntValue: integer;
+  IntValue: Integer;
   IconFile: string;
   Project: string;
   InputManifest: string;
@@ -306,8 +351,8 @@ begin
       end;
 
       if FGetOpt.OptionPassed('Copyright', Param) then begin
-        VersionInfo.LegalCopyright := UnquoteStr(Param);
-        WriteLn('Setting LegalCopyright to ', VersionInfo.LegalCopyright);
+        VersionInfo.LegalCopyRight := UnquoteStr(Param);
+        WriteLn('Setting LegalCopyright to ', VersionInfo.LegalCopyRight);
       end;
 
       if FGetOpt.OptionPassed('Trademark', Param) then begin
@@ -321,13 +366,40 @@ begin
       end;
 
       if FGetOpt.OptionPassed('SvnRevision', Param) then begin
-        VersionInfo.SvnRevision := StrToIntDef(UnquoteStr(Param), 0);
-        WriteLn('Setting SvnRevision to ', IntToStr(VersionInfo.SvnRevision));
+        //*** add a svn revision as integer ("0" if not a number)
+        VersionInfo.SCMRevision := IntToStr(StrToIntDef(UnquoteStr(Param), 0));
+        WriteLn('Setting SCMRevision to ', VersionInfo.SCMRevision);
+      end;
+
+      if FGetOpt.OptionPassed('GitRevision', Param) then begin
+        //*** gitRevision overwrites the svn revision
+        VersionInfo.SCMRevision := UnquoteStr(Param);
+        WriteLn('Setting SCMRevision to ', VersionInfo.SCMRevision);
       end;
 
       if FGetOpt.OptionPassed('BuildDateTime', Param) then begin
         VersionInfo.BuildDateTime := UnquoteStr(Param);
         WriteLn('Setting BuildDateTime to ', VersionInfo.BuildDateTime);
+      end;
+
+      if FGetOpt.OptionPassed('IsPrivateBuild', Param) then begin
+        VersionInfo.IsPrivateBuild := StrToBool(UnquoteStr(Param));
+        WriteLn('Setting IsPrivateBuild to ', VersionInfo.IsPrivateBuild);
+      end;
+
+      if FGetOpt.OptionPassed('IsSpecialBuild', Param) then begin
+        VersionInfo.IsSpecialBuild := StrToBool(UnquoteStr(Param));
+        WriteLn('Setting IsSpecialBuild to ', VersionInfo.IsSpecialBuild);
+      end;
+
+      if FGetOpt.OptionPassed('PrivateBuild', Param) then begin
+        VersionInfo.PrivateBuildComments := UnquoteStr(Param);
+        WriteLn('Setting PrivateBuildComments to ', VersionInfo.PrivateBuildComments);
+      end;
+
+      if FGetOpt.OptionPassed('SpecialBuild', Param) then begin
+        VersionInfo.SpecialBuildComments := UnquoteStr(Param);
+        WriteLn('Setting SpecialBuildComments to ', VersionInfo.SpecialBuildComments);
       end;
 
       if FGetOpt.OptionPassed('IncBuild') then begin
@@ -357,7 +429,7 @@ begin
       end;
 
       if FGetOpt.OptionPassed('UpdateDproj', Param) then begin
-        VerInfoAccess := Tdm_DprojVersionInfo.Create(Param);
+        VerInfoAccess := Tdm_DProjVersionInfo.Create(Param);
         WriteLn('Updating ', VerInfoAccess.VerInfoFilename);
         VerInfoAccess.WriteToFile(VersionInfo);
       end;
@@ -373,9 +445,9 @@ begin
         Manifest := '';
 
       if FGetOpt.OptionPassed('IgnoreManifestErrors') then
-        IgnoreManifestErrors := true
+        IgnoreManifestErrors := True
       else
-        IgnoreManifestErrors := false;
+        IgnoreManifestErrors := False;
 
       if FGetOpt.OptionPassed('UpdateManifest') then begin
         try
@@ -435,48 +507,55 @@ end;
 procedure TPrepBuildMain.InitCmdLineParser;
 begin
   inherited;
-  FGetOpt.RegisterOption('dumpcmd', _('dump the commandline and exit (for debug purposes)'), false);
+  FGetOpt.RegisterOption('dumpcmd', _('dump the commandline and exit (for debug purposes)'), False);
 
-  FGetOpt.RegisterOption('ReadDof', _('read a .dof file to get the version information'), true);
-  FGetOpt.RegisterOption('ReadBdsproj', _('read a .bdsproj file to get the version information'), true);
-  FGetOpt.RegisterOption('ReadIni', _('read a .ini file to get the version information'), true);
-  FGetOpt.RegisterOption('ReadDproj', _('Read a .dproj file to get the version information'), true);
+  FGetOpt.RegisterOption('ReadDof', _('read a .dof file to get the version information'), True);
+  FGetOpt.RegisterOption('ReadBdsproj', _('read a .bdsproj file to get the version information'), True);
+  FGetOpt.RegisterOption('ReadIni', _('read a .ini file to get the version information'), True);
+  FGetOpt.RegisterOption('ReadDproj', _('Read a .dproj file to get the version information'), True);
 
-  FGetOpt.RegisterOption('MajorVer', _('set the major version number (overwrites value from -ReadXxx option)'), true);
-  FGetOpt.RegisterOption('MinorVer', _('set the minor version number (overwrites value from -ReadXxx option)'), true);
-  FGetOpt.RegisterOption('Release', _('set the release number (overwrites value from -ReadXxx option)'), true);
-  FGetOpt.RegisterOption('Build', _('set the build number (overwrites value from -ReadXxx option)'), true);
+  FGetOpt.RegisterOption('MajorVer', _('set the major version number (overwrites value from -ReadXxx option)'), True);
+  FGetOpt.RegisterOption('MinorVer', _('set the minor version number (overwrites value from -ReadXxx option)'), True);
+  FGetOpt.RegisterOption('Release', _('set the release number (overwrites value from -ReadXxx option)'), True);
+  FGetOpt.RegisterOption('Build', _('set the build number (overwrites value from -ReadXxx option)'), True);
 
-  FGetOpt.RegisterOption('FileDesc', _('set the file description (overwrites value from -ReadXxx option)'), true);
-  FGetOpt.RegisterOption('InternalName', _('set the internal name (overwrites value from -ReadXxx option)'), true);
-  FGetOpt.RegisterOption('OriginalName', _('set the original file name (overwrites value from -ReadXxx option)'), true);
-  FGetOpt.RegisterOption('Product', _('set the product name (overwrites value from -ReadXxx option)'), true);
-  FGetOpt.RegisterOption('ProductVersion', _('set the product version (overwrites value from -ReadXxx option)'), true);
-  FGetOpt.RegisterOption('Company', _('set the company name (overwrites value from -ReadXxx option)'), true);
-  FGetOpt.RegisterOption('Copyright', _('set the legal copyright (overwrites value from -ReadXxx option)'), true);
-  FGetOpt.RegisterOption('Trademark', _('set the legal trademark (overwrites value from -ReadXxx option)'), true);
-  FGetOpt.RegisterOption('Comments', _('set the comments (overwrites value from -ReadXxx option)'), true);
+  FGetOpt.RegisterOption('FileDesc', _('set the file description (overwrites value from -ReadXxx option)'), True);
+  FGetOpt.RegisterOption('InternalName', _('set the internal name (overwrites value from -ReadXxx option)'), True);
+  FGetOpt.RegisterOption('OriginalName', _('set the original file name (overwrites value from -ReadXxx option)'), True);
+  FGetOpt.RegisterOption('Product', _('set the product name (overwrites value from -ReadXxx option)'), True);
+  FGetOpt.RegisterOption('ProductVersion', _('set the product version (overwrites value from -ReadXxx option)'), True);
+  FGetOpt.RegisterOption('Company', _('set the company name (overwrites value from -ReadXxx option)'), True);
+  FGetOpt.RegisterOption('Copyright', _('set the legal copyright (overwrites value from -ReadXxx option)'), True);
+  FGetOpt.RegisterOption('Trademark', _('set the legal trademark (overwrites value from -ReadXxx option)'), True);
+  FGetOpt.RegisterOption('Comments', _('set the comments (overwrites value from -ReadXxx option)'), True);
 
-  FGetOpt.RegisterOption('SvnRevision', _('set the SvnRevision (overwrites value from -ReadXxx option)'), true);
-  FGetOpt.RegisterOption('BuildDateTime', _('set the BuildDateTime (overwrites value from -ReadXxx option)'), true);
-  FGetOpt.RegisterOption('IncBuild', _('increment the build number'), false);
+  FGetOpt.RegisterOption('SvnRevision', _('set the Revision (overwrites value from -ReadXxx option)'), True);
+  FGetOpt.RegisterOption('GitRevision', _('set the Revision (overwrites value from SvnRevision and -ReadXxx option)'), True);
+  FGetOpt.RegisterOption('BuildDateTime', _('set the BuildDateTime (overwrites value from -ReadXxx option)'), True);
 
-  FGetOpt.RegisterOption('UpdateDof', _('update a .dof file with the version information'), true);
-  FGetOpt.RegisterOption('UpdateBdsproj', _('update a .bdsproj file with the version information'), true);
-  FGetOpt.RegisterOption('UpdateIni', _('update a .ini file with the version information'), true);
-  FGetOpt.RegisterOption('UpdateDproj', _('update a .dproj file with the version information'), true);
+  FGetOpt.RegisterOption('IsPrivateBuild', _('set the private build flag (overwrites value from -ReadXxx option)'), True);
+  FGetOpt.RegisterOption('IsSpecialBuild', _('set the special build flag (overwrites value from -ReadXxx option)'), True);
+  FGetOpt.RegisterOption('PrivateBuild', _('set the private build comments (overwrites value from -ReadXxx option)'), True);
+  FGetOpt.RegisterOption('SpecialBuild', _('set the special build comments (overwrites value from -ReadXxx option)'), True);
 
-  FGetOpt.RegisterOption('InputManifest', _('read the contents for the .manifest for the UpdateManifest option from this file'), true);
-  Fgetopt.RegisterOption('Manifest', _('Name of the .manifest file for the UpdateManifest and WriteManifestRc options'), true);
+  FGetOpt.RegisterOption('IncBuild', _('increment the build number'), False);
+
+  FGetOpt.RegisterOption('UpdateDof', _('update a .dof file with the version information'), True);
+  FGetOpt.RegisterOption('UpdateBdsproj', _('update a .bdsproj file with the version information'), True);
+  FGetOpt.RegisterOption('UpdateIni', _('update a .ini file with the version information'), True);
+  FGetOpt.RegisterOption('UpdateDproj', _('update a .dproj file with the version information'), True);
+
+  FGetOpt.RegisterOption('InputManifest', _('read the contents for the .manifest for the UpdateManifest option from this file'), True);
+  FGetOpt.RegisterOption('Manifest', _('Name of the .manifest file for the UpdateManifest and WriteManifestRc options'), True);
   FGetOpt.RegisterOption('UpdateManifest', _('update the .manifest file (given with the Manifest option) with the version information'));
   FGetOpt.RegisterOption('IgnoreManifestErrors', _('ignore any errors caused by the UpdateManifest option'));
-  FGetOpt.RegisterOption('WriteManifestRc', _('Write an .rc file for embedding the .manifest file given with the Manifest option'), true);
+  FGetOpt.RegisterOption('WriteManifestRc', _('Write an .rc file for embedding the .manifest file given with the Manifest option'), True);
 
-  FGetOpt.RegisterOption('Icon', _('Assign an icon file to add to the .rc file'), true);
+  FGetOpt.RegisterOption('Icon', _('Assign an icon file to add to the .rc file'), True);
 
-  FGetOpt.RegisterOption('WriteRc', _('write version info to a .rc file'), true);
+  FGetOpt.RegisterOption('WriteRc', _('write version info to a .rc file'), True);
 
-  FGetOpt.RegisterOption('Exec', _('execute the given program or script with extended environment'), true);
+  FGetOpt.RegisterOption('Exec', _('execute the given program or script with extended environment'), True);
 end;
 
 initialization

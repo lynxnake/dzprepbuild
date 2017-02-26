@@ -16,12 +16,12 @@ type
     FIniFile: TMemIniFile;
     FInfoSection: string;
     FInfoKeysSection: string;
-    function ReadInteger(const _Section, _Ident: string; _Default: integer): integer; virtual;
-    procedure WriteInteger(const _Section, _Ident: string; _Value: integer); virtual;
+    function ReadInteger(const _Section, _Ident: string; _Default: Integer): Integer; virtual;
+    procedure WriteInteger(const _Section, _Ident: string; _Value: Integer); virtual;
     function ReadString(const _Section, _Ident: string; _Default: string): string; virtual;
     procedure WriteString(const _Section, _Ident: string; _Value: string); virtual;
-    function ReadBool(const _Section, _Ident: string; _Default: boolean): boolean; virtual;
-    procedure WriteBool(const _Section, _Ident: string; _Value: boolean); virtual;
+    function ReadBool(const _Section, _Ident: string; _Default: Boolean): Boolean; virtual;
+    procedure WriteBool(const _Section, _Ident: string; _Value: Boolean); virtual;
   private
     FIniFilename: string;
   protected // implement IVersionInfoAccess
@@ -69,12 +69,12 @@ begin
   inherited;
 end;
 
-function TIniVersionInfo.ReadBool(const _Section, _Ident: string; _Default: boolean): boolean;
+function TIniVersionInfo.ReadBool(const _Section, _Ident: string; _Default: Boolean): Boolean;
 begin
   Result := 0 <> ReadInteger(_Section, _Ident, Ord(_Default));
 end;
 
-function TIniVersionInfo.ReadInteger(const _Section, _Ident: string; _Default: integer): integer;
+function TIniVersionInfo.ReadInteger(const _Section, _Ident: string; _Default: Integer): Integer;
 var
   s: string;
 begin
@@ -93,12 +93,12 @@ begin
   Result := FIniFilename;
 end;
 
-procedure TIniVersionInfo.WriteBool(const _Section, _Ident: string; _Value: boolean);
+procedure TIniVersionInfo.WriteBool(const _Section, _Ident: string; _Value: Boolean);
 begin
   WriteInteger(_Section, _Ident, Ord(_Value));
 end;
 
-procedure TIniVersionInfo.WriteInteger(const _Section, _Ident: string; _Value: integer);
+procedure TIniVersionInfo.WriteInteger(const _Section, _Ident: string; _Value: Integer);
 begin
   WriteString(_Section, _Ident, IntToStr(_Value));
 end;
@@ -124,13 +124,18 @@ begin
   _VerInfo.FileDescription := ReadString(FInfoKeysSection, 'FileDescription', '');
   _VerInfo.FileVersion := ReadString(FInfoKeysSection, 'FileVersion', '');
   _VerInfo.InternalName := ReadString(FInfoKeysSection, 'InternalName', '');
-  _VerInfo.LegalCopyright := ReadString(FInfoKeysSection, 'LegalCopyright', '');
+  _VerInfo.LegalCopyRight := ReadString(FInfoKeysSection, 'LegalCopyright', '');
   _VerInfo.LegalTrademarks := ReadString(FInfoKeysSection, 'LegalTrademarks', '');
   _VerInfo.OriginalFilename := ReadString(FInfoKeysSection, 'OriginalFilename', '');
   _VerInfo.ProductName := ReadString(FInfoKeysSection, 'ProductName', '');
   _VerInfo.ProductVersion := ReadString(FInfoKeysSection, 'ProductVersion', '');
-  _VerInfo.SvnRevision := ReadInteger(FInfoKeysSection, 'Revision', 0);
+  _VerInfo.SCMRevision := ReadString(FInfoKeysSection, 'Revision', '');
   _VerInfo.BuildDateTime := ReadString(FInfoKeysSection, 'BuildDateTime', '');
+
+  _VerInfo.IsPrivateBuild := ReadBool(FInfoSection, 'IsPrivateBuild', False);
+  _VerInfo.IsSpecialBuild := ReadBool(FInfoSection, 'IsSpecialBuild', False);
+  _VerInfo.PrivateBuildComments := ReadString(FInfoKeysSection, 'PrivateBuild', '');
+  _VerInfo.SpecialBuildComments := ReadString(FInfoKeysSection, 'SpecialBuild', '');
 end;
 
 procedure TIniVersionInfo.WriteToFile(_VerInfo: TVersionInfo);
@@ -142,7 +147,7 @@ begin
   WriteString(FInfoKeysSection, 'FileDescription', _VerInfo.FileDescription);
   WriteString(FInfoKeysSection, 'FileVersion', _VerInfo.FileVersion);
   WriteString(FInfoKeysSection, 'InternalName', _VerInfo.InternalName);
-  WriteString(FInfoKeysSection, 'LegalCopyright', _VerInfo.LegalCopyright);
+  WriteString(FInfoKeysSection, 'LegalCopyright', _VerInfo.LegalCopyRight);
   WriteString(FInfoKeysSection, 'LegalTrademarks', _VerInfo.LegalTrademarks);
   WriteInteger(FInfoSection, 'MajorVer', _VerInfo.MajorVer);
   WriteInteger(FInfoSection, 'MinorVer', _VerInfo.MinorVer);
@@ -150,8 +155,14 @@ begin
   WriteString(FInfoKeysSection, 'ProductName', _VerInfo.ProductName);
   WriteString(FInfoKeysSection, 'ProductVersion', _VerInfo.ProductVersion);
   WriteInteger(FInfoSection, 'Release', _VerInfo.Release);
-  WriteInteger(FInfoSection, 'Revision', _VerInfo.SvnRevision);
+  WriteString(FInfoSection, 'Revision', _VerInfo.SCMRevision);
   WriteString(FInfoKeysSection, 'BuildDateTime', _VerInfo.BuildDateTime);
+
+  WriteBool(FInfoSection, 'IsPrivateBuild', _VerInfo.IsPrivateBuild);
+  WriteBool(FInfoSection, 'IsSpecialBuild', _VerInfo.IsSpecialBuild);
+  WriteString(FInfoKeysSection, 'PrivateBuild', _VerInfo.PrivateBuildComments);
+  WriteString(FInfoKeysSection, 'SpecialBuild', _VerInfo.SpecialBuildComments);
+
   FIniFile.UpdateFile;
 end;
 

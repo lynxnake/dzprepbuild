@@ -87,7 +87,7 @@ function TCentralIniVersionInfo.ReadString(const _Section, _Ident: string; _Defa
 var
   Redir: string;
   IniFile: TMemIniFile;
-  Filename: string;
+  FileName: string;
   Section: string;
   Ident: string;
 begin
@@ -95,8 +95,8 @@ begin
   if Redir = '' then begin
     Result := FIniFile.ReadString(_Section, _Ident, _Default);
     if UStartsWith('redirect:', Result) then begin
-      GetRedirIdentInfo(Result, Filename, Section, Ident);
-      IniFile := TMemIniFile.Create(Filename);
+      GetRedirIdentInfo(Result, FileName, Section, Ident);
+      IniFile := TMemIniFile.Create(FileName);
       try
         Result := IniFile.ReadString(Section, Ident, _Default);
       finally
@@ -104,8 +104,8 @@ begin
       end;
     end;
   end else begin
-    GetRedirSectionInfo(Redir, Filename, Section);
-    IniFile := TMemIniFile.Create(Filename);
+    GetRedirSectionInfo(Redir, FileName, Section);
+    IniFile := TMemIniFile.Create(FileName);
     try
       Result := IniFile.ReadString(Section, _Ident, _Default);
     finally
@@ -118,7 +118,7 @@ procedure TCentralIniVersionInfo.WriteString(const _Section, _Ident: string; _Va
 var
   Redir: string;
   IniFile: TMemIniFile;
-  Filename: string;
+  FileName: string;
   Section: string;
   Ident: string;
 begin
@@ -126,8 +126,8 @@ begin
   if Redir = '' then begin
     Redir := FIniFile.ReadString(_Section, _Ident, '');
     if UStartsWith('redirect:', Redir) then begin
-      GetRedirIdentInfo(Redir, Filename, Section, Ident);
-      IniFile := TMemIniFile.Create(Filename);
+      GetRedirIdentInfo(Redir, FileName, Section, Ident);
+      IniFile := TMemIniFile.Create(FileName);
       try
         IniFile.WriteString(Section, Ident, _Value);
         IniFile.UpdateFile;
@@ -137,8 +137,8 @@ begin
     end else
       FIniFile.WriteString(_Section, _Ident, _Value);
   end else begin
-    GetRedirSectionInfo(Redir, Filename, Section);
-    IniFile := TMemIniFile.Create(Filename);
+    GetRedirSectionInfo(Redir, FileName, Section);
+    IniFile := TMemIniFile.Create(FileName);
     try
       IniFile.WriteString(Section, _Ident, _Value);
       IniFile.UpdateFile;
