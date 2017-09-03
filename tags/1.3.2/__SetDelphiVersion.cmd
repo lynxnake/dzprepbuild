@@ -1,0 +1,1 @@
+set DelphiVer=XE2 
