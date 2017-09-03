@@ -94,7 +94,7 @@ $(PostBuildEvent)]]></PostBuildEvent>
 			<DCC_Optimize>False</DCC_Optimize>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
-			<Debugger_RunParams>--incbuild --readini=testdata\testproject --updateini=testdata\testproject --writerc=testdata\testproject  --inputmanifest=testdata\testproject.manifest.in --manifest=testdata\testproject --updatemanifest --WriteManifestRc=testdata\testproject</Debugger_RunParams>
+			<Debugger_RunParams>--ReadDof=testdata\Testproject --IncBuild --updatedof=testdata\Testproject --writerc=testdata\Testproject</Debugger_RunParams>
 			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
 			<VerInfo_Locale>1033</VerInfo_Locale>
 		</PropertyGroup>
