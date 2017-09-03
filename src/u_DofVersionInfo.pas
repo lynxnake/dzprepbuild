@@ -39,7 +39,7 @@ const
 constructor TDofVersionInfo.Create(const _ProjectName: string);
 begin
   FProjectName := _ProjectName;
-  inherited Create(VerInfoFilename, VERSION_INFO_SECTION, VERSION_INFO_KEYS_SECTION);
+  inherited Create(FilenameFor(_ProjectName), VERSION_INFO_SECTION, VERSION_INFO_KEYS_SECTION);
   if FIniFile.ReadInteger(VERSION_INFO_SECTION, 'IncludeVerInfo', 0) <> 1 then
     raise ENoVersionInfo.Create(_('.dof file does not contain version info'));
 end;
