@@ -209,7 +209,7 @@ begin
       Executor.Environment.Values[DZ_VERSION + 'SpecialBuild'] := _VersionInfo.SpecialBuildComments;
     end;
 
-    Executor.Execute;
+    Executor.doExecute;
     Executor.Wait(INFINITE);
     Result := Executor.ExitCode;
   finally
