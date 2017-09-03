@@ -57,7 +57,7 @@ begin
   inherited Create;
   FIniFilename := _FullFilename;
   if not FileExists(_FullFilename) then
-    raise ENoVersionInfo.CreateFmt(_('File %s does not exist.'), [_FullFilename]);
+    raise ENoVersionInfo.CreateFmt(_('File "%s" does not exist.'), [_FullFilename]);
   FInfoSection := _InfoSection;
   FInfoKeysSection := _InfoKeysSection;
   FIniFile := TMemIniFile.Create(_FullFilename);
